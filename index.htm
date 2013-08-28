@@ -1,12 +1,64 @@
-<!doctype HTML>
 <html>
 
 	<head>
 		<link rel="stylesheet" type="text/css" href="index.css" />
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+		</script>
+		<script type="text/javascript"  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 	</head>
 
 	<body>
-		<canvas id="mainCanvas"></canvas>
+		<div id="leftbar">
+			<h1>BeamCAD</h1>
+			<div id="infobox">
+				<h2> Info: </h2>
+				
+				<table>
+					<tr>
+						<td>Concrete Area:</td><td>xxxx mm^2</td>
+					</tr>
+					<tr>
+						<td>Area of Steel:</td><td>xxxx mm^2</td>
+					</tr>
+					<tr>
+						<td>Ast/Ac Ratio:</td><td>xxxx</td>
+					</tr>
+					<tr>
+						<td>Total Depth:</td><td>xxxx mm</td>
+					</tr>
+					<tr>
+						<td>Effective Breadth:</td><td>xxxx mm</td>
+					</tr>
+					<tr>
+						<td>D/B Ratio:</td><td>xxxx</td>
+					</tr>
+				</table>
+			</div>
+			<hr>
+		</div>
+		<div id="topbar">
+			<h2>
+				<a href="#1">1</a>
+				<a href="#2">2</a>
+				<a href="#3">3</a>
+				<a href="#4">4</a>
+				<a href="#5">5</a>
+				<a href="#6">6</a>
+			</h2>
+		</div>
+		<div id="mainspace">
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<h1>
+				Step 4: Define Section
+			</h1>
+			<img style="margin-left:2cm;" src = "img/MockupBeamDesigner.JPG">
+			<br><br>
+			Test Formula: $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+			<br><br><br><br><br><br>
+		</div>
+		<div id="bottombar"></div>
+		
 	</body>
 
 	<script data-main="js/main.js" src="nickRequire.js"></script>

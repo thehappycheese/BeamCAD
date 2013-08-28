@@ -10,8 +10,45 @@ canvas:focus{
 }
 
 body{
-	color:white;
-	background-color:black;
-	margin-top:2.5cm;
-	/*padding:0;*/
+	color:black;
+	background-color:#BBBBBB;
+	padding:0;
+	margin:0;
+}
+
+h1,h2,h3,h4 {
+	font-family: sans-serif;
+}
+
+#infobox{
+	width:68mm;
+	backgroun-color:#DDDDDD;
+}
+
+#leftbar, #topbar, #bottombar, #mainspace{
+	position:fixed;
+	margin: 3mm;
+	padding: 1mm;
+	border-radius: 3mm;
+	background-color: #E0E0E0;
+	
+}
+#leftbar{
+	width:70mm;
+	height:-webkit-calc(100% - 8mm);
+	top:0;
+	left:0;
+}
+#topbar{
+	width: -webkit-calc(100% - 83mm);
+	height: 1.5cm;
+	right:0;
+	top:0;
+}
+#mainspace{
+	width: -webkit-calc(100% - 83mm);
+	height: -webkit-calc(100% - 28mm);
+	bottom:0; /* topbar.height */
+	right:0;
+	overflow-y:scroll;
 }

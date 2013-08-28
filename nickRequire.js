@@ -25,39 +25,38 @@
 
 	function loopInspect(){
 		if(toinspect.length>0){
+			
 			var url = toinspect.pop();
-			
-			if(currentFile != null){
-				rules.push(currentFile);
-			}
-			
 			currentFile = {url:url, after:[], name:getName(url), path:getPath(url), content:""};
+			rules.push(currentFile);
 			
 			var xreq = new XMLHttpRequest();
 				xreq.onreadystatechange = textLoaded;
 				xreq.open("GET", url, false);
 				xreq.send();
+				xreq.timeout = 4000;
+				xreq.ontimeout = function () { alert("Build timed out!"); };
 		}else{
 			console.log("Inspection Complete!");
-			order(rules, orders);
+			order(rules);
 		}
 	}
 	function textLoaded (e){
 		if(e.target.readyState==4){
 			if(e.target.status==200){
 				var text = e.target.responseText.split(/\r?\n/);
+				currentFile.content = e.target.responseText;
+				
 				for(var i = 0; i<text.length;i++){
 					// =============== USE RELATIVE PATH ===============
 					if(text[i].substr(0,4)=="///*"){
 						var url = text[i].substr(5,text[i].length-5);
-						currentFile.content = e.target.responseText;
 						toinspect.push(getPath(currentFile.url)+url);
 						currentFile.after.push(getPath(currentFile.url)+url);
 					}
 					// =============== USE ROOT PATH ===========
 					if(text[i].substr(0,4)=="///~"){
 						var url = text[i].substr(5,text[i].length-5);
-						currentFile.content = e.target.responseText;
 						toinspect.push(url);
 						currentFile.after.push(url);
 					}
@@ -70,13 +69,25 @@
 	}
 	
 	
-	function order(rule, order){
+	function order(rule){
 		var i, j;
 		var satisfied = false;
 		
+		if(rule.length==0){
+			// No rules have been made since the mainfile is the only file.
+			orders.push(main);
+			console.log("Was "+main+" the only file you wanted?");
+			loopLoad();
+			
+			return;
+		}
+		
+		
+		console.log(rule);
+		
 		for(i = 0; i< rule.length; i++){
 			if(rule[i].after.length==0){
-				order.push(rule[i].url);
+				orders.push(rule[i].url);
 				rule.splice(i--,1);
 			}
 		}
@@ -90,14 +101,14 @@
 			for(i = 0; i< rule.length; i++){
 				satisfied = true;
 				for(j=0;j<rule[i].after.length;j++){
-					if(order.indexOf(rule[i].after[j])==-1){
+					if(orders.indexOf(rule[i].after[j])==-1){
 						satisfied = false;
 						break;
 					}
 				}
 				if(satisfied){
 					w.compiled = w.compiled+rule[i].content;
-					order.unshift(rule[i].url);
+					orders.unshift(rule[i].url);
 					rule.splice(i--,1);
 					
 				}

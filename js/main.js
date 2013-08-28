@@ -1,6 +1,6 @@
 "use strict";
 
-///~ lib/Canvas.js
+///~ ui/ToggleButton.js
 
 
 
@@ -10,55 +10,28 @@
 
 
 
-document.title = "Thesis";
+document.title = "Thesis Idea";
+
+
+var ui = {};
+
+ui.topBar = document.getElementById("topbar");
+ui.bottomBar = document.getElementById("bottombar");
+ui.leftBar = document.getElementById("leftbar");
+ui.mainspace = document.getElementById("mainspace");
 
 
 
-/*var canvas = new Canvas("mainCanvas");
-
-//=============================== EVENTS =============================
-
-canvas.on("mousedown", function(e){
-	
-});
 
 
 
-canvas.on("animate",function(delta){
-	
-	// ============ UPDATE
-	
-	
-	// ============ DRAW
+ui.leftBar.appendChild((new ToggleButton("img/icons0.png")).button);
+ui.leftBar.appendChild((new ToggleButton("img/icons1.png")).button);
+ui.leftBar.appendChild((new ToggleButton("img/icons2.png")).button);
+ui.leftBar.appendChild((new ToggleButton("img/icons3.png")).button);
+ui.leftBar.appendChild((new ToggleButton("img/icons4.png")).button);
+ui.leftBar.appendChild((new ToggleButton("img/icons5.png")).button);
+ui.leftBar.appendChild((new ToggleButton("img/icons6.png")).button);
+ui.leftBar.appendChild((new ToggleButton("img/icons7.png")).button);
 
-});
-
-
-canvas.on("blur",function(){
-	
-})*/
-
-
-var f = new ToggleButton();
-document.body.appendChild(f.button);
-
-
-function ToggleButton(){
-	this.value = false;
-	this.idString = (new Date()).getTime().toString(36);
-	
-	this.button = document.createElement("div");
-	
-	this.button.style.width = "24px";
-	this.button.style.height = "24px";
-	this.button.style.borderRadius = "5px";
-	this.button.style.backgroundColor = "#AAAAAA";
-	this.button.style.border = "2px outset #CCCCCC";
-	
-	this.button.addEventListener("mousedown",(function(e){
-		this.button.style.borderStyle = "inset";
-		this.button.style.backgroundColor = "#BBBBBB";
-	}).bind(this));
-	
-}
 
