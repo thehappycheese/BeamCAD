@@ -38,17 +38,20 @@ h1,h2,h3,h4 {
 	height:-webkit-calc(100% - 8mm);
 	top:0;
 	left:0;
+	overflow-y:scroll;
 }
 #topbar{
 	width: -webkit-calc(100% - 83mm);
-	height: 1.5cm;
+	height: 1cm;
 	right:0;
 	top:0;
+	font-family: sans-serif;
+	font-size: 8mm;
 }
 #mainspace{
 	width: -webkit-calc(100% - 83mm);
-	height: -webkit-calc(100% - 28mm);
-	bottom:0; /* topbar.height */
+	height: -webkit-calc(100% - 23mm);
+	bottom:0;
 	right:0;
 	overflow-y:scroll;
 }
