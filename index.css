@@ -21,16 +21,15 @@ h1,h2,h3,h4 {
 }
 
 #infobox{
-	width:68mm;
-	backgroun-color:#DDDDDD;
+	width:100%;
 }
 
 #leftbar, #topbar, #bottombar, #mainspace{
 	position:fixed;
 	margin: 3mm;
 	padding: 1mm;
-	border-radius: 3mm;
-	background-color: #E0E0E0;
+	box-shadow: 1px 1px 4px #777777;
+	background: linear-gradient(to bottom, #eaeaea 0%,#bcbcbc 100%);
 	
 }
 #leftbar{
@@ -50,8 +49,14 @@ h1,h2,h3,h4 {
 }
 #mainspace{
 	width: -webkit-calc(100% - 83mm);
-	height: -webkit-calc(100% - 23mm);
-	bottom:0;
+	height: -webkit-calc(100% - 30mm);
+	bottom:7mm;
 	right:0;
 	overflow-y:scroll;
+}
+#bottombar{
+	width: -webkit-calc(100% - 83mm);
+	height: 5mm;
+	right:0;
+	bottom:0;
 }

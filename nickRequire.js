@@ -7,7 +7,7 @@
 		var myscripttag = document.querySelectorAll('[data-main]')
 		var main = myscripttag[0].getAttribute("data-main");
 	}catch(e){
-		console.log("Could not find [data-main] in document");
+		console.log("nickReqire.js --> Could not find [data-main] in document");
 		return;
 	}
 	
@@ -32,12 +32,12 @@
 			
 			var xreq = new XMLHttpRequest();
 				xreq.onreadystatechange = textLoaded;
-				xreq.open("GET", url, false);
+				xreq.open("GET", url, true);
 				xreq.send();
 				xreq.timeout = 4000;
-				xreq.ontimeout = function () { alert("Build timed out!"); };
+				xreq.ontimeout = function () { alert("nickReqire.js --> Build timed out!"); };
 		}else{
-			console.log("Inspection Complete!");
+			console.log("nickReqire.js --> Inspection Complete!");
 			order(rules);
 		}
 	}
@@ -63,7 +63,7 @@
 				}
 				loopInspect();
 			}else{
-				console.error("Could not inspect file.. terminating "+currentFile.url);
+				console.error("nickReqire.js --> Terminating. Could not inspect file: "+currentFile.url);
 			}
 		}
 	}
@@ -76,14 +76,12 @@
 		if(rule.length==0){
 			// No rules have been made since the mainfile is the only file.
 			orders.push(main);
-			console.log("Was "+main+" the only file you wanted?");
+			console.log("nickReqire.js --> Was "+main+" the only file you wanted?");
 			loopLoad();
 			
 			return;
 		}
 		
-		
-		console.log(rule);
 		
 		for(i = 0; i< rule.length; i++){
 			if(rule[i].after.length==0){
@@ -117,7 +115,7 @@
 		
 		if(rule.length>0){
 			console.log(rule);
-			throw new Error("Cross dependancy error!");
+			throw new Error("nickReqire.js --> Cross dependancy error!");
 		}
 		
 		loopLoad();
@@ -132,7 +130,7 @@
 			script.src = orders.pop();
 			document.head.appendChild(script);
 		}else{
-			console.log("Build Complete!");
+			console.log("nickReqire.js --> Build Complete!");
 		}
 	}
 

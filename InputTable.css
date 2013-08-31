@@ -1,0 +1,19 @@
+
+.InputTable{
+	border:1px solid black;
+}
+
+.InputTable td{
+	margin:0;
+	padding:0;
+	text-align:center;
+}
+.InputTable input{
+	margin:0;
+	width:2cm;
+}
+.InputTable th{
+	font-family:sans-serif;
+	padding-left:2mm;
+	text-align:left;
+}
