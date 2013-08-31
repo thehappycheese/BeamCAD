@@ -7,6 +7,8 @@ document.title = "BeamCAD";
 ///~ ui/Setup.js
 ///~ lib/sylvester/sylvester.js
 
+///~ app/app_structural_analysis.js
+
 
 
 
@@ -14,7 +16,7 @@ document.title = "BeamCAD";
 var project = new Project();
 var appman = new AppManager();
 
-var app = new testapp();
+var app = new app_structural_analysis();
 
 appman.load(app)
 

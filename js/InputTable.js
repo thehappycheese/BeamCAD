@@ -29,7 +29,42 @@ function InputTable(){
 		}
 
 		// ==== GENERATE HEADER
+		
+		// --- title and minimiser
+		
+		var temprow2 = document.createElement("tr");
 		temprow = document.createElement("tr");
+		tempcell = document.createElement("th");
+		tempcell.setAttribute("colspan",this.columns.length+1);
+		tempcell.innerHTML = this.name;
+		tempcell.className = "InputTableTitle"
+		temprow.appendChild(tempcell);
+		
+		tempcell = document.createElement("td");
+		tempcell.style.width = "1cm";
+		tempelem = document.createElement("button");
+		tempelem.innerHTML = "&Theta;";
+		tempelem.secrow = temprow2;
+		tempelem.minimized = false;
+		tempelem.onclick = (function(e){
+			console.log(e.target.minimized)
+			if(e.target.minimized){
+				e.target.secrow.style.display = "table-row";
+				this.tbody.style.display = "";
+				e.target.innerHTML = "&Theta;"
+			}else{
+				e.target.secrow.style.display = "none";
+				this.tbody.style.display = "none";
+				e.target.innerHTML = "&Omicron;"
+			}
+			e.target.minimized  = !e.target.minimized;
+		}).bind(this);
+		tempcell.appendChild(tempelem);
+		temprow.appendChild(tempcell);
+		this.thead.appendChild(temprow);
+		
+		// --- column lables
+		temprow = temprow2;
 		tempcell = document.createElement("th");
 		temprow.appendChild(tempcell);
 		for(i=0;i<this.columns.length;i++){
@@ -39,13 +74,12 @@ function InputTable(){
 		}
 		tempcell = document.createElement("td");
 		temprow.appendChild(tempcell);
-			
+		
+		// --- buttons
 		tempelem = document.createElement("button");
 		tempelem.innerHTML = "+";
 		tempelem.row = -1;
-		tempelem.onclick = (function(e){
-			this.addRow(e.target.row);
-		}).bind(this);
+		tempelem.onclick = (function(e){this.addRow(e.target.row);}).bind(this);
 		tempcell.appendChild(tempelem);
 		this.thead.appendChild(temprow);
 		
@@ -62,10 +96,7 @@ function InputTable(){
 			tempelem = document.createElement("button");
 			tempelem.innerHTML = "-";
 			tempelem.row = j;
-			tempelem.onclick = (function(e){
-				this.removeRow(e.target.row);
-				console.log(e.target.row);
-			}).bind(this);
+			tempelem.onclick = (function(e){this.removeRow(e.target.row);}).bind(this);
 			tempcell.appendChild(tempelem)
 			
 			// --- Content
