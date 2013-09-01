@@ -8,7 +8,7 @@ function nInput(type, x, y){
 	this.dom.type = "text";
 	this.dom.required = true;
 	
-	switch(type){
+	switch(this.type){
 		case "float":
 			this.dom.pattern = "[-+]?[0-9]*\.?[0-9]*";
 			break;
@@ -58,10 +58,13 @@ function nInput(type, x, y){
 				break;
 			case "bool":
 				this.dom.checked = newVal;
+				break;
 			case "int":
 				this.dom.value = newVal.toFixed(0);
+				break;
 			case "uint":
 				this.dom.value = Math.abs(newVal).toFixed(0);
+				break;
 		}
 	}).bind(this));
 	

@@ -25,23 +25,23 @@ function app_structural_analysis(){
 
 function NodeTable(){
 
-	InputTable.call(this);
+	nTable.call(this);
 
 	this.name = "Nodes";
 	
 	this.datatype = Node;
 	this.dataprops = [
-		["id",	"ID",			"uint"],
-		["x",	"x (mm)", 		"float"],
-		["y",	"y (mm)", 		"float"],
-		["fx",	"Fix X", 		"bool"],
-		["fy",	"Fix Y", 		"bool"],
-		["fr",	"Fix Rotation",	"bool"]
+		{property:"id",	lable:"ID",				type:"uint"	},
+		{property:"x",	lable:"x (mm)", 		type:"float"},
+		{property:"y",	lable:"y (mm)", 		type:"float"},
+		{property:"fx",	lable:"Fix X", 			type:"bool"	},
+		{property:"fy",	lable:"Fix Y", 			type:"bool"	},
+		{property:"fr",	lable:"Fix &theta;",	type:"bool"	}
 	];
 	
-	this.addRow(0);
+	this.data = [new Node(),new Node(),new Node(),new Node(),new Node()];
 	
-	this.generateInputs();
+	this.initInputs();
 	this.generateTable();
 }
 

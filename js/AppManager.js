@@ -1,6 +1,6 @@
 ///~ lib/EventDispatcher.js
 ///~ lib/dom_utilities.js
-///* InputTable.js
+///* nTable.js
 
 function AppManager(){
 	

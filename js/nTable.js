@@ -3,128 +3,150 @@
 function nTable(){
 	
 	
-	this.generateInputs = (function(){
+	
+	
+	
+	
+	
+	// =================== GENERATE <input> tags for initial values
+	// ==== TODO: convert this to an "addRow()" function
+	// ==== so that this is the only way to add data
+	// ==== this function is bad because it only runs on init
+	// ==== and it wasts a fucktonne of space. Mkay.
+	
+	this.initInputs = (function(){
+		var i, j;
+		var row, type;
+		this.inputs = [];
+		
+		for(i = 0; i<this.data.length; i++){
+			row = [];
+			for(j = 0; j<this.dataprops.length; j++){
+				
+				type	= this.dataprops[j].type;
+
+				ninput	= new nInput(type, j, i);
+				
+				ninput.value = this.data[i][this.dataprops[j].property];
+				
+				row.push(ninput.dom);
+				
+			}
+			this.inputs.push(row);
+		}
 	}).bind(this);
 	
 	
-
 	
-	this.generateTable = (function(){
-		
-		var i,j,temprow,tempcell, tempelem;
+	
+	
+	
+	
+	
 
-		// ==== CLEAR THE TABLE
-		this.dom.innerHTML = "";
+	// ================== GENERATE INITIAL HTML TABLE ======
+	this.generateTable = (function(){
+		var i,j, row;
+		
 		this.tbody.innerHTML = "";
 		this.thead.innerHTML = "";
 		
-
-		// ==== GENERATE THE INPUT ELEMENTS
 		
-		return;
+		// ================ GENERATE TITLE ROW
+		row = [
+			this.createCell(this.name),
+			this.createCell(this.createMinimizeButton())
+		];
+		row[0].setAttribute("colspan", this.dataprops.length+1);
+		this.thead.appendChild(this.createRow(row))
 		
-		// ==== GENERATE HEADER
 		
-		// --- title and minimiser
-		temprow = document.createElement("tr");
-
-		tempcell = document.createElement("th");
-		tempcell.setAttribute("colspan",this.dataprops.length+1);
-		tempcell.innerHTML = this.name;
-		tempcell.className = "InputTableTitle"
-		temprow.appendChild(tempcell);
+		// ================ GENERATE COLUMN HEADINGS
 		
-
-		tempelem = document.createElement("button");
-		tempelem.innerHTML = "&Theta;";
-		tempelem.onclick = (function(e){
-			console.log(e.target.minimized)
-			if(this.minimized){
-				this.tbody.style.display = "";
-				e.target.innerHTML = "&Theta;"
-			}else{
-				this.tbody.style.display = "none";
-				e.target.innerHTML = "&Omicron;"
-			}
-			this.minimized  = !this.minimized;
-		}).bind(this);
-		tempcell.appendChild(tempelem);
-		temprow.appendChild(tempcell);
-		this.thead.appendChild(temprow);
-		
-		// --- column lables
-		temprow = temprow2;
-		tempcell = document.createElement("th");
-		temprow.appendChild(tempcell);
-		for(i=0;i<this.columns.length;i++){
-			tempcell = document.createElement("th");
-			tempcell.innerHTML = this.columns[i].name;
-			temprow.appendChild(tempcell);
+		row = [this.createCell("")];
+		for(i = 0;i<this.dataprops.length;i++){
+			row.push(this.createCell(this.dataprops[i].lable))
 		}
-		tempcell = document.createElement("td");
-		temprow.appendChild(tempcell);
+		row.push(this.createCell(this.createAddRowButton()));
+		this.tbody.appendChild(this.createRow(row));
 		
-		// --- buttons
-		tempelem = document.createElement("button");
-		tempelem.innerHTML = "+";
-		tempelem.row = -1;
-		tempelem.onclick = (function(e){this.addRow(e.target.row);}).bind(this);
-		tempcell.appendChild(tempelem);
-		this.thead.appendChild(temprow);
-		
-		// ==== GENERATE BODY
+		// ================ GENERATE ROWS OF CONTENT
 		for(j=0;j<this.inputs.length;j++){
-			// --- Create new row
-			temprow = document.createElement("tr");
-			this.tbody.appendChild(temprow);
-			
-			// --- Startrow button
-			tempcell = document.createElement("td");
-			temprow.appendChild(tempcell);
-			
-			tempelem = document.createElement("button");
-			tempelem.innerHTML = "-";
-			tempelem.row = j;
-			tempelem.onclick = (function(e){this.removeRow(e.target.row);}).bind(this);
-			tempcell.appendChild(tempelem)
-			
-			// --- Content
-			for(i=0;i<this.inputs[j].length;i++){
-				tempcell = document.createElement("td");
-				tempcell.appendChild(this.inputs[j][i])
-				temprow.appendChild(tempcell);
+			row = [this.createCell(this.createAddRowButton())];
+			for(i = 0;i<this.inputs[j].length;i++){
+				row.push(this.createCell(this.inputs[j][i]))
 			}
-			
-			// --- Endrow buttons
-			tempcell = document.createElement("td");
-			temprow.appendChild(tempcell);
-			
-			tempelem = document.createElement("button");
-			tempelem.innerHTML = "+";
-			tempelem.row = j;
-			tempelem.onclick = (function(e){
-				this.addRow(e.target.row);
-			}).bind(this);
-			tempcell.appendChild(tempelem);
-			
-			
+			row.push(this.createCell(this.createAddRowButton()))
+			this.tbody.appendChild(this.createRow(row));
 		}
-		
 		
 		
 		
 	}).bind(this);
+	
+	
+	
+	this.createMinimizeButton = (function(){
+		var result = document.createElement("button");
+		result.innerHTML = "^";
+		result.onclick = (function(e){
+			if(this.minimized){
+				this.tbody.style.display = "";
+				e.target.innerHTML = "^";
+			}else{
+				this.tbody.style.display = "none";
+				e.target.innerHTML = "v";
+			}
+			this.minimized = !this.minimized;
+		}).bind(this);
+		return result;
+	}).bind(this);
+	
+	
+	this.createAddRowButton = (function(){
+		var button = document.createElement("button");
+		
+		button.innerHTML = "+";
+		
+		button.onclick = (function(e){
+			var f = e.target;
+			var tr = f.parentNode.parentNode;
+			var tb = f.parentNode.parentNode.parentNode;
+			var index = 0;
+			for(var i = 0; i< tb.children.length; i++){
+				if(tr==tb.children[i]){
+					index = i-1;
+					break;
+				}
+			}
+			console.log(index);
+		}).bind(this);
+		
+		return button;
+	}).bind(this);
+	
+	
 	
 	
 	this.createCell = (function(content){
-		var cont = content;
-		if(typeof content == "string"){
-			cont = document.createTextNode(content);
-		}		
 		var cell = document.createElement("td");
-		cell.appendChild(cont);
+		if(typeof content == "string"){
+			cell.innerHTML = content;
+		}else{
+			cell.appendChild(content);
+		}
 		return cell;
 	}).bind(this);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	this.createRow = (function(array){
@@ -137,14 +159,28 @@ function nTable(){
 	
 	
 	
+	
+	
+	
+	
+	
 	this.addRow = (function(after){
 		var data = this.getRawData();
-		
 		data.splice(after+1,0,[]);
 		this.numrows++;
 		this.generateTable();
 		this.setRawData(data);
 	}).bind(this);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	this.removeRow = function(row){
 		var data = this.getRawData();
@@ -154,6 +190,12 @@ function nTable(){
 		this.generateTable();
 		this.setRawData(data);
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	this.getRawData = (function(){
@@ -175,6 +217,14 @@ function nTable(){
 		return result;
 	}).bind(this);
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	this.setRawData = (function(newdata){
 		for(j=0;j<this.inputs.length;j++){
 			for(i=0;i<this.inputs[j].length;i++){
@@ -191,7 +241,7 @@ function nTable(){
 	this.tbody = document.createElement("tbody");
 	this.thead = document.createElement("thead");
 	this.dom = document.createElement("table");
-	this.dom.className = "InputTable";
+	this.dom.className = "nTable";
 	this.dom.appendChild(this.thead);
 	this.dom.appendChild(this.tbody);
 	
@@ -202,9 +252,6 @@ function nTable(){
 	this.data = [];
 	this.datatype = null;
 	this.dataprops = [];
-	
-	
-	this.generateTable();
 	
 }
 
