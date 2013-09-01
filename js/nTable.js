@@ -1,11 +1,13 @@
+///* nInput.js
 
-
-
-function InputTable(){
+function nTable(){
 	
-	this.tbody = document.createElement("tbody");
-	this.thead = document.createElement("thead");
 	
+	this.generateInputs = (function(){
+	}).bind(this);
+	
+	
+
 	
 	this.generateTable = (function(){
 		
@@ -15,49 +17,36 @@ function InputTable(){
 		this.dom.innerHTML = "";
 		this.tbody.innerHTML = "";
 		this.thead.innerHTML = "";
-		this.inputs = [];
+		
 
 		// ==== GENERATE THE INPUT ELEMENTS
-		for(j=0;j<this.numrows;j++){
-			temprow = [];
-			for(i=0;i<this.columns.length;i++){
-				tempelem = document.createElement("input");
-				tempelem.type = this.columns[i].type;
-				temprow.push(tempelem);
-			}
-			this.inputs.push(temprow);
-		}
-
+		
+		return;
+		
 		// ==== GENERATE HEADER
 		
 		// --- title and minimiser
-		
-		var temprow2 = document.createElement("tr");
 		temprow = document.createElement("tr");
+
 		tempcell = document.createElement("th");
-		tempcell.setAttribute("colspan",this.columns.length+1);
+		tempcell.setAttribute("colspan",this.dataprops.length+1);
 		tempcell.innerHTML = this.name;
 		tempcell.className = "InputTableTitle"
 		temprow.appendChild(tempcell);
 		
-		tempcell = document.createElement("td");
-		tempcell.style.width = "1cm";
+
 		tempelem = document.createElement("button");
 		tempelem.innerHTML = "&Theta;";
-		tempelem.secrow = temprow2;
-		tempelem.minimized = false;
 		tempelem.onclick = (function(e){
 			console.log(e.target.minimized)
-			if(e.target.minimized){
-				e.target.secrow.style.display = "table-row";
+			if(this.minimized){
 				this.tbody.style.display = "";
 				e.target.innerHTML = "&Theta;"
 			}else{
-				e.target.secrow.style.display = "none";
 				this.tbody.style.display = "none";
 				e.target.innerHTML = "&Omicron;"
 			}
-			e.target.minimized  = !e.target.minimized;
+			this.minimized  = !this.minimized;
 		}).bind(this);
 		tempcell.appendChild(tempelem);
 		temprow.appendChild(tempcell);
@@ -122,32 +111,52 @@ function InputTable(){
 		}
 		
 		
-		this.dom.appendChild(this.thead);
-		this.dom.appendChild(this.tbody);
+		
 		
 	}).bind(this);
 	
 	
+	this.createCell = (function(content){
+		var cont = content;
+		if(typeof content == "string"){
+			cont = document.createTextNode(content);
+		}		
+		var cell = document.createElement("td");
+		cell.appendChild(cont);
+		return cell;
+	}).bind(this);
+	
+	
+	this.createRow = (function(array){
+		var row = document.createElement("tr");
+		for(var i = 0; i<array.length;i++){
+			row.appendChild(array[i]);
+		}
+		return row;
+	}).bind(this);
+	
+	
+	
 	this.addRow = (function(after){
-		var data = this.getData();
+		var data = this.getRawData();
 		
 		data.splice(after+1,0,[]);
 		this.numrows++;
 		this.generateTable();
-		this.setData(data);
+		this.setRawData(data);
 	}).bind(this);
 	
 	this.removeRow = function(row){
-		var data = this.getData();
+		var data = this.getRawData();
 		
 		data.splice(row,1);
 		this.numrows--;
 		this.generateTable();
-		this.setData(data);
+		this.setRawData(data);
 	}
 	
 	
-	this.getData = (function(){
+	this.getRawData = (function(){
 		var i,j,
 			temprow,
 			tempval,
@@ -166,7 +175,7 @@ function InputTable(){
 		return result;
 	}).bind(this);
 	
-	this.setData = (function(newdata){
+	this.setRawData = (function(newdata){
 		for(j=0;j<this.inputs.length;j++){
 			for(i=0;i<this.inputs[j].length;i++){
 				this.setInputValue(this.inputs[j][i], newdata[j][i]);
@@ -174,7 +183,38 @@ function InputTable(){
 		}
 	}).bind(this);
 	
-	this.setInputValue = (function(input, value){
+	
+	
+	// ================= CONSTRUCTOR =====================
+	
+	
+	this.tbody = document.createElement("tbody");
+	this.thead = document.createElement("thead");
+	this.dom = document.createElement("table");
+	this.dom.className = "InputTable";
+	this.dom.appendChild(this.thead);
+	this.dom.appendChild(this.tbody);
+	
+	this.minimised = false;
+
+	this.name = "unset";
+	this.inputs = [];
+	this.data = [];
+	this.datatype = null;
+	this.dataprops = [];
+	
+	
+	this.generateTable();
+	
+}
+
+
+
+
+
+
+/*
+this.setInputValue = (function(input, value){
 		switch(input.type){
 			case "number":
 				return input.value = value;
@@ -196,13 +236,4 @@ function InputTable(){
 		}
 	}).bind(this);
 	
-	// ================= CONSTRUCTOR =====================
-	this.columns = this.columns || [];
-	this.numrows = 1;
-	this.inputs = [];
-	
-	this.dom = document.createElement("table");
-	this.dom.className = "InputTable";
-	this.generateTable();
-	
-}
+*/

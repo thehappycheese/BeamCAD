@@ -1,0 +1,26 @@
+
+.nTable{
+	border:1px solid black;
+	width:100%;
+}
+
+.nTable td{
+	margin:0;
+	padding:0;
+	text-align:center;
+}
+
+.nTable button{
+	margin:0;
+	width:1cm;
+}
+
+
+.nTable input{
+	width:100%;
+}
+/*.nTable*/
+input:invalid{
+	color:red;
+	border-color:red;
+}
