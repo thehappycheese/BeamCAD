@@ -7,15 +7,21 @@ function app_structural_analysis(){
 	this.manager = null;
 	this.ui = null;
 	
+	this.ctx = null;
+	
 	this.html = "";
 	this.url = "app/app_structural_analysis.htm";
 	
 	this.nodeTable = new NodeTable();
 	this.memberTable = new MemberTable();
 	
+	this.nodeTable.on("change", (function(){
+		console.log(this.nodeTable.data);
+	}).bind(this));
+	
 	
 	this.on("load", (function(){
-		console.log(this.ui);
+		this.ctx = this.ui.app_canvas.getContext("2d");
 		this.ui.app_leftcol.appendChild(this.nodeTable.dom);
 		this.ui.app_rightcol.appendChild(this.memberTable.dom);
 	}).bind(this));
@@ -41,9 +47,8 @@ function NodeTable(){
 		{property:"fr",	lable:"Fix &theta;",	type:"bool"	}
 	];
 	
-	this.data = [new this.datatype()];
+	this.addRow(0);
 	
-	this.initInputs();
 	this.generateTable();
 }
 function MemberTable(){
@@ -59,9 +64,9 @@ function MemberTable(){
 		{property:"b",	lable:"Node B", 		type:"float"}
 	];
 	
-	this.data = [new this.datatype()];
+	this.addRow(0);
 	
-	this.initInputs();
+
 	this.generateTable();
 }
 

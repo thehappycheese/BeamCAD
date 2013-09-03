@@ -1,4 +1,9 @@
+"use strict";
+///~ lib/EventDispatcher.js
+///~ lib/KEYS.js
+
 function nInput(type){
+	EventDispatcher.call(this);
 	
 	this.type = type;
 	
@@ -6,7 +11,34 @@ function nInput(type){
 	this.dom.type = "text";
 	this.dom.required = true;
 	
-	this.onchange = function(){};
+	this.dom.onkeydown = (function(e){
+		if(e.keyCode == KEYS.left){
+			if(this.dom.type=="checkbox" || (this.dom.selectionStart == 0 && this.dom.selectionEnd == 0)){
+				e.direction = "left"
+				this.dispatch("exit",e);
+			}
+		}
+		if(e.keyCode == KEYS.right){ 
+			if(this.dom.type=="checkbox" || (this.dom.selectionStart == this.dom.value.length && this.dom.selectionEnd == this.dom.value.length)){
+				e.direction = "right";
+				this.dispatch("exit",e);
+			}
+		}
+		if(this.dom.type=="checkbox" || (this.dom.selectionStart == this.dom.selectionEnd)){
+			if(e.keyCode == KEYS.up){
+				e.direction = "up";
+				this.dispatch("exit",e);
+			}
+			if(e.keyCode == KEYS.down){
+				e.direction = "down";
+				this.dispatch("exit",e);
+			}
+		}
+	}).bind(this);
+	
+	this.dom.onchange = (function(e){
+		this.dispatch("change");
+	}).bind(this);
 	
 	switch(this.type){
 		case "float":
@@ -33,7 +65,7 @@ function nInput(type){
 	
 	
 	this.__defineGetter__("value", (function(){
-		switch(type){
+		switch(this.type){
 			case "float":
 				return parseFloat(this.dom.value);
 			case "ufloat":
@@ -53,7 +85,7 @@ function nInput(type){
 			this.dom.value = "";
 			return;
 		}
-		switch(type){
+		switch(this.type){
 			case "float":
 				this.dom.value = newVal;
 				break;

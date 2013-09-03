@@ -1,49 +1,14 @@
+"use strict";
 ///* nInput.js
+///~ lib/EventDispatcher.js
 
 function nTable(){
 	
+	EventDispatcher.call(this);
 	
 	
 	
 	
-	
-	
-	// =================== GENERATE <input> tags for initial values
-	// ==== TODO: convert this to an "addRow()" function
-	// ==== so that this is the only way to add data
-	// ==== this function is bad because it only runs on init
-	// ==== and it wasts a fucktonne of space. Mkay.
-	
-	this.initInputs = (function(){
-		var i, j;
-		var row, type;
-		this.inputs = [];
-		
-		for(i = 0; i<this.data.length; i++){
-			row = [];
-			for(j = 0; j<this.dataprops.length; j++){
-				
-				type	= this.dataprops[j].type;
-
-				ninput	= new nInput(type, j, i);
-				
-				ninput.value = this.data[i][this.dataprops[j].property];
-				
-				row.push(ninput.dom);
-				
-			}
-			this.inputs.push(row);
-		}
-	}).bind(this);
-	
-	
-	
-	
-	
-	
-	
-	
-
 	// ================== GENERATE INITIAL HTML TABLE ======
 	this.generateTable = (function(){
 		var i,j, row;
@@ -75,7 +40,7 @@ function nTable(){
 		for(j=0;j<this.inputs.length;j++){
 			row = [this.createCell(this.createRowButton(false))];
 			for(i = 0;i<this.inputs[j].length;i++){
-				row.push(this.createCell(this.inputs[j][i]))
+				row.push(this.createCell(this.inputs[j][i].dom))
 			}
 			row.push(this.createCell(this.createRowButton(true)))
 			this.tbody.appendChild(this.createRow(row));
@@ -84,6 +49,8 @@ function nTable(){
 	
 	
 	
+	
+	// ============== MINIMIZE BUTTON!! ==============
 	this.createMinimizeButton = (function(){
 		var result = document.createElement("button");
 		result.innerHTML = String.fromCharCode(9651);
@@ -101,6 +68,9 @@ function nTable(){
 	}).bind(this);
 	
 	
+	
+	
+	// ============= CREATE ROW+ / ROW- BUTTONS ======
 	this.createRowButton = (function(add){
 		
 		var button = document.createElement("button");
@@ -141,6 +111,7 @@ function nTable(){
 	
 	
 	
+	// ============= CREATE <TD> WRAPPER =============
 	this.createCell = (function(content){
 		var cell = document.createElement("td");
 		if(typeof content == "string"){
@@ -154,14 +125,7 @@ function nTable(){
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	// ============= CREATE <TR> WRAPPER =============	
 	this.createRow = (function(array){
 		var row = document.createElement("tr");
 		for(var i = 0; i<array.length;i++){
@@ -174,19 +138,60 @@ function nTable(){
 	
 	
 	
-	
-	
-	
+	// ============= ADD NEW DATA ELEMENT AND ========
 	this.addRow = (function(after, data){
 		if(data==undefined){
 			data = new this.datatype();
 		}
-		var j, temp, ninput, row = [];
+		var j, temp, type, ninput, row = [];
 		for(j = 0; j<this.dataprops.length; j++){
 			
-			type	= this.dataprops[j].type;
+			type	= this.dataprops[j].type;//bool
 
-			ninput	= new nInput(type);
+			ninput	= new nInput(type);//bool
+			
+			
+			ninput.on("exit",(function(e){
+				var i,  j, nextfocus;
+				var done = false;
+				console.log(e.target, e.direction);
+				for(j=0;j<this.inputs.length;j++){
+					for(i=0;i<this.inputs[j].length;i++){
+						if(e.target == this.inputs[j][i].dom){
+							done=true;
+							break
+						}
+					}
+					if(done){
+						break;
+					}
+				}
+				switch(e.direction){
+					case "up":
+						j--;
+						break;
+					case "down":
+						j++;
+						break;
+					case "left":
+						i--;
+						break;
+					case "right":
+						i++;
+						break;
+				}
+				if(i<0 || i>=this.inputs[0].length){
+					return;
+				}
+				if(j<0 || j>=this.inputs.length){
+					return;
+				}
+				this.inputs[j][i].dom.focus();
+			}).bind(this));
+			
+			ninput.on("change",(function(e){
+				this.updateData();
+			}).bind(this));
 			
 			temp = data[this.dataprops[j].property];
 			
@@ -196,78 +201,52 @@ function nTable(){
 				ninput.value = temp;
 			}
 			
-			row.push(ninput.dom);
-			
-			
+			row.push(ninput);
 		}
 		this.data.splice(after+1,0,data);
 		this.inputs.splice(after+1, 0, row);
 		this.generateTable();
+		this.dispatch("change");
 	}).bind(this);
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	this.removeRow = function(row){
+	// ============= REMOVE TABLE AND DATA ROW =======
+	this.removeRow = (function(row){
 		this.inputs.splice(row,1);
 		this.data.splice(row,1);
 		this.tbody.removeChild(this.tbody.children[row+1]);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	this.getRawData = (function(){
-		var i,j,
-			temprow,
-			tempval,
-			result = [];
-		
-		for(j=0;j<this.inputs.length;j++){
-			temprow = [];
-			for(i=0;i<this.inputs[j].length;i++){
-				
-				temprow.push(this.getInputValue(this.inputs[j][i]));
-			}
-			
-			result.push(temprow);
-		
-		}
-		return result;
+		this.dispatch("change");
+		this.dispatch("removedrow",row);
 	}).bind(this);
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	this.setRawData = (function(newdata){
-		for(j=0;j<this.inputs.length;j++){
-			for(i=0;i<this.inputs[j].length;i++){
-				this.setInputValue(this.inputs[j][i], newdata[j][i]);
+	// ============= UPDATE [DATA] FROM [INPUTS] =====
+	this.updateData = (function(){
+		var i, j, p;
+		for(j = 0; j <this.inputs.length; j++){
+			for(i = 0; i <this.inputs[j].length; i++){
+				this.data[j][this.dataprops[i].property] = this.inputs[j][i].value;
 			}
 		}
+		this.dispatch("change");
 	}).bind(this);
+	
+	
+	
+	
+	// ============ UPDATE [INPUTS] FROM [DATA] ==========
+	this.updateInputs = (function(){
+		console.log("unimplemented!");
+	}).bind(this);
+	
 	
 	
 	
 	// ================= CONSTRUCTOR =====================
-	
-	
 	this.tbody = document.createElement("tbody");
 	this.thead = document.createElement("thead");
 	this.dom = document.createElement("table");
@@ -284,33 +263,3 @@ function nTable(){
 	this.dataprops = [];
 	
 }
-
-
-
-
-
-
-/*
-this.setInputValue = (function(input, value){
-		switch(input.type){
-			case "number":
-				return input.value = value;
-			case "checkbox":
-				return input.checked = value;
-			default:
-				return input.value = value;
-		}
-	}).bind(this);
-	
-	this.getInputValue = (function(input){
-		switch(input.type){
-			case "number":
-				return parseFloat(input.value);
-			case "checkbox":
-				return input.checked;
-			default:
-				return input.value;
-		}
-	}).bind(this);
-	
-*/
