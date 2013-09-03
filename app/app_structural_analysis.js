@@ -1,5 +1,5 @@
 
-//~ js/StructuralAnalysis.js
+///~ js/StructuralAnalysis.js
 
 function app_structural_analysis(){
 	EventDispatcher.call(this);
@@ -11,11 +11,13 @@ function app_structural_analysis(){
 	this.url = "app/app_structural_analysis.htm";
 	
 	this.nodeTable = new NodeTable();
+	this.memberTable = new MemberTable();
 	
 	
 	this.on("load", (function(){
 		console.log(this.ui);
 		this.ui.app_leftcol.appendChild(this.nodeTable.dom);
+		this.ui.app_rightcol.appendChild(this.memberTable.dom);
 	}).bind(this));
 	
 	this.on("unload", (function(){
@@ -39,7 +41,25 @@ function NodeTable(){
 		{property:"fr",	lable:"Fix &theta;",	type:"bool"	}
 	];
 	
-	this.data = [new Node(),new Node(),new Node(),new Node(),new Node()];
+	this.data = [new this.datatype()];
+	
+	this.initInputs();
+	this.generateTable();
+}
+function MemberTable(){
+
+	nTable.call(this);
+
+	this.name = "Member";
+	
+	this.datatype = Member;
+	this.dataprops = [
+		{property:"id",	lable:"ID",				type:"uint"	},
+		{property:"a",	lable:"Node A", 		type:"float"},
+		{property:"b",	lable:"Node B", 		type:"float"}
+	];
+	
+	this.data = [new this.datatype()];
 	
 	this.initInputs();
 	this.generateTable();
@@ -47,12 +67,3 @@ function NodeTable(){
 
 
 
-function Node(){
-	this.id = 0;
-	this.x = 0;
-	this.y = 0;
-	this.fx = false;
-	this.fy = false;
-	this.fr = false;
-	
-}

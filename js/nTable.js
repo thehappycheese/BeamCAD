@@ -58,6 +58,7 @@ function nTable(){
 			this.createCell(this.createMinimizeButton())
 		];
 		row[0].setAttribute("colspan", this.dataprops.length+1);
+		row[1].style.width ="22px";
 		this.thead.appendChild(this.createRow(row))
 		
 		
@@ -67,35 +68,32 @@ function nTable(){
 		for(i = 0;i<this.dataprops.length;i++){
 			row.push(this.createCell(this.dataprops[i].lable))
 		}
-		row.push(this.createCell(this.createAddRowButton()));
+		row.push(this.createCell(this.createRowButton(true)));
 		this.tbody.appendChild(this.createRow(row));
 		
 		// ================ GENERATE ROWS OF CONTENT
 		for(j=0;j<this.inputs.length;j++){
-			row = [this.createCell(this.createAddRowButton())];
+			row = [this.createCell(this.createRowButton(false))];
 			for(i = 0;i<this.inputs[j].length;i++){
 				row.push(this.createCell(this.inputs[j][i]))
 			}
-			row.push(this.createCell(this.createAddRowButton()))
+			row.push(this.createCell(this.createRowButton(true)))
 			this.tbody.appendChild(this.createRow(row));
 		}
-		
-		
-		
 	}).bind(this);
 	
 	
 	
 	this.createMinimizeButton = (function(){
 		var result = document.createElement("button");
-		result.innerHTML = "^";
+		result.innerHTML = String.fromCharCode(9651);
 		result.onclick = (function(e){
 			if(this.minimized){
 				this.tbody.style.display = "";
-				e.target.innerHTML = "^";
+				e.target.innerHTML = String.fromCharCode(9651);
 			}else{
 				this.tbody.style.display = "none";
-				e.target.innerHTML = "v";
+				e.target.innerHTML = String.fromCharCode(9661);
 			}
 			this.minimized = !this.minimized;
 		}).bind(this);
@@ -103,12 +101,27 @@ function nTable(){
 	}).bind(this);
 	
 	
-	this.createAddRowButton = (function(){
-		var button = document.createElement("button");
+	this.createRowButton = (function(add){
 		
-		button.innerHTML = "+";
+		var button = document.createElement("button");
+		button.add = add;
+		if(button.add){
+			button.innerHTML = "+";
+		}else{
+			button.innerHTML = "-";
+		}
 		
 		button.onclick = (function(e){
+			var row = e.target.getRow(e);
+			if(e.target.add){
+				this.addRow(row);
+			}else{
+				this.removeRow(row);
+			}
+			console.log(row+""+e.target.add);
+		}).bind(this);
+		
+		button.getRow = (function(e){
 			var f = e.target;
 			var tr = f.parentNode.parentNode;
 			var tb = f.parentNode.parentNode.parentNode;
@@ -119,7 +132,7 @@ function nTable(){
 					break;
 				}
 			}
-			console.log(index);
+			return index;
 		}).bind(this);
 		
 		return button;
@@ -164,12 +177,32 @@ function nTable(){
 	
 	
 	
-	this.addRow = (function(after){
-		var data = this.getRawData();
-		data.splice(after+1,0,[]);
-		this.numrows++;
+	this.addRow = (function(after, data){
+		if(data==undefined){
+			data = new this.datatype();
+		}
+		var j, temp, ninput, row = [];
+		for(j = 0; j<this.dataprops.length; j++){
+			
+			type	= this.dataprops[j].type;
+
+			ninput	= new nInput(type);
+			
+			temp = data[this.dataprops[j].property];
+			
+			if(temp === undefined || isNaN(temp)){
+				ninput.value = "";
+			}else{
+				ninput.value = temp;
+			}
+			
+			row.push(ninput.dom);
+			
+			
+		}
+		this.data.splice(after+1,0,data);
+		this.inputs.splice(after+1, 0, row);
 		this.generateTable();
-		this.setRawData(data);
 	}).bind(this);
 	
 	
@@ -183,12 +216,9 @@ function nTable(){
 	
 	
 	this.removeRow = function(row){
-		var data = this.getRawData();
-		
-		data.splice(row,1);
-		this.numrows--;
-		this.generateTable();
-		this.setRawData(data);
+		this.inputs.splice(row,1);
+		this.data.splice(row,1);
+		this.tbody.removeChild(this.tbody.children[row+1]);
 	}
 	
 	

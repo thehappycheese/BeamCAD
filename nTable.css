@@ -25,6 +25,7 @@
 
 .nTable input{
 	width:100%;
+	min-width:1.5cm;
 	height:22px;
 	margin:0;
 }

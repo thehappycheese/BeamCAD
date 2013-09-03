@@ -1,12 +1,12 @@
-function nInput(type, x, y){
+function nInput(type){
 	
 	this.type = type;
-	this.x = x;
-	this.y = y;
 	
 	this.dom = document.createElement("input");
 	this.dom.type = "text";
 	this.dom.required = true;
+	
+	this.onchange = function(){};
 	
 	switch(this.type){
 		case "float":
@@ -19,10 +19,10 @@ function nInput(type, x, y){
 			this.dom.type = "checkbox";
 			break;
 		case "int":
-			this.dom.pattern = "[0-9]*";
+			this.dom.pattern = "[-+]?[0-9]*";
 			break;
 		case "uint":
-			this.dom.pattern = "[-+]?[0-9]*";
+			this.dom.pattern = "[0-9]*";
 			break;
 	}
 	
@@ -49,6 +49,10 @@ function nInput(type, x, y){
 	
 	
 	this.__defineSetter__("value", (function(newVal){
+		if(newVal === undefined || isNaN(newVal) || newVal === ""){
+			this.dom.value = "";
+			return;
+		}
 		switch(type){
 			case "float":
 				this.dom.value = newVal;

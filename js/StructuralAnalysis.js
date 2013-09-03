@@ -1,22 +1,22 @@
 
 
 function Node(){
-	this.id = null;
-	this.x = 0;
-	this.y = 0;
+	this.id = undefined;
+	this.x = undefined;
+	this.y = undefined;
 	this.fx = false;
 	this.fy = false;
 	this.fr = false;
 }
 
 function Member(){
-	this.id = null;
-	this.a = null;
-	this.b = null;
+	this.id = undefined;
+	this.a = undefined;
+	this.b = undefined;
 }
 
 function Material(){
-	this.id = null;
+	this.id = undefined;
 	this.name = "";
 	this.E = 200000;
 	this.I = 894000;
