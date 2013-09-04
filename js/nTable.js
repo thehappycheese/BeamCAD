@@ -23,7 +23,7 @@ function nTable(){
 			this.createCell(this.createMinimizeButton())
 		];
 		row[0].setAttribute("colspan", this.dataprops.length+1);
-		row[1].style.width ="22px";
+		row[1].style.width ="20px";
 		this.thead.appendChild(this.createRow(row))
 		
 		
@@ -154,7 +154,6 @@ function nTable(){
 			ninput.on("exit",(function(e){
 				var i,  j, nextfocus;
 				var done = false;
-				console.log(e.target, e.direction);
 				for(j=0;j<this.inputs.length;j++){
 					for(i=0;i<this.inputs[j].length;i++){
 						if(e.target == this.inputs[j][i].dom){
@@ -183,8 +182,11 @@ function nTable(){
 				if(i<0 || i>=this.inputs[0].length){
 					return;
 				}
-				if(j<0 || j>=this.inputs.length){
+				if(j<0){
 					return;
+				}
+				if(j>=this.inputs.length){
+					this.addRow(this.data.length);
 				}
 				this.inputs[j][i].dom.focus();
 			}).bind(this));

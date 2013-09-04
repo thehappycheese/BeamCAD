@@ -1,4 +1,4 @@
-///~ ui/ToggleButton.js 
+///* ToggleButton.js 
 
 var ui = {};
 

@@ -12,6 +12,7 @@
 
 	font-family:sans-serif;
 }
+
 .nTable tr{
 	margin:0;
 	padding:0;
@@ -40,8 +41,13 @@
 	margin:0;
 }
 
-/*.nTable*/
-input:invalid{
-	color:red;
-	border-color:red;
+
+.nTable input:invalid{
+	color:darkorange;
+	border-color:orange;
+}
+.nTable input:focus{
+	background:#FEFEDD;
+	/*border:1px solid yellow;*/
+	outline:1px solid orange;
 }

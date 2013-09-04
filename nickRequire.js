@@ -85,6 +85,7 @@
 		
 		for(i = 0; i< rule.length; i++){
 			if(rule[i].after.length==0){
+				w.compiled = w.compiled+"\n"+rule[i].content;
 				orders.push(rule[i].url);
 				rule.splice(i--,1);
 			}
@@ -105,10 +106,9 @@
 					}
 				}
 				if(satisfied){
-					w.compiled = w.compiled+rule[i].content;
+					w.compiled = w.compiled+"\n"+rule[i].content;
 					orders.unshift(rule[i].url);
 					rule.splice(i--,1);
-					
 				}
 			}
 		}

@@ -5,12 +5,74 @@
 function nInput(type){
 	EventDispatcher.call(this);
 	
+	// ===================== CONSTRUCTOR ===============
+	this.oldvalue = this.value;
+	
 	this.type = type;
 	
 	this.dom = document.createElement("input");
-	this.dom.type = "text";
+	if(this.type=="bool"){
+		this.dom.type = "checkbox";
+	}else{
+		this.dom.type = "text";
+	}
 	this.dom.required = true;
 	
+	/*switch(this.type){
+		case "float":
+			this.dom.pattern = "[-+]?[0-9]*\\.?[0-9]*";
+			break;
+		case "ufloat":
+			this.dom.pattern = "[0-9]*\\.?[0-9]*";
+			break;
+		case "bool":
+			this.dom.type = "checkbox";
+			break;
+		case "int":
+			this.dom.pattern = "[-+]?[0-9]*";
+			break;
+		case "uint":
+			this.dom.pattern = "[0-9]*";
+			break;
+	}*/
+	
+	
+	this.__defineGetter__("valid",(function(){
+		if(this.type == "bool" || this.type == "text"){
+			return true;
+		}
+		var value = this.dom.value;
+		var positive = true;
+		var isint = false;
+		if(value.substring(0,1)=="+"){
+			value = value.substring(1,Infinity);
+		}
+		if(value.substring(0,1)=="-"){
+			value = value.substring(1,Infinity);
+			positive = false;
+		}
+		value = parseFloat(value);
+		isint = (value == Math.floor(value))
+		
+		switch(this.type){
+			case "uint":
+				return !isNaN(value) && isint && positive;
+				break;
+			case "int":
+				return !isNaN(value) && isint;
+				break;
+			case "ufloat":
+				return !isNaN(value) && positive;
+				break;
+			case "float":
+				return !isNaN(value);
+				break;
+		}
+		
+	}).bind(this));
+	
+	
+	// ===================== KEYDOWN EVENT ===============
 	this.dom.onkeydown = (function(e){
 		if(e.keyCode == KEYS.left){
 			if(this.dom.type=="checkbox" || (this.dom.selectionStart == 0 && this.dom.selectionEnd == 0)){
@@ -34,30 +96,17 @@ function nInput(type){
 				this.dispatch("exit",e);
 			}
 		}
+		
+		
 	}).bind(this);
 	
-	this.dom.onchange = (function(e){
-		this.dispatch("change");
+	this.dom.onkeyup = (function(e){
+		if(this.oldvalue !== this.value){
+			this.dom.setCustomValidity((this.valid)?"":"invalid!");
+			this.dispatch("change");
+		}
 	}).bind(this);
-	
-	switch(this.type){
-		case "float":
-			this.dom.pattern = "[-+]?[0-9]*\.?[0-9]*";
-			break;
-		case "ufloat":
-			this.dom.pattern = "[0-9]*\.?[0-9]*";
-			break;
-		case "bool":
-			this.dom.type = "checkbox";
-			break;
-		case "int":
-			this.dom.pattern = "[-+]?[0-9]*";
-			break;
-		case "uint":
-			this.dom.pattern = "[0-9]*";
-			break;
-	}
-	
+
 	
 	this.__defineGetter__("isValid", (function(){
 		return dom.validity;
