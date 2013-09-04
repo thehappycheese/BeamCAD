@@ -2,6 +2,7 @@
 .nTable{
 	border:1px solid black;
 	width:100%;
+	border-spacing:0;
 }
 
 .nTable td{
@@ -11,24 +12,34 @@
 
 	font-family:sans-serif;
 }
+.nTable tr{
+	margin:0;
+	padding:0;
+}
+
+
 .nTable thead{
 	font-family:sans-serif;
 	font-size: 1.3em;
+	background-color:#CCCCCC;
 }
+
 
 .nTable button{
 	margin:0;
-	width:22px;
+	width:20px;
 	padding:0;
 }
 
 
 .nTable input{
 	width:100%;
-	min-width:1.5cm;
-	height:22px;
+	min-width:1cm;
+	height:20px;
+	border:1px solid grey;
 	margin:0;
 }
+
 /*.nTable*/
 input:invalid{
 	color:red;
