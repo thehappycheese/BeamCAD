@@ -18,23 +18,8 @@ function nInput(type){
 	}
 	this.dom.required = true;
 	
-	/*switch(this.type){
-		case "float":
-			this.dom.pattern = "[-+]?[0-9]*\\.?[0-9]*";
-			break;
-		case "ufloat":
-			this.dom.pattern = "[0-9]*\\.?[0-9]*";
-			break;
-		case "bool":
-			this.dom.type = "checkbox";
-			break;
-		case "int":
-			this.dom.pattern = "[-+]?[0-9]*";
-			break;
-		case "uint":
-			this.dom.pattern = "[0-9]*";
-			break;
-	}*/
+	
+	
 	
 	
 	this.__defineGetter__("valid",(function(){
@@ -67,8 +52,9 @@ function nInput(type){
 			case "float":
 				return !isNaN(value);
 				break;
+			default:
+				return true;
 		}
-		
 	}).bind(this));
 	
 	
@@ -99,6 +85,7 @@ function nInput(type){
 		
 		
 	}).bind(this);
+	
 	
 	this.dom.onkeyup = (function(e){
 		if(this.oldvalue !== this.value){

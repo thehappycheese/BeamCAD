@@ -12,7 +12,7 @@ function Node(){
 		result = true;
 		result = result && (typeof this.id == "number");
 		result = result && (!isNaN(this.id));
-		result = result && (this.id == Math.abs(this.id));
+		result = result && (this.id == Math.round(Math.abs(this.id)));
 		
 		result = result && (typeof this.x == "number");
 		result = result && (!isNaN(this.x));
@@ -31,22 +31,25 @@ function Member(){
 	this.id = undefined;
 	this.a = undefined;
 	this.b = undefined;
+
 	
 	this.__defineGetter__("valid",(function(){
 		result = true;
 		result = result && (typeof this.id == "number");
 		result = result && (!isNaN(this.id));
-		result = result && (this.id == Math.abs(this.id));
+		result = result && (this.id == Math.round(Math.abs(this.id)));
 		
 		result = result && (typeof this.a == "number");
 		result = result && (!isNaN(this.a));
-		result = result && (this.a == Math.abs(this.a));
+		result = result && (this.a == Math.round(Math.abs(this.a)));
 		
 		result = result && (typeof this.b == "number");
 		result = result && (!isNaN(this.b));
-		result = result && (this.b == Math.abs(this.b));
+		result = result && (this.b == Math.round(Math.abs(this.b)));
 		
 		result = result && (this.a != this.b);
+		
+
 		
 		return result;
 	}).bind(this));
