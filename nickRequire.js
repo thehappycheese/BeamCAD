@@ -37,7 +37,7 @@
 				xreq.timeout = 4000;
 				xreq.ontimeout = function () { alert("nickReqire.js --> Build timed out!"); };
 		}else{
-			console.log("nickReqire.js --> Inspection Complete!");
+			//console.log("nickReqire.js --> Inspection Complete!");
 			order(rules);
 		}
 	}
@@ -130,7 +130,7 @@
 			script.src = orders.pop();
 			document.head.appendChild(script);
 		}else{
-			console.log("nickReqire.js --> Build Complete!");
+			//console.log("nickReqire.js --> Build Complete!");
 		}
 	}
 

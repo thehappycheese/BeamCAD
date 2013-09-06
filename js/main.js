@@ -18,9 +18,7 @@ document.title = "BeamCAD";
 var project = new Project();
 var appman = new AppManager();
 
-var app = new app_beam_design();
-
-appman.load(app)
+appman.load(app_beam_design);
 
 
 
