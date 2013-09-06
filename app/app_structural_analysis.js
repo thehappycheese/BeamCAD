@@ -1,10 +1,10 @@
 
 ///~ js/StructuralAnalysis.js
 
-function app_structural_analysis() {
+function app_structural_analysis(manager) {
 	EventDispatcher.call(this);
 
-	this.manager = null;
+	this.manager = manager;
 	this.ui = null;
 
 	this.ctx = null;

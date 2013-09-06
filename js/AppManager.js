@@ -12,13 +12,14 @@ function AppManager(){
 		
 
 
-		this.loadingApp = app;
+		this.loadingApp = new app(this);
+		
 		var req = new XMLHttpRequest();
 			this.currentRequest=req;
 			req.timeout = 4000;
-			req.ontimeout = function(){throw new Error("appload has failed")};
+			req.ontimeout = function(){throw new Error("Loading an application has failed D: "+this.loadingApp.constructor.name)};
 			req.onreadystatechange = this.apploaded;
-			req.open("GET", app.url);
+			req.open("GET", this.loadingApp.url);
 			req.send();
 			
 		
@@ -32,7 +33,6 @@ function AppManager(){
 				}
 				this.currentApp = this.loadingApp;
 				this.loadingApp = null;
-				this.currentApp.manager = this;
 				this.currentApp.html   = e.target.responseText;
 				ui.mainspace.innerHTML = e.target.responseText;
 				this.currentApp.ui = domScrobble(ui.mainspace);
