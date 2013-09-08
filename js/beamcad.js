@@ -49,17 +49,23 @@ beamcad = (function (exports) {
 		}
 	]
 
-	function po(o) {
+	function po(o,ent) {
 		if (typeof o != "object") {
 			return o;
 		}
-		var result = "{";
+		var result = "";
 
 		for (var i in o) {
-			result += " " + i + ":" + po(o[i]) + " ";
+			result += i + ":" + po(o[i],true) + " ";
+			if(ent==undefined){
+				result += "\n";
+			}
 		}
 
-		return result + "}";
+		
+		
+
+		return result;
 	}
 
 	function flexmethod() {
@@ -181,14 +187,14 @@ beamcad = (function (exports) {
 		for (i = 0; i < localRo.length; i++) {
 			for (j = i + 1; j < localRo.length; j++) {
 				if (localRo[i].na == localRo[j].na) {
-					localRo.splice(j--, 1);
+					//localRo.splice(j--, 1);
 				}
 			}
 		}
 		for (i = 0; i < localRo.length; i++) {
-			localRo[i].n=localRo[i].na;
-			delete localRo[i].na;
-			delete localRo[i].nb;
+			//localRo[i].n=localRo[i].na;
+			//delete localRo[i].na;
+			//delete localRo[i].nb;
 		}
 		// find uncompiled stiffness matrix [k]
 		
@@ -215,7 +221,7 @@ beamcad = (function (exports) {
 		for(j=0;j<localMo.length;j++){
 			tmp = [];
 			for(i=0;i<localRo.length;i++){
-				tmp.push(getRotationStiffness(localMo[j].member, localMo[j].na, localMo[j].nb, localRo[i].n));
+				tmp.push(getRotationStiffness(localMo[j].member, localMo[j].na, localMo[j].nb, localRo[i].na));
 			}
 			for(i=0;i<localEx.length;i++){
 				tmp.push(0);
@@ -240,13 +246,18 @@ beamcad = (function (exports) {
 		k = $M(k);
 
 		// q=the row indexer, d = the column indexer
+		
+		
 
-		console.log("======= members\n", po(members), "\n");
-		console.log("======= nodes	\n", po(nodes), "\n");
-		console.log("======= lro	\n", po(localRo), "\n");
-		console.log("======= lex	\n", po(localEx), "\n");
-		console.log("======= lmo	\n", po(localMo), "\n");
-		console.log("======= lte	\n", po(localTe), "\n");
+		
+		
+
+		console.log("nodes	======\n"+ po(nodes)  +	"\n");
+		console.log("members======\n"+ po(members)+ "\n\n");
+		console.log("q		======\n"+ po(localMo)+ "\n"+po(localTe)+"\n");
+		console.log("d	 	======\n"+ po(localRo)+ "\n"+ po(localEx)+ "\n");
+		console.log("D		======\n"+ po(globalX)+ "\n"+ po(globalY)+ "\n"+ po(globalRo)+ "\n");
+		console.log("k		======\n");
 		console.log(k.inspect(2))
 
 		// each member has 3 local displacements, mai mbi and ei (e for extention)
