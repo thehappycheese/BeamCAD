@@ -1,0 +1,174 @@
+
+
+
+
+
+
+
+
+
+
+
+Design a beam
+	
+	Load combinations
+	Analysis
+	Critical Moments
+	
+	
+	
+Check Capacity
+	
+	
+		
+	
+	
+
+Exposure Classification
+	
+	
+	
+	Affects
+		Required Cover
+		Concrete Strength
+			Elastic Modulus
+			
+			
+			
+			
+Beam Shape
+	
+	Rectangle
+	T Beam
+	L Beam
+	
+	Affects
+		B_eff
+		Shear Design
+
+
+roh_c
+	Concrete Density
+	Uses 2400kg/m^3 but trhe limits are 1800-2800 1.1.2
+	
+	Affects
+		Self-weight
+
+
+		
+A_g {
+	Cross stectional area of
+	Concrete beam
+	(gross area)
+}
+
+
+A_st {
+	Cross stectional area of
+	Tensile steel 
+}
+
+
+A_sc {
+	Cross stectional area of
+	Compressive steel 
+}
+
+
+
+B {
+	Breadth of a rectangular section
+}
+
+
+
+B_eff{
+	Effective breadth of a non rectangular section
+	For a T-Beam or slab/beam this is the width of the flange
+	<>
+}
+
+
+d {
+	Effective depth in plain of bending;
+	measured from the outermost compression fiber to the centroid of the tensile steel
+	this measure becomes confusing when dealing with compression steel and multiple layers
+}
+
+
+d_n {
+	Depth from outermost compression fiber to the neutral axis of the beam
+	This is the imaginary hinge of the see-saw in the beam
+}
+
+
+D {
+	The overall depth of a beam in the plane of bending.
+}
+
+
+E_c{
+	Mean elastic modulus
+	at 28 days of
+	Concrete
+	<>
+}
+
+
+f_sy{
+	Characteristic yield strength of
+	Reinforcement bars
+	<AS3600: 3.2.1>
+	
+	For more info see <AS4671>
+}
+
+
+f'c {
+	Characteristic compressive strength
+	At 28 days of
+	Concrete
+	
+	20MPa to 100MPa 1.1.2
+	
+	Affects
+		E_c
+		alpha_2
+		gamma	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+

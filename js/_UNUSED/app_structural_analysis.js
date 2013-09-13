@@ -1,6 +1,4 @@
 
-///~ js/StructuralAnalysis.js
-
 function app_structural_analysis(manager) {
 	EventDispatcher.call(this);
 

@@ -6,8 +6,9 @@
 	try{
 		var myscripttag = document.querySelectorAll('[data-main]')
 		var main = myscripttag[0].getAttribute("data-main");
+		var root = myscripttag[0].getAttribute("data-root");
 	}catch(e){
-		console.log("nickReqire.js --> Could not find [data-main] in document");
+		console.log("nickReqire.js --> Could not find [data-main] or [data-root] in document");
 		return;
 	}
 	
@@ -32,7 +33,7 @@
 			
 			var xreq = new XMLHttpRequest();
 				xreq.onreadystatechange = textLoaded;
-				xreq.open("GET", url, true);
+				xreq.open("GET", root+"/"+url, true);
 				xreq.send();
 				xreq.timeout = 4000;
 				xreq.ontimeout = function () { alert("nickReqire.js --> Build timed out!"); };
