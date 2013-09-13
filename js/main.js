@@ -4,7 +4,7 @@ document.title = "BeamCAD";
 
 ///* Project.js
 ///* AppManager.js
-///* beamcad.js
+///* stiffnessmethod.js
 ///~ ui/Setup.js
 ///~ lib/sylvester/sylvester.js
 
@@ -18,7 +18,7 @@ document.title = "BeamCAD";
 var project = new Project();
 var appman = new AppManager();
 
-appman.load(app_beam_design);
+appman.load(app_structural_analysis);
 
 
 
