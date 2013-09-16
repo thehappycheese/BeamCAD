@@ -1,0 +1,201 @@
+
+
+======== Design goal tiers ========
+
+The idea for this thesis topic came to me during one of the many times i have created a spreadsheet to perform some kind of engineering design. The process involves a combination of theoretical knowledge and the application of design standards. The relationship between design standards and the theoretical knowledge is entirely obtuse. Furthermore the standards themselves are presented in a strict linear "book" format. Reading a standard from cover to cover will prove entirely fruitless to a new engineer.
+
+To this end i intend to create a map. Not just a map but a trainsystem. The trainsystem would give a student an accellerated tour of the standard in order to familiarise them with the process of the design.
+
+It would be easy to write software wich assists a student to design a beam to standard. There are several industry software which already allow automated design. The challenge with this software is to assist a student to learn the equivalent hand calculations
+
+
+Thesis goals
+
+1.	To accelerate the learning process of university students in the design of
+	concrete beams through the use of a piece of software.
+2.	To investigate the potential of software in teaching and "knowledge transfer"
+3.	To investigate the possibility of collaboration between software engineers and
+	civil engineers for an assignment. This type of project would be of enourmouse
+	benefit to the students involved and if successful, the entire field of civil 
+	engineering in the long term
+
+
+Primary goals in order of priority for this project.
+
+1.	Ultimate strength design procedure
+	1.1	Bending moment design
+	1.2	Shear design
+
+2.	Ultimate strength check  procudure
+	1.1	Bending moment checks
+	1.2	Shear checks
+
+3.	Load combinations
+4.	Servicability and deflection design
+
+Ancilliary goals that are not likely to be adressed in this itteration of the project
+
+
+
+
+
+======== AS 1700 =========
+
+Load combinations
+
+
+
+
+
+======== AS 3600 =========
+
+2.2		Design for strength
+	
+	P1	2.1.1
+		Explanation of process with the following formulas:
+			R_d >= E_d
+			R_d = phi R_u
+			R_u is determined from the standard
+			E_d is determined by static, linear elastic or approved simplified methods 	as a result of the critical combined load from AS 1170.0
+
+	P1	T2.2.2	Capacity reduction factors (phi)
+
+	OS	2.2.3	Linear elastic stress
+	OS	2.2.4	Strut and tie procedure
+	OS	2.2.5	Non-linear analysis of framed structures
+	OS	2.2.6	Non-linear analysis of whole structure
+		
+
+	
+	
+	
+2.3		Design for servicability
+
+		2.3.2	Deflection limits
+			T2.3.2 Deflection limits
+				P1	Deflection limits should be in mind when starting design
+				P4	Full calculation and check of deflection
+
+		2.3.3	Cracking
+			P1	General requirements will be mentioned but not in detail
+			P4	Extensive requirement checking proceadure addressed
+		
+	OS	2.3.4	Vibration
+
+	2.4		Action and Combinations
+		P3	Suggested minimum combinations (within scope should be considered
+		OS	Load arrangements (Alternating span dead-loads not in scope)
+		
+.
+
+
+3.1		Properties of materials
+	
+		
+	3.1		Properties of concrete
+	
+		Assisted calculation of all values based on unrefined calculations:
+	
+		P1	3.1.1.1		Characteristic compressive strength
+		P1	3.1.1.2		Mean compressive strength
+		P1	3.1.1.3		Tensile strength
+		P1	3.1.2		Modulus of Elasticity
+		P1	3.1.3		Density
+		
+		
+		OS	3.1.4	Stress Strain Curves
+		OS	3.1.5	Poison's Ratio
+		OS	3.1.6	Coef of thermal expansion
+		OS	3.1.7	Shrinkage
+		OS	3.1.8	Creep
+	
+	3.2			Properties of reinforcement
+		
+		P1	3.2.1	Strength and ductility
+		P1	3.2.2	Modulus of elasticity
+		P1	3.2.3	Stress-Strain Curve
+		
+		OS	Thermal expansion
+		
+			start again from page 44 of concrete standard :)
+		
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
