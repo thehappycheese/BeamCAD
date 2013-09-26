@@ -1,0 +1,72 @@
+
+digraph lemon{
+
+	node[height="0.1"]
+	node[width="0.1"]
+	node[shape="rectangle"]
+
+
+	a_2			-> M_u
+	A_g			-> SW;
+		
+	A_st		-> shape
+	A_st		-> SW [style=dotted]
+	A_st -> reo_layout
+	
+	AS1170		-> "M*"
+	
+	f_c			-> M_u;
+	f_c			-> a2	
+	f_c			-> gamma
+	f_c			-> f_ctf
+		
+	f_ctf		-> M_u_min
+
+	B			-> shape
+	B			-> B_eff
+	B			-> M_u
+	
+	D			-> shape
+	D			-> d
+	
+	d			-> M_u
+	
+	DL			-> AS1170
+	
+	gamma		-> M_u
+		
+	k_u			-> M_u
+	k_u			-> phi
+		
+	L			-> shape;
+	L			-> LL
+	L			-> DL
+		
+	LL			-> AS1170 ;
+		
+	"M*"		-> "M* > phi_M_u > M_u_min";
+		
+		
+	M_u			-> phi_M_u
+	
+	M_u_min		-> "M* > phi_M_u > M_u_min"
+	
+	phi 		-> phi_M_u
+	
+	phi_M_u 	-> "M* > phi_M_u > M_u_min"
+	
+	
+	reo_layout 	-> d
+	reo_layout 	-> A_st
+	
+	roh_c		-> SW;
+	
+	
+	SW 			-> DL
+	
+	shape		-> A_g
+	shape		-> A_st
+	shape		-> Z
+	
+	Z			-> M_u_min
+}
