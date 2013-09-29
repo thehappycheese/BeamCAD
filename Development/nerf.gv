@@ -1,0 +1,35 @@
+digraph { 
+	A_g -> { SW };
+	A_st -> { reo_layout  SW };
+	AS1170 -> { M };
+	B -> { B_eff };
+	D -> { d };
+	d -> { M_u };
+	DL -> { AS1170 };
+	f_c -> { a_2  f_ctf  gamma  M_u };
+	f_ctf -> { M_u_min };
+	gamma -> { M_u };
+	k_u -> { M_u  phi };
+	L -> { DL  LL };
+	LL -> { AS1170 };
+	M_u -> { phi_M_u };
+	M_u_min -> { cap_calc };
+	M -> { cap_calc };
+	phi -> { phi_M_u };
+	phi_M_u -> { cap_calc };
+	reo_layout -> { A_st  d };
+	roh_c -> { SW };
+	SW -> { DL };
+	Z -> { M_u_min };
+	a_2 -> { M_u };
+	B_eff -> { M_u };
+	B_eff [lable="<B>B_eff</B>"];
+
+
+
+	{rank = same; SW; DL; LL;}
+	{rank = same; M; M_u; phi_M_u;}
+	{rank = same; B; L; A_g; D;}
+	
+
+}
