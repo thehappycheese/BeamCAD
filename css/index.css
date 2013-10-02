@@ -12,7 +12,6 @@ h1,h2,h3,h4 {
 #infobox{
 	width:100%;
 }
-
 #leftbar, #topbar, #bottombar, #mainspace{
 	position:fixed;
 	margin: 3mm;
@@ -48,4 +47,23 @@ h1,h2,h3,h4 {
 	height: 5mm;
 	right:0;
 	bottom:0;
+}
+
+
+
+
+
+
+.bracket{
+
+	margin:2px;
+	border: solid 1px black;
+	display: inline;
+
+}
+.inline{
+
+	margin:2px;
+	display: inline;
+
 }

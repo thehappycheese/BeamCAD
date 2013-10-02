@@ -1,0 +1,37 @@
+/*
+ * Classic example grammar, which recognizes simple arithmetic expressions like
+ * "2*(3+4)". The parser generated from this grammar then computes their value.
+ */
+//http://pegjs.majda.cz/online
+
+start
+  = additive
+
+additive
+  = l:multiplicative "+" r:additive { return ["+",l,r]; }
+  / l:multiplicative "-" r:additive { return ["-",l,r]; }
+  / multiplicative
+  
+
+multiplicative
+  = l:index "/" r:multiplicative { return ["/",l,r]; }
+  / l:index "*" r:multiplicative { return ["*",l,r]; }
+  / index
+
+
+index
+  = l:primary "^" r:index { return ["^",l,r]; }
+  / l:primary "_" r:index { return ["_",l,r]; }
+  / primary
+
+primary
+  = integer
+  / variable
+  / "(" additive:additive ")" { return ["()",additive]; }
+  / "{" additive:additive "}" { return ["{}",additive]; }
+
+integer "integer"
+  = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
+
+variable
+  = name:[a-zA-Z]+ { return name.join(""); }
