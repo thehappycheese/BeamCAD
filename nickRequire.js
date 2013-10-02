@@ -128,7 +128,7 @@
 		if(orders.length>0){
 			var script = document.createElement("script");
 			script.onload = loopLoad;
-			script.src = orders.pop();
+			script.src = root+"/"+orders.pop();
 			document.head.appendChild(script);
 		}else{
 			//console.log("nickReqire.js --> Build Complete!");
