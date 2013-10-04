@@ -51,19 +51,61 @@ h1,h2,h3,h4 {
 
 
 
-
-
+table{
+	font-size:inherit;
+	padding:0;
+	margin:0;
+}
+tr{
+	font-size:inherit;
+	padding:0;
+	margin:0;
+}
+td{
+	margin:0;
+	padding:0;
+}
 
 .bracket{
-
-	margin:2px;
-	border: solid 1px black;
-	display: inline;
-
+	border-radius: 6px;
+	border-left: solid 1px black;
+	border-right: solid 1px black;
 }
-.inline{
-
-	margin:2px;
-	display: inline;
-
+.mathcell{
+	padding:0;
+	margin:0;
+	text-align:center;
+	font-size:inherit;
 }
+.mathrow {
+	
+}
+.math-numerator{
+	border-bottom: solid 1px black;
+}
+.math-subscript{
+	font-size:50%;
+	position:relative;
+	top:5pt;
+}
+
+
+
+/*
+
+	vertical-align: -160%;
+	
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
