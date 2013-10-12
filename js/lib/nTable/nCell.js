@@ -11,21 +11,20 @@ function nCell(tbl,r,c){
 	this.setValue = function(newval){
 		this.value = newval;
 		this.dom.innerHTML = newval;
+		return this;
 	}.bind(this);
 	
-	this.merge = function(w,h){
+	this.merge = function(h,w){
 		if(w<=0 || h<=0){
 			throw new Error("Merge function must have positive non-zero integers");
-			return;
-		}
-		if(w+this.column>this.table.getWidth() || h+this.row>this.table.getHeight()){
-			throw new Error("Cannot Merge out of table bounds");
 			return;
 		}
 		if(this.obscured==true){
 			throw new Error("Cannot merge obscured cell");
 			return;
 		}
+		w = Math.min(w,this.table.getWidth()-this.column);
+		h = Math.min(h,this.table.getHeight()-this.row);
 		this.unmerge();
 		var i, j;
 		for(j=this.row;j<h+this.row;j++){
@@ -33,7 +32,6 @@ function nCell(tbl,r,c){
 				if(this.row==j && this.column==i){
 					continue;
 				}else{
-					
 					this.table.getCell(j,i).obscured = true;
 				}
 			}
@@ -41,6 +39,7 @@ function nCell(tbl,r,c){
 		this.dom.rowSpan = h;
 		this.dom.colSpan = w;
 		this.table.renderTable();
+		return this;
 	}.bind(this);
 	
 	this.unmerge = function(){
@@ -63,6 +62,7 @@ function nCell(tbl,r,c){
 		this.dom.rowSpan = 1;
 		this.dom.colSpan = 1;
 		this.table.renderTable();
+		return this
 	}.bind(this);
 	
 	this.getLeft	= function(){return this.table.getCell(this.r-1,this.c);}.bind(this);
@@ -75,5 +75,5 @@ function nCell(tbl,r,c){
 	this.value = "";
 	this.dom = document.createElement("td");
 	
-	this.setValue("narf");
+	this.setValue("");
 }

@@ -1,6 +1,6 @@
 ///* nCell.js
 
-function nTable(c,r){
+function nTable(r,c){
 	
 	
 	
@@ -55,7 +55,7 @@ function nTable(c,r){
 	
 	this.cells = [];
 	this.dom = document.createElement("table");	
-	this.dom.className = "vTable";
+	this.dom.className = "nTable";
 	this.init(c,r);
 }
 
