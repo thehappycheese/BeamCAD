@@ -1,7 +1,9 @@
 
-var geom = (function(){
+var Geom = (function(exp){
+var exports = exp || {};
 
-var exports = {};
+
+
 
 exports.Point = function Point (ax,ay){
 	this.x = ax || 0;
@@ -68,4 +70,4 @@ exports.Point = function Point (ax,ay){
 
 
 return exports;
-})();
+})(Geom);

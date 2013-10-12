@@ -1,4 +1,9 @@
-function domScrobble(dom,addTo){
+
+var DOMTools = (function(exp){
+var exports = exp || {};
+
+
+exports.scrobble = function(dom,addTo){
 	var elems = dom.querySelectorAll("[id]");
 	var results = addTo || {};
 	
@@ -9,7 +14,6 @@ function domScrobble(dom,addTo){
 	return results;
 }
 
-function domApplyStyle(dom,style){
-	
-}
+return exports;
+})(DOMTools);
 
