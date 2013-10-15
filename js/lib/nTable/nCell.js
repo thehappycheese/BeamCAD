@@ -13,6 +13,19 @@ function nCell(tbl,r,c){
 		this.dom.innerHTML = newval;
 		return this;
 	}.bind(this);
+	this.setValues = function(arr){
+		var rows = arr.length;
+		var columns = arr[0].length;
+		var r, c, tmpcell;
+		for(r=0;r<rows;r++){
+			for(c=0;c<columns;c++){
+				tmpcell = this.table.getCell(this.row+r, this.column+c);
+				if(tmpcell!=undefined){
+					tmpcell.setValue(arr[r][c]);
+				}
+			}
+		}
+	}.bind(this);
 	
 	this.merge = function(h,w){
 		if(w<=0 || h<=0){

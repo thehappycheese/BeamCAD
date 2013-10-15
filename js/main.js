@@ -23,11 +23,8 @@ ui.mainspace.appendChild(tab.dom);
 
 tab.getCell(0,0).merge(1,Infinity).setValue("GEOMETRY").dom.className = "title";
 
-tab.getCell(2,0).merge(1,Infinity).setValue("Cross Section").dom.className = "subtitle";
+tab.getCell(1,0).setValues([["Variable","Formula","Value","Unit"]])
 
-tab.getCell(3,0).setValue("Full Geometry known");
-tab.getCell(3,4).setValue("Web Width Known");
-tab.getCell(4,0).setValue("Web Width Known");
 
 
 
