@@ -12,31 +12,36 @@ var ui = DOMTools.scrobble(document.body);
 
 
 
-ui.mainspace.innerHTML = "";
+//ui.mainspace.innerHTML = "";
 
 
-var tab = new nTable(10,4);
+var tab = new calctable();
 ui.mainspace.appendChild(tab.dom);
 
 
 
 
-tab.getCell(0,0).merge(1,Infinity).setValue("GEOMETRY").dom.className = "title";
-
-tab.getCell(1,0).setValues([["Variable","Formula","Value","Unit"]]);
-tab.getCell(1,0).setStyles("width",[["50%","2cm","","5%"]]);
-
-var subtab = new nTable(3,4);
 
 
 
 
 
+function calc(){
 
+}
 
+function calctable(){
+	this.ntable = new nTable(5,5);
+	this.dom = this.ntable.dom;
+	
+	this.ntable.getCell(0,0)
+		.setValues([["Name","Notation","Value","Unit","Description"]])
+		.setStyles("width",[["40%","2cm","3cm","1cm"]])
+		.setDomProperties("className",[["heading","heading","heading","heading","heading"]]);
+	
+	
 
-
-
+}
 
 
 

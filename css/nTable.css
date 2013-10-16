@@ -9,10 +9,8 @@
 }
 
 .nTable td{
-	margin:0;
-	padding:1px;
-	height:12px;
-	min-width:12px;
+	margin:2px;
+	padding:5px;
 	border-left:1px solid green;
 	border-bottom:1px solid green;
 	font-size:0.8em;
@@ -26,8 +24,8 @@
 	border-bottom:2px solid black;
 }
 
-.nTable .subtitle{
-	font-size:1.1em;
+.nTable .heading{
+	font-weight:bold;
 	font-family:sans-serif;
 	text-align:center;
 }

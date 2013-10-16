@@ -25,6 +25,7 @@ function nCell(tbl,r,c){
 				}
 			}
 		}
+		return this;
 	}.bind(this);
 	this.setStyles = function(stylename,arr){
 		var rows = arr.length;
@@ -38,6 +39,21 @@ function nCell(tbl,r,c){
 				}
 			}
 		}
+		return this;
+	}.bind(this);
+	this.setDomProperties = function(property,arr){
+		var rows = arr.length;
+		var columns = arr[0].length;
+		var r, c, tmpcell;
+		for(r=0;r<rows;r++){
+			for(c=0;c<columns;c++){
+				tmpcell = this.table.getCell(this.row+r, this.column+c);
+				if(tmpcell!=undefined){
+					tmpcell.dom[property]=arr[r][c];
+				}
+			}
+		}
+		return this;
 	}.bind(this);
 	
 	this.merge = function(h,w){
