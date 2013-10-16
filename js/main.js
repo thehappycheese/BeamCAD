@@ -15,7 +15,7 @@ var ui = DOMTools.scrobble(document.body);
 ui.mainspace.innerHTML = "";
 
 
-var tab = new nTable(10,7);
+var tab = new nTable(10,4);
 ui.mainspace.appendChild(tab.dom);
 
 
@@ -23,7 +23,10 @@ ui.mainspace.appendChild(tab.dom);
 
 tab.getCell(0,0).merge(1,Infinity).setValue("GEOMETRY").dom.className = "title";
 
-tab.getCell(1,0).setValues([["Variable","Formula","Value","Unit"]])
+tab.getCell(1,0).setValues([["Variable","Formula","Value","Unit"]]);
+tab.getCell(1,0).setStyles("width",[["50%","2cm","","5%"]]);
+
+var subtab = new nTable(3,4);
 
 
 
