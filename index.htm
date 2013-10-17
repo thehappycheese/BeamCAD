@@ -3,104 +3,26 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
 		<link rel="stylesheet" type="text/css" href="css/nTable.css" />
-		<!--
-			<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
-			<script type="text/javascript"  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-		-->
 	</head>
 
 	<body id="body">
 		<div id="leftbar">
 			<h1>BeamCAD</h1>
-			<div id="infobox">
-				<h2> Info: </h2>
+			<div id="calcbox">
+				<h2> Calculate: </h2>
 				
-				<table>
-					<tr>
-						<td>Concrete Area:</td><td>320000</td><td>mm<sup>2</sup></td>
-					</tr>
-					<tr>
-						<td>Area of Steel:</td><td>??</td><td>mm<sup>2</sup></td>
-					</tr>
-					<tr>
-						<td>Ast/Ac Ratio:</td><td>??</td><td></td>
-					</tr>
-					<tr>
-						<td>Total Depth:</td><td>600</td><td>mm</td>
-					</tr>
-					<tr>
-						<td>Flange Width:</td><td>1000</td><td>mm</td>
-					</tr>
-					<tr>
-						<td>Effective Breadth:</td><td>300</td><td>mm</td>
-					</tr>
-				</table>
 			</div>
 			<hr>
+			<div id="assbox">
+				<h2> Assume: </h2>
+				
+			</div>
 		</div>
 		<div id="topbar">
-			<a href="#1">File</a>|
-			<a href="#2">Edit</a>|
-			<a href="#3">View</a>|
-			<a href="#4">Settings</a>|
-			<a href="#5">Etc</a>
+			[Untitled Design.bcad]
 		</div>
 		<div id="mainspace">
 			
-			<div class="worksheet">
-				<h2>Geometry</h2>
-				
-				<label for="dgoal">Geometry: </label>
-				<select name="dgoal" id="dgoal">
-					<option>Full Geometry Known</option>
-					<option>Specify Beam Depth</option>
-					<option>Specify Beam Width</option>
-				</select>
-				
-				<p>Specify Geometry</p>
-				<label for="bshape">Beam Shape</label>
-				<select name="bshape" id="bshape">
-					<option>T Beam</option>
-					<option>Rectangular Beam</option>
-					<option>L Beam</option>
-				</select>
-				<label for="bdepth">Total Depth</label>
-				<input type="text" id="bdepth" value="600" /><br>
-				<label for="fdepth">Flange Depth</label>
-				<input type="text" id="fdepth" value="200" />
-				<label for="wwidth">Web Width</label>
-				<input type="text"  id="wwidth" value="300" /><br>
-				<label for="fwidth">Flange Width</label>
-				<input type="text" name="wwidth" id="fwidth" value="1000" /><br>
-				<div style="background:white;">
-					<img style="margin-left:2cm;" src = "img/MockupBeamDesigner.JPG"><br>
-				</div>
-			</div>
-			
-			<label for="kloads">Loading: </label>
-			<select name="kloads" id="kloads">
-			  <option>Unfactored design actions</option>
-			  <option>Factored design combinations</option>
-			</select>
-
-			<p style="font-size:1.2em;">
-				\begin{align}
-					d_n &= k_u d\\
-					C_c &= \left( \alpha_2 f'_c \right) \left( \gamma d_n \right) B\\
-					T_s &= \sigma_{ys} A_{st}\\
-				  \sum T_{s,i} \left( d_i-{\gamma ~ k_{ou} ~ d \over 2 } \right) &= M_{ou,y}\\
-				  C_c \left( d-{\gamma ~ k_{ou} ~ d \over 2 } \right) &= M_{ou,y}+1
-				\end{align}
-			</p>
-			<h1>Step 1: Load Combinations</h1>
-			<h1>Step 2: Structural Model</h1>
-			<h1>Step 3: Analisis</h1>
-			<h2>Step 4: Design Forces</h1>
-			
-			<h1>Step 4: Define Section</h1>
-			
-			<h1>Check Capacity</h1>
-			<br><br><br><br><br><br><br><br>
 		</div>
 		<div id="bottombar">Status | Bar</div>
 		

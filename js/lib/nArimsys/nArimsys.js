@@ -106,14 +106,81 @@ var vb = new nVarBase();
 
 
 // PREREQUISITE BUILDER!
-function pb(){
+p = new (function PrerequisiteBuilder(){
 
-	this.has = function
+	this.has = function(name){
+		return ["has",name];
+	}
+	
+	
+	this.nothas = function(name){
+		return ["not",["has",name]];
+	}
+	this.not = function(statement){
+		return ["not",statement];
+	}
+	
+	
+	this.and = function(){
+		return arguments
+	}
+	this.or = function(){
+		return arguments.unshift("or");
+	}
+	
+	
+	this.less = function(variable,value){
+		return ["less",variable,value];
+	}
+	this.greater = function(variable,value){
+		return ["greater",variable,value];
+	}
+	
+	
+	this.lequal = function(variable,value){
+		return ["lequal",variable,value];
+	}
+	this.gequal = function(variable,value){
+		return ["gequal",variable,value];
+	}
+	
+	
+	this.equal = function(variable,value){
+		return ["equal",variable,value];
+	}
+	this.notequal = function(variable,value){
+		return ["notequal",variable,value];
+	}
+	this.none = function(){
+		return ["none"];
+	}
 
-}
+})();
 
-p = new pb()
-p.and(has("A"),has("B"),not(has("C")));
+var req = p.and(p.has("A"),	p.has("B"),	p.nothas("C"));
 
-Unknowns = pb.none();
-prBeamType = pb.has("Unknowns");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

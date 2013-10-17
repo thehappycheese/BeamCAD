@@ -126,10 +126,18 @@
 	
 	function loopLoad(){
 		if(orders.length>0){
-			var script = document.createElement("script");
-			script.onload = loopLoad;
-			script.src = root+"/"+orders.pop();
-			document.head.appendChild(script);
+			var file = orders.pop();
+			if(file.substr(file.length-4)==".css"){
+				var link = document.createElement("link");
+				link.onload = loopLoad;
+				link.src = root+"/"+file;
+				document.head.appendChild(link);
+			}else{
+				var script = document.createElement("script");
+				script.onload = loopLoad;
+				script.src = root+"/"+file;
+				document.head.appendChild(script);
+			}
 		}else{
 			//console.log("nickReqire.js --> Build Complete!");
 		}
