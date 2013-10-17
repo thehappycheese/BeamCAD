@@ -130,7 +130,9 @@
 			if(file.substr(file.length-4)==".css"){
 				var link = document.createElement("link");
 				link.onload = loopLoad;
-				link.src = root+"/"+file;
+				link.rel = "stylesheet"
+				link.type = "text/css"
+				link.href = root+"/"+file;
 				document.head.appendChild(link);
 			}else{
 				var script = document.createElement("script");
