@@ -6,12 +6,14 @@ function nTable(r,c){
 	
 	
 	this.getCell = function(r,c){
-		return this.cells[r][c];
+		try{
+			return this.cells[r][c];
+		}catch(e){
+			return undefined;
+		}
 	}.bind(this);
 	
-	
-	
-	this.init = function(c,r){
+	this.init = function(r,c){
 		this.cells = [];
 		
 		var i,j,tmparr,tmpcell;
@@ -57,7 +59,7 @@ function nTable(r,c){
 	this.cells = [];
 	this.dom = document.createElement("table");	
 	this.dom.className = "nTable";
-	this.init(c,r);
+	this.init(r,c);
 }
 
 

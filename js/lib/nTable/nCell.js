@@ -1,3 +1,5 @@
+///~ lib/nDOMTools/DOMTools.getUniqueId.js
+
 function nCell(tbl,r,c){
 	
 	this.row = r;
@@ -11,6 +13,7 @@ function nCell(tbl,r,c){
 	this.setValue = function(newval){
 		this.value = newval;
 		this.dom.innerHTML = newval;
+		// TODO: onchange event
 		return this;
 	}.bind(this);
 	this.setValues = function(arr){
@@ -107,10 +110,73 @@ function nCell(tbl,r,c){
 		return this
 	}.bind(this);
 	
-	this.getLeft	= function(){return this.table.getCell(this.r-1,this.c);}.bind(this);
-	this.getRight	= function(){return this.table.getCell(this.r+1,this.c);}.bind(this);
-	this.getUp		= function(){return this.table.getCell(this.r  ,this.c-1);}.bind(this);
-	this.getDown	= function(){return this.table.getCell(this.r  ,this.c+1);}.bind(this);
+	
+	
+	
+	
+	
+	
+	
+	this.convertToInput = function(){
+		this.dom.innerHTML = "";
+		var input = document.createElement("input");
+		input.type = "text";
+		input.value = this.value;
+		var inputChange = function(){
+			this.value = input.value;
+			// TODO: onchange event src = user
+		}.bind(this);
+		input.addEventListener("keyup",inputChange);
+		input.addEventListener("change",inputChange);
+		this.setValue = function(newval){
+			input.value = newval;
+			this.value = newval;
+			// TODO: onchange event
+			return this;
+		}.bind(this);
+		this.getValue = function(newval){
+			this.value = input.value;
+			return this.value;
+		}.bind(this);
+		
+		this.dom.appendChild(input);
+		return this;
+	}.bind(this);
+	
+	this.convertToMathJax = function(){
+		this.dom.innerHTML = "";
+		this.dom.id = DOMTools.getUniqueId();
+		this.setValue = function(newval){
+			this.dom.innerHTML = "$${"+newval+"}$$";
+			this.value = newval;
+			MathJax.Hub.Queue(["Typeset",MathJax.Hub,this.dom.id]);
+			
+			return this;
+		}.bind(this);
+		this.getValue = function(newval){
+			return this.value;
+		}.bind(this);
+		this.setValue(this.value);
+		return this;
+	}.bind(this);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	this.getLeft	= function(){return this.table.getCell(this.row		,this.column-1);}.bind(this);
+	this.getRight	= function(){return this.table.getCell(this.row		,this.column+1);}.bind(this);
+	this.getUp		= function(){return this.table.getCell(this.row-1	,this.column);}.bind(this);
+	this.getDown	= function(){return this.table.getCell(this.row+1	,this.column);}.bind(this);
 	
 	
 	this.table = tbl;

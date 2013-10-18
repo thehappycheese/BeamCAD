@@ -21,9 +21,6 @@ a:visited{
 	color:#ad5874;
 }
 
-#infobox{
-	width:100%;
-}
 #leftbar, #topbar, #bottombar, #mainspace{
 	position:fixed;
 	margin: 3mm;
@@ -43,9 +40,9 @@ a:visited{
 	width: -webkit-calc(100% - 83mm);
 	height: 1cm;
 	right:0;
+	padding-bottom:0;
 	top:0;
 	font-family: sans-serif;
-	font-size: 5mm;
 	background: #DFD462;
 }
 #mainspace{
@@ -61,31 +58,33 @@ a:visited{
 	right:0;
 	bottom:0;
 	font-family:sans-serif;
-	color:#5D88AC
+	color:#5D88AC;
 }
 
 
 
-table{
-	font-size:inherit;
-	padding:0;
-	margin:0;
-}
-tr{
-	font-size:inherit;
-	padding:0;
-	margin:0;
-}
-td{
-	margin:0;
-	padding:0;
-}
-
-div .worksheet{
-	margin:2mm;
+.maintab {
+	background-color: #EFE573;
+	display:inline-block;
+	text-align:center;
+	font-size:1.05em;
+	border-radius:1.5mm 1.5mm 0 0;
+	height:-webkit-calc(100% - 4mm - 2px);
 	padding:2mm;
-	border:1px solid black;
+	cursor:pointer;
+	margin-right:2mm;
+	color: #6E0426;
+	border: 2px outset #F6ee9c;
+	border-bottom:none;
 }
+.maintab.selected{
+	background-color: #FFF795;
+	color: #893651;
+}
+.maintab:hover {
+	background-color: #FFFAAA;
+}
+
 
 
 

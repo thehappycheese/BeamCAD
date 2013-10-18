@@ -1,7 +1,7 @@
 
 .nTable{
-	border-right:1px solid green;
-	border-top:1px solid green;
+	border-right:1px solid #5D88AC;
+	border-top:1px solid #5D88AC;
 	width:100%;
 	max-width:18cm;
 	margin-left:auto;
@@ -9,14 +9,17 @@
 	border-spacing:0;
 	text-align:left;
 	font-family:sans-serif;
+	table-layout: fixed;
 }
 
 .nTable td{
 	margin:2px;
-	padding:5px;
-	border-left:1px solid green;
-	border-bottom:1px solid green;
+	padding:1.5mm;
+	border-left:1px solid #5D88AC;
+	border-bottom:1px solid #5D88AC;
 	font-size:0.8em;
+	word-wrap:break-word;
+	/*overflow-x:hidden;*/
 }
 
 
@@ -28,6 +31,7 @@
 }
 
 .nTable .heading{
+	color: #6E0426;
 	font-weight:bold;
 	font-family:sans-serif;
 	text-align:center;
@@ -43,13 +47,6 @@
 	font-family:sans-serif;
 	font-size: 1.3em;
 	background-color:#CCCCCC;
-}
-
-
-.nTable button{
-	margin:0;
-	width:20px;
-	padding:0;
 }
 
 

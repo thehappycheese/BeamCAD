@@ -32,7 +32,7 @@ multi
 	
 	
 unary
-	= "!" right:multi {
+	= "!" right:primary {
 		return ["not",right];
 	}
 	/ primary
