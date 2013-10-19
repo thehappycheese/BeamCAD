@@ -2,6 +2,7 @@
 ///~ lib/nDOMTools/DOMTools.scrobble.js
 ///~ lib/nTable/nTable.js
 ///~ lib/nArimsys/nArimsys.js
+///~ lib/taffy-min.js
 
 "use strict";
 
@@ -25,7 +26,7 @@ ui.calcbox.appendChild(asstab.dom);
 
 
 
-var dat = new Database();
+var dat = TAFFY([{"id":"mdc","prereq":"!mdc","name":"Moment design capacity","notation":"M^*","value":500,"unit":"kNm"},{"id":"bt","prereq":"!bt","name":"Beam type","notation":"{}","value":"T-Beam","unit":""},{"id":"mu","prereq":"!mc&Cc&Ts&dn&gamma","name":"Moment capacity","notation":"M_{uo}","value":"","unit":"kNm"},{"id":"phi","prereq":"!phi","name":"Capacity reduction factor","notation":"\\Phi","value":"","unit":""},{"id":"fc","prereq":"!fc","name":"Concrete characteristic strength","notation":"f'_{c}","value":"","unit":"MPa"},{"id":"fctf","prereq":"!fctf&fc","name":"Concrete characteristic tensile strength","notation":"f'_{ct.f}","value":"","unit":"MPa"},{"id":"alphatwo","prereq":"!alphatwo","name":"Alpha2 Coefficient","notation":"\\alpha_2","value":"","unit":""},{"id":"gamma","prereq":"!gamma&fc","name":"Gamma Ratio","notation":"\\gamma","value":"","unit":""},{"id":"ku","prereq":"d&dn","name":"k ratio","notation":"k_u","value":"","unit":""},{"id":"d","prereq":"!d","name":"Depth to tensile steel centroid","notation":"d","value":"","unit":"mm"},{"id":"B","prereq":"!B","name":"Breadth of beam","notation":"B","value":"","unit":"mm"},{"id":"D","prereq":"!D","name":"Depth of beam","notation":"D","value":"","unit":"mm"},{"id":"dn","prereq":"!dn&alphatwo&fc&gamma&B&sigys&Ast","name":"Depth to neutral axis","notation":"d_n","value":"","unit":"mm"},{"id":"Ts","prereq":"!Ts&Ast&sigys","name":"Force in tensile steel","notation":"T_s","value":"","unit":"kN"},{"id":"I","prereq":"!I&B&D","name":"Second moment of area","notation":"I","value":"","unit":"mm^4"},{"id":"Z","prereq":"!Z&I","name":"Section modulus","notation":"Z","value":"","unit":"mm^3"},{"id":"mumin","prereq":"!mumin&Z&fctf","name":"Minimum design capacity","notation":"(M_{uo})_{min}","value":"","unit":""},{"id":"Cc","prereq":"!Cc&dn","name":"Concrete Compression","notation":"C_c","value":"","unit":"kN"},{"id":"Ast","prereq":"!Ast","name":"Area of tensile steel","notation":"A_{st}","value":"","unit":"mm^2"},{"id":"sigys","prereq":"!sigys","name":"Steel yield stress","notation":"\\sigma_{ys}","value":500,"unit":""},{"id":"cchk","prereq":"!cchk&phi&mdc&mu","name":"Capacity Check","notation":"{}","value":"","unit":""}]);
 var arim = new Arimsys(dat);
 
 rendertables();
@@ -77,61 +78,6 @@ function rendertables (){
 	}while (cell);
 	
 	
-}
-
-
-
-
-
-
-
-// ID Description Notation
-
-
-
-
-function Database(){
-	this.humanHeader = ["ID","Prerequisite","Name","Notation","Value","Unit"];
-	this.header = {"id":0,"0":"id","prereq":1,"1":"prereq","name":2,"2":"name","notation":3,"3":"notation","value":4,"4":"value","unit":5,"5":"unit"};
-	this.data =[["mdc","!mdc","Moment design capacity","M^*",500,"kNm"],["bt","!bt","Beam type","Beam~Type","T-Beam",null],["mu","!mc&Cc&Ts&dn&gamma","Moment capacity","M_{uo}",null,"kNm"],["phi","!phi","Capacity reduction factor","\\Phi",null,null],["fc","!fc","Concrete characteristic strength","f'_{c}",null,"MPa"],["fctf","!fctf&fc","Concrete characteristic tensile strength","f'_{ct.f}",null,"MPa"],["alphatwo","!alphatwo","Alpha2 Coefficient","\\alpha_2",null,null],["gamma","!gamma&fc","Gamma Ratio","\\gamma",null,null],["ku","d&dn","k ratio","k_u",null,null],["d","!d","Depth to tensile steel centroid","d",null,"mm"],["B","!B","Breadth of beam","B",null,"mm"],["D","!D","Depth of beam","D",null,"mm"],["dn","!dn&alphatwo&fc&gamma&B&sigys&Ast","Depth to neutral axis","d_n",null,"mm"],["Ts","!Ts&Ast&sigys","Force in tensile steel","T_s",null,"kN"],["I","!IB&D","Second moment of area","I",null,"mm^4"],["Z","!Z&I","Section modulus","Z",null,"mm^3"],["mumin","!mumin&Z&fctf","Minimum design capacity","(M_{uo})_{min}",null,null],["Cc","!Cc&dn","Concrete Compression","C_C",null,"kN"],["Ast","!Ast","Area of tensile steel","A_{st}",null,"mm^2"],["sigys","!sigys","Steel yield stress","\\sigma_{ys}",500,null],["cchk","!cchk&phi&mdc&mu","Capacity Check","Capacity~Check",null,null]]
-	
-	
-	this.getValue = function(inhead,val,outhead){
-		// a top down search for a match for the VAL of the column INHEAD. Returns the value of the OUTHEAD cell.
-		var inh  = this.header[inhead];
-		var outh = this.header[outhead];
-		
-		if(inh==undefined || outh==undefined){
-			return undefined;
-		}
-		
-		var row;
-		for(row=0;row<this.data.length;row++){
-			if(this.data[row][inh]==val){
-				return this.data[row][outh];
-			}
-		}
-		return undefined;
-	}.bind(this);
-	
-	this.setValue = function(inhead,val,outhead,newval){
-		// a top down search for a match for the VAL of the column INHEAD. Returns the value of the OUTHEAD cell.
-		var inh  = this.header[inhead];
-		var outh = this.header[outhead];
-		
-		if(inh==undefined || outh==undefined){
-			return undefined;
-		}
-		
-		var row;
-		for(row=0;row<this.data.length;row++){
-			if(this.data[row][inh]==val){
-				this.data[row][outh] = newval;
-			}
-		}
-		rendertables();
-		return this;
-	}.bind(this);
 }
 
 function Arimsys (database){
