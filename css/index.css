@@ -11,6 +11,7 @@ h1,h2,h3,h4 {
 	font-family: sans-serif;
 	color: #185c94;
 	margin-top:0px;
+	text-shadow: -1px 0px 1px #000, 1px 1px 1px white;
 }
 
 a{
@@ -26,7 +27,7 @@ a:visited{
 	margin: 3mm;
 	padding: 1mm;
 	box-shadow: 1px 1px 4px #2F2F29;
-	background: linear-gradient(to bottom, #eaeaea 0%,#bcbcbc 100%);
+	background: linear-gradient(to top, #AAAAAA 0%,#e8e7dd 50%);
 	background: #e8e7dd;
 }
 #leftbar{
@@ -67,10 +68,11 @@ a:visited{
 	background-color: #EFE573;
 	display:inline-block;
 	text-align:center;
-	font-size:1.05em;
+	font-size:14pt;
+	text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
 	border-radius:1.5mm 1.5mm 0 0;
 	height:-webkit-calc(100% - 4mm - 2px);
-	padding:2mm;
+	padding:1mm;
 	cursor:pointer;
 	margin-right:2mm;
 	color: #6E0426;
@@ -83,6 +85,7 @@ a:visited{
 }
 .maintab:hover {
 	background-color: #FFFAAA;
+	text-shadow: 0px 0px 5px rgba(255,255,255,0.8);
 }
 
 
