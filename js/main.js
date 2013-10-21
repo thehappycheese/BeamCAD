@@ -120,7 +120,7 @@ function Arimsys (database){
 	// ===== PREREQUISITE OPPERATORS =====
 	this.has = function(varname){
 		var val = this.dat({"id":varname}).first().value;
-		return (val!==null && val!==undefined)
+		return (val!==null && val!==undefined && val!=="")
 	}.bind(this);
 	this.and = function(left, right){
 		return this.check(left) && this.check(right);
