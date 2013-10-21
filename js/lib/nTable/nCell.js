@@ -12,6 +12,9 @@ function nCell(tbl,r,c){
 	}.bind(this);
 	this.setValue = function(newval){
 		this.value = newval;
+		if(newval==="" || newval === " "){
+			newval = "&nbsp;"
+		}
 		this.dom.innerHTML = newval;
 		// TODO: onchange event
 		return this;
