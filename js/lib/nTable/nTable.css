@@ -1,9 +1,9 @@
 
 .nTable{
-	border-right:1px solid #5D88AC;
-	border-top:1px solid #5D88AC;
+	border-right:1px solid #3F8184;
+	border-top:1px solid #3F8184;
 	width:100%;
-	max-width:18cm;
+	max-width: 21cm;
 	margin-left:auto;
 	margin-right:auto;
 	border-spacing:0;
@@ -14,13 +14,15 @@
 }
 
 .nTable td{
-	margin:2px;
-	padding:1.5mm;
-	border-left:1px solid #5D88AC;
-	border-bottom:1px solid #5D88AC;
+	padding:3px 5px;
+	border-left:1px solid #3F8184;
+	border-bottom:1px solid #3F8184;
 	font-size:0.8em;
-	word-wrap:break-word;
-	/*overflow-x:hidden;*/
+	white-space:nowrap;
+	overflow:hidden;
+}
+.nTable button{
+	margin:0px;
 }
 
 

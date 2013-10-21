@@ -152,7 +152,7 @@ function nCell(tbl,r,c){
 		this.setValue = function(newval){
 			this.dom.innerHTML = "$${"+newval+"}$$";
 			this.value = newval;
-			MathJax.Hub.Queue(["Typeset",MathJax.Hub,this.dom.id]);
+			
 			
 			return this;
 		}.bind(this);

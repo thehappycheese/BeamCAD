@@ -21,7 +21,7 @@ var asstab = new nTable(1,1);
 
 
 
-ui.mainspace.appendChild(tab.dom);
+ui.mainbar.appendChild(tab.dom);
 ui.calcbox.appendChild(asstab.dom);
 
 
@@ -31,7 +31,7 @@ ui.calcbox.appendChild(asstab.dom);
 var dat = data_AS3600Variables;
 var arim = new Arimsys(dat);
 
-rendertables(["name","notation","value"]);
+rendertables(["name","notation","value","unit"]);
 function rendertables (headings){
 	tab.init(dat().count()+1,headings.length);
 	var cell = tab.getCell(0,0).setValues([headings]);
@@ -76,7 +76,7 @@ function rendertables (headings){
 		butt.vid = av[i];
 		butt.onclick = function(){
 			dat({"id":this.vid}).first().value = "###"
-			rendertables(["name","notation","value"]);
+			rendertables(["name","notation","value","unit"]);
 		}.bind(butt);
 		butcell = cell.getRight();
 		butcell.dom.appendChild(butt);
@@ -85,6 +85,7 @@ function rendertables (headings){
 		cell = cell.getDown();
 	}while (cell);
 	
+	MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.body]);
 	
 }
 
