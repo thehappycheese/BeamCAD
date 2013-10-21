@@ -1,5 +1,6 @@
 ///* nTable.css
 ///* nCell.js
+///* nRange.js
 
 function nTable(r,c){
 	
@@ -11,6 +12,10 @@ function nTable(r,c){
 		}catch(e){
 			return undefined;
 		}
+	}.bind(this);
+	
+	this.getRange = function(r,c,h,w){
+		return new nRange(r,c,h,w,this);
 	}.bind(this);
 	
 	this.init = function(r,c){
