@@ -83,6 +83,22 @@ a:visited{
 
 
 
+
+
+
+
+.calcblock{
+	background-color:grey;
+	width:100%;
+	max-width:21cm;
+	min-height:1cm;
+}
+
+
+
+
+
+
 .maintab {
 	background-color: #EFE573;
 	background: linear-gradient(to bottom,#F8C0E1,#e8e7dd);
