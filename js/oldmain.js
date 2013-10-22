@@ -1,11 +1,17 @@
+///~ lib/mathjax/MathJax.js?config=default
+///~ lib/nDOMTools/DOMTools.scrobble.js
+///~ lib/nTable/nTable.js
+///~ lib/nArimsys/nArimsys.js
+///~ data/Data.js
+
 var tab = new nTable(10,2);
 
 var asstab = new nTable(1,1);
 
+ui = DOMTools.scrobble(document.body);
 
-
-ui.mainbar.appendChild(tab.dom);
-ui.calcbox.appendChild(asstab.dom);
+ui.tab3.appendChild(tab.dom);
+ui.leftbarcontent.appendChild(asstab.dom);
 
 
 

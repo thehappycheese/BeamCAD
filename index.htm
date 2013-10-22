@@ -20,20 +20,40 @@
 		
 		
 		<div id="topbar">
-			<div id="tabbut0" class="maintab">Database View	</div>
-			<div id="tabbut1" class="maintab selected">Calculation View   </div>
-			<div id="tabbut2" class="maintab">Paperspace         </div>
-			<div id="tabbut3" class="maintab">Design Summary     </div>
+			<div id="tabbut0" class="maintab selected">Calculation View</div>
+			<div id="tabbut1" class="maintab">Paperspace</div>
+			<div id="tabbut2" class="maintab">Design Summary</div>
+			<div id="tabbut3" class="maintab">Database View</div>
 		</div>
 		
 		
 		<div id="mainbar">
-			<div id="tab0" style="display:block">0</div>
-			<div id="tab1" style="display:none">1</div>
-			<div id="tab2" style="display:none">2</div>
-			<div id="tab3" style="display:none">3</div>
+			<div id="tab0" style="display:block">
+				<div class="calcblock"><div class="calcblocktopbar">Material Properties</div></div>
+				<div class="calcblock"><div class="calcblocktopbar">[calculation group]</div></div>
+				<div class="calcblock"><div class="calcblocktopbar">[calculation group]</div></div>
+			</div>
+			<div id="tab1" style="display:none;background-image:url('/img/paperlines.png');line-height:30px;">
+				<h2 style="margin-bottom:7px;">Aim</h2>
+				<b>Design reinforcement</b> (<b>Tensile only</b>) for a <b>T-Beam</b> given the dimentions shown below:
+				<div style="background:rgba(255,255,255,0.9);width:100%;height:210;">
+					<img style="display:block;margin-left:auto;margin-right:auto;" src="img/beamdimentionsmockup.png"></img>
+				</div>
+				Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+				<div style="height:40px;text-align:center;padding:10px 0px;background:rgba(255,255,255,0.9);">
+					$${
+					\zeta(s) = \sum^\infty_{n=1} {1\over{n^s}} = {1\over{1^s}} + {1\over{2^s}} + {1\over{3^s}} + ...
+					}$$
+				</div>
+				aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt le
+			</div>
+			<div id="tab2" style="display:none">
+				<img src="img/Mockup/Isometric beam compression tenstion.JPG">
+				etc etc
+			</div>
+			<div id="tab3" style="display:none"></div>
 		</div>
-		<div id="bottombar">Status | Bar</div>
+		<div id="bottombar">[tooltip text]</div>
 		
 	</body>
 

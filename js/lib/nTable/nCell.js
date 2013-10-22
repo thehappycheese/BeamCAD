@@ -146,6 +146,58 @@ function nCell(tbl,r,c){
 		return this;
 	}.bind(this);
 	
+	this.convertToCheckbox = function(){
+		this.dom.innerHTML = "";
+		var input = document.createElement("input");
+		input.type = "checkbox";
+		input.checked = this.value;
+		var inputChange = function(){
+			this.value = input.checked;
+			// TODO: onchange event src = user
+		}.bind(this);
+		input.addEventListener("keyup",inputChange);
+		input.addEventListener("change",inputChange);
+		this.setValue = function(newval){
+			input.checked = newval;
+			this.value = newval;
+			// TODO: onchange event
+			return this;
+		}.bind(this);
+		this.getValue = function(newval){
+			this.value = input.checked;
+			return this.value;
+		}.bind(this);
+		
+		this.dom.appendChild(input);
+		return this;
+	}.bind(this);
+	this.convertToRadio = function(name){
+		this.dom.innerHTML = "";
+		var input = document.createElement("input");
+		input.type = "radio";
+		input.name = name;
+		input.checked = this.value;
+		var inputChange = function(){
+			this.value = input.checked;
+			// TODO: onchange event src = user
+		}.bind(this);
+		input.addEventListener("keyup",inputChange);
+		input.addEventListener("change",inputChange);
+		this.setValue = function(newval){
+			input.checked = newval;
+			this.value = newval;
+			// TODO: onchange event
+			return this;
+		}.bind(this);
+		this.getValue = function(newval){
+			this.value = input.checked;
+			return this.value;
+		}.bind(this);
+		
+		this.dom.appendChild(input);
+		return this;
+	}.bind(this);
+	
 	this.convertToMathJax = function(){
 		this.dom.innerHTML = "";
 		this.dom.id = DOMTools.getUniqueId();
