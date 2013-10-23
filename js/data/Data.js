@@ -1,14 +1,14 @@
 ///* taffy-min.js
 ///* data_AS3600Variables.js
 
+console.log("run");
+data_AS3600Variables = nConvertTo2Taffy(data_AS3600Variables);
 
-data_AS3600Variables = nConvertToTaffy(data_AS3600Variables);
-
-function nConvertToTaffy(spreadsheet){
+function nConvertTo2Taffy(spreadsheet){
 	var prettyheader = spreadsheet.prettyheader;
 	var header = spreadsheet.header;
 	var data = spreadsheet.data;
-	
+	console.log(spreadsheet);
 	
 	var tmpobj,arr = [];
 	

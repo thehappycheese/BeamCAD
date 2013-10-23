@@ -32,11 +32,11 @@
 			rules.push(currentFile);
 			
 			var xreq = new XMLHttpRequest();
-				xreq.onreadystatechange = textLoaded;
 				xreq.open("GET", root+"/"+url, true);
-				xreq.send();
-				xreq.timeout = 4000;
+				xreq.onreadystatechange = textLoaded;
 				xreq.ontimeout = function () { alert("nickReqire.js --> Build timed out!"); };
+				xreq.timeout = 4000;
+				xreq.send();
 		}else{
 			//console.log("nickReqire.js --> Inspection Complete!");
 			order(rules);
@@ -73,7 +73,6 @@
 	function order(rule){
 		var i, j;
 		var satisfied = false;
-		
 		if(rule.length==0){
 			// No rules have been made since the mainfile is the only file.
 			orders.push(main);
@@ -83,10 +82,26 @@
 			return;
 		}
 		
+		// TODO: remove duplicate imports:
 		
+		for(i=0;i<rule.length;i++){
+			for(j=i+1;j<rule.length;j++){
+				if(rule[i].url === rule[j].url){
+					console.log("removed duplicate import: " + rule[j].url);
+					rule.splice(j,1);
+					i--;
+					break;
+				}
+			}
+		}
+		
+		
+		// orders is the list of script tag urls to load. rules contains all the file infos.
 		for(i = 0; i< rule.length; i++){
 			if(rule[i].after.length==0){
-				w.compiled = w.compiled+"\n"+rule[i].content;
+				if(rule[i].name.substr(rule[i].name.length-3)==".js"){
+					w.compiled = w.compiled+"\n"+rule[i].content;
+				}
 				orders.push(rule[i].url);
 				rule.splice(i--,1);
 			}

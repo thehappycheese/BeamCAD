@@ -1,4 +1,3 @@
-///* nTable.css
 ///* nCell.js
 ///* nRange.js
 

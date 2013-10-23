@@ -1,8 +1,6 @@
-///~ lib/mathjax/MathJax.js?config=default
 ///~ lib/nDOMTools/DOMTools.scrobble.js
 ///~ lib/nTable/nTable.js
 ///~ lib/nArimsys/nArimsys.js
-///~ data/Data.js
 ///* oldMain.js
 
 "use strict";
