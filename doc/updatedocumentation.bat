@@ -1,0 +1,1 @@
+yuidoc ../js -T simple

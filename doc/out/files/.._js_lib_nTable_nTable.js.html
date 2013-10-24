@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>..\js\lib\nTable\nTable.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.8.0pr2/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <script src="http://yui.yahooapis.com/combo?3.8.0pr2/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            <h1><a href="../index.html"><img src="../assets/css/logo.png">undefined: ..\js\lib\nTable\nTable.js</a></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div class="yui3-g">
+
+        <div id="sidebar" class="yui3-u">
+            <div id="modules" class="sidebox">
+    <div class="hd">
+        <h2 class="no-toc">Modules</h2>
+    </div>
+    <div class="bd">
+        <ul>
+            
+                <li><a href="../modules/tables.html">tables</a>
+                
+                </li>
+            
+        </ul>
+    </div>
+</div>
+
+<div id="classes" class="sidebox">
+    <div class="hd">
+        <h2 class="no-toc">Classes</h2>
+    </div>
+    <div class="bd">
+        <ul>
+            
+                <li><a href="../classes/nCell.html">nCell</a></li>
+            
+                <li><a href="../classes/nRange.html">nRange</a></li>
+            
+                <li><a href="../classes/nTable.html">nTable</a></li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div id="fileTree" class="sidebox">
+    <div class="hd">
+        <h2 class="no-toc">Files</h2>
+    </div>
+    <div class="bd">
+        <ul><li>..\js\lib\mathjax\MathJax.js/<ul></ul></li><li>..\js\lib\mathjax\config\default.js/<ul></ul></li><li>..\js\lib\mathjax\config\local\local.js/<ul></ul></li><li>..\js\lib\nTable\nCell.js/<ul></ul></li><li>..\js\lib\nTable\nRange.js/<ul></ul></li><li>..\js\lib\nTable\nTable.js/<ul></ul></li></ul>
+    </div>
+</div>
+
+
+
+        </div>
+
+        <div id="main" class="yui3-u">
+            <div class="content"><h4>..\js\lib\nTable\nTable.js</h4>
+
+<pre class="code prettyprint linenums">
+///* nCell.js
+///* nRange.js
+
+/**
+@module tables
+@class nTable
+@class nRange
+@class nCell
+*/
+
+/**
+@class nTable
+@constructor
+@param r {int} The number of rows
+@param c {int} The number of columns
+@requires nCell
+*/
+function nTable(r,c){
+	
+	
+	/**
+	@method getCell
+	@param r {int} The row of the cell, zero based.
+	@param c {int} The column of the cell, zero based.
+	@returns {nCell} The nCell object that is stored internally in the cells array
+	*/
+	this.getCell = function(r,c){
+		try{
+			return this.cells[r][c];
+		}catch(e){
+			return undefined;
+		}
+	}.bind(this);
+
+	/**
+	@method getRange
+	@param r {int} The row of the top left cell, zero based.
+	@param c {int} The column of the top left cell, zero based.
+	@param height {int} Height of the range (minimum of 1).
+	@param width {int} Width of the range (minimum of 1).
+	@returns {nRange} A new nRange object.
+	*/
+	this.getRange = function(r,c,h,w){
+		return new nRange(r,c,h,w,this);
+	}.bind(this);
+	/**
+	This method is called internally when the class is constructed. It can be called again at any time empty and resize the table.
+	@method init
+	@param row {int} The new number of rows.
+	@param column {int} The new number of columns.
+	*/
+	this.init = function(r,c){
+		this.cells = [];
+		
+		var i,j,tmparr,tmpcell;
+		
+		for(j=0;j&lt;r;j++){
+			tmparr = [];
+			for(i=0; i&lt;c; i++){
+				tmpcell = new nCell(this,j,i);
+				tmparr.push(tmpcell);
+			}
+			this.cells.push(tmparr);
+		}
+		this.renderTable();
+	}.bind(this)
+	/**
+	This method is called internally after the cells array is filled. This function generates the dom required to display the array and appends it to the dom property.
+	At present this function redraws the entire table from scratch which is expensive.
+	@method renderTable
+	*/
+	this.renderTable = function(){
+		var i,j,tmprow;
+		this.dom.innerHTML = &quot;&quot;;
+		for(j=0;j&lt;this.cells.length;j++){
+			
+			tmprow = document.createElement(&quot;tr&quot;);
+			
+			for(i=0; i&lt;this.cells[j].length; i++){
+
+				if(this.cells[j][i].obscured==false){
+					tmprow.appendChild(this.cells[j][i].dom);
+				}
+			
+			}
+			
+			this.dom.appendChild(tmprow);
+		
+		}
+	}.bind(this)
+	/**
+	@method getWidth
+	@returns {int} The width of the table
+	*/
+	this.getWidth = function(){
+		return this.cells[0].length;
+	}.bind(this);
+	/**
+	@method getHeight
+	@returns {int} The height of the table
+	*/
+	this.getHeight = function(){
+		return this.cells.length;
+	}.bind(this);
+	
+	/**
+	This is the internal storage of the nCells objects displayed by the nTable class.
+	@property cells
+	@type Array
+	*/
+	this.cells = [];
+	/**
+	This is the element that needs to be added to the DOM once the nTable class has been initialised.
+	@example
+		var t = new nTable(5,5);
+		document.body.appendChild(t.dom);
+	@property dom
+	@type HTMLTableElement
+	*/
+	this.dom = document.createElement(&quot;table&quot;);
+	/**
+	Note that by default, the className of the table .dom property is set to &quot;nTable&quot;.
+	*/
+	this.dom.className = &quot;nTable&quot;;
+	this.init(r,c);
+}
+
+
+
+
+
+</pre>
+
+</div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/js/tabs.js"></script>
+</body>
+</html>

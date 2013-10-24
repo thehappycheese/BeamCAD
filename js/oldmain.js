@@ -21,16 +21,20 @@ var arim = new Arimsys(dat);
 
 rendertables(["name","notation","value","unit"]);
 function rendertables (headings){
-	tab.init(dat().count()+1,headings.length);
-	var cell = tab.getCell(0,0).setValues([headings]);
+	tab.init(dat().count() + 1, headings.length);
+	// TODO: Fix this problem with setvalues
+	var cell = tab.getCell(0,0);//.setValues([headings]);
 		
 	// TODO: Get range object from table, apply formatting options to range;
 	do{
 		cell.dom.className = "heading";
 		cell = cell.getRight();
 	}while(cell!=undefined)
-	// TODO: Change this awful method of math-jaxing things
-	cell = tab.getCell(1,1);
+	// TODO: Change this awful method of math-jaxing things; remove it entirely from the nCell features?
+	cell = tab.getCell(1, 1);
+	// TODO: create a range.callFunction("funcname",[args,args,...])
+	// TODO: remove cell manipulation from nTable and put it in nRange
+	// TODO: create nRange.getRange; nrange.getCell
 	do{
 		cell.convertToMathJax()
 		cell = cell.getDown();

@@ -1,0 +1,667 @@
+{
+    "project": {},
+    "files": {
+        "..\\js\\lib\\mathjax\\config\\local\\local.js": {
+            "name": "..\\js\\lib\\mathjax\\config\\local\\local.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "..\\js\\lib\\mathjax\\config\\default.js": {
+            "name": "..\\js\\lib\\mathjax\\config\\default.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "..\\js\\lib\\mathjax\\MathJax.js": {
+            "name": "..\\js\\lib\\mathjax\\MathJax.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "..\\js\\lib\\nTable\\nCell.js": {
+            "name": "..\\js\\lib\\nTable\\nCell.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "..\\js\\lib\\nTable\\nRange.js": {
+            "name": "..\\js\\lib\\nTable\\nRange.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "..\\js\\lib\\nTable\\nTable.js": {
+            "name": "..\\js\\lib\\nTable\\nTable.js",
+            "modules": {
+                "tables": 1
+            },
+            "classes": {
+                "nCell": 1,
+                "nRange": 1,
+                "nTable": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "tables": {
+            "name": "tables",
+            "submodules": {},
+            "classes": {
+                "nCell": 1,
+                "nRange": 1,
+                "nTable": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 11
+        }
+    },
+    "classes": {
+        "nCell": {
+            "name": "nCell",
+            "shortname": "nCell",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "tables",
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 4,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "Table",
+                    "description": "The table to which the cell will belong.",
+                    "type": "NTable"
+                },
+                {
+                    "name": "Row",
+                    "description": "The row of the cell.",
+                    "type": "Int"
+                },
+                {
+                    "name": "Column",
+                    "description": "The column of the cell.",
+                    "type": "Int"
+                }
+            ]
+        },
+        "nRange": {
+            "name": "nRange",
+            "shortname": "nRange",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "tables",
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 4,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "row",
+                    "description": "The row of the top left cell of the new nRange.",
+                    "type": "Int"
+                },
+                {
+                    "name": "column",
+                    "description": "The column of the top left cell of the nRange.",
+                    "type": "Int"
+                },
+                {
+                    "name": "height",
+                    "description": "The height of the nRange in rows.",
+                    "type": "Int"
+                },
+                {
+                    "name": "width",
+                    "description": "The width of the nRange in rows.",
+                    "type": "Int"
+                },
+                {
+                    "name": "ntable",
+                    "description": "The nTable instance from which this nRange object was derived.",
+                    "type": "NTable"
+                }
+            ]
+        },
+        "nTable": {
+            "name": "nTable",
+            "shortname": "nTable",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "tables",
+            "namespace": "",
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 11,
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "r",
+                    "description": "The number of rows",
+                    "type": "Int"
+                },
+                {
+                    "name": "c",
+                    "description": "The number of columns",
+                    "type": "Int"
+                }
+            ],
+            "requires": [
+                "nCell"
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "..\\js\\lib\\mathjax\\config\\local\\local.js",
+            "line": 4,
+            "description": "MathJax/config/local/local.js\n  \n  Include changes and configuration local to your installation\n  in this file.  For example, common macros can be defined here\n  (see below).  To use this file, add \"local/local.js\" to the\n  config array in MathJax.js or your MathJax.Hub.Config() call.\n---------------------------------------------------------------------\n  \n  Copyright (c) 2009-2013 The MathJax Consortium\n \n  Licensed under the Apache License, Version 2.0 (the \"License\");\n  you may not use this file except in compliance with the License.\n  You may obtain a copy of the License at\n \n      http://www.apache.org/licenses/LICENSE-2.0\n \n  Unless required by applicable law or agreed to in writing, software\n  distributed under the License is distributed on an \"AS IS\" BASIS,\n  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n  See the License for the specific language governing permissions and\n  limitations under the License.",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\mathjax\\config\\default.js",
+            "line": 4,
+            "description": "MathJax/config/default.js\nThis configuration file is loaded when you load MathJax\n  via <script src=\"MathJax.js?config=default\"></script>\nUse it to customize the MathJax settings.  See comments below.\n---------------------------------------------------------------------\n  \n  Copyright (c) 2009-2013 The MathJax Consortium\n \n  Licensed under the Apache License, Version 2.0 (the \"License\");\n  you may not use this file except in compliance with the License.\n  You may obtain a copy of the License at\n \n      http://www.apache.org/licenses/LICENSE-2.0\n \n  Unless required by applicable law or agreed to in writing, software\n  distributed under the License is distributed on an \"AS IS\" BASIS,\n  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n  See the License for the specific language governing permissions and\n  limitations under the License.",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\mathjax\\MathJax.js",
+            "line": 1,
+            "description": "MathJax.js\nThe main code for the MathJax math-typesetting library.  See\n  http://www.mathjax.org/ for details.\n---------------------------------------------------------------------\nCopyright (c) 2009-2013 The MathJax Consortium\nLicensed under the Apache License, Version 2.0 (the \"License\");\n  you may not use this file except in compliance with the License.\n  You may obtain a copy of the License at\n    http://www.apache.org/licenses/LICENSE-2.0\nUnless required by applicable law or agreed to in writing, software\n  distributed under the License is distributed on an \"AS IS\" BASIS,\n  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n  See the License for the specific language governing permissions and\n  limitations under the License.",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 12,
+            "description": "The row nCell.",
+            "itemtype": "property",
+            "name": "row",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 17,
+            "description": "The column of the nCell.",
+            "itemtype": "property",
+            "name": "column",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 22,
+            "description": "Indicates that the cell is obscured due to merging.",
+            "itemtype": "property",
+            "name": "obscured",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 27,
+            "itemtype": "method",
+            "name": "getValue",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 33,
+            "itemtype": "method",
+            "name": "setValue",
+            "params": [
+                {
+                    "name": "NewValue",
+                    "description": "",
+                    "type": "Any"
+                }
+            ],
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 46,
+            "description": "Attempt to merge this nCell with those to the bottom left of it. Merging will throw an error if the cell is obscured.",
+            "itemtype": "method",
+            "name": "merge",
+            "params": [
+                {
+                    "name": "height",
+                    "description": ""
+                },
+                {
+                    "name": "width",
+                    "description": ""
+                }
+            ],
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 79,
+            "description": "Attempt to unmerge this nCell. Un-merging will throw an error if the cell is obscured.",
+            "itemtype": "method",
+            "name": "unmerge",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 112,
+            "description": "Converts the cell to a text input field. The 'value' of this nCell is updated as the user types. nCell 'onchange' events are yet to be added.",
+            "itemtype": "method",
+            "name": "convertToInput",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 141,
+            "description": "Converts the cell to a checkbox field. The 'value' of this nCell is updated automatically. nCell 'onchange' events are yet to be added.",
+            "itemtype": "method",
+            "name": "convertToCheckbox",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 170,
+            "description": "Converts the cell to a radio field. The 'value' of this nCell is updated automatically. nCell 'onchange' events are yet to be added.\nThe radio element requires a \"name\" attribute to be defined so that groups of options work correctly.",
+            "itemtype": "method",
+            "name": "convertToRadio",
+            "params": [
+                {
+                    "name": "RadioElementNameAttribute",
+                    "description": ""
+                }
+            ],
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 202,
+            "description": "Converts the cell to a MathJax field surounded by $${}$$ tags. These tags should be set to 'single line mode' in the MathJax config.\nAfter setting the value of this nCell, call the mathjax typesetting opperation.",
+            "itemtype": "method",
+            "name": "convertToMathJax",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 229,
+            "itemtype": "method",
+            "name": "getLeft",
+            "return": {
+                "description": "The cell left of this one.",
+                "type": "NCell"
+            },
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 234,
+            "itemtype": "method",
+            "name": "getRight",
+            "return": {
+                "description": "The cell right of this one.",
+                "type": "NCell"
+            },
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 239,
+            "itemtype": "method",
+            "name": "getUp",
+            "return": {
+                "description": "The cell above this one.",
+                "type": "NCell"
+            },
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 244,
+            "itemtype": "method",
+            "name": "getDown",
+            "return": {
+                "description": "The cell below this one.",
+                "type": "NCell"
+            },
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 250,
+            "description": "Refers to the table element that this nCell belongs to",
+            "itemtype": "property",
+            "name": "table",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 255,
+            "description": "Stores the value of the nCell",
+            "itemtype": "property",
+            "name": "value",
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nCell.js",
+            "line": 260,
+            "description": "This is automadically generated as the nCell class is created. This could lead to massive memory problems!",
+            "itemtype": "property",
+            "name": "dom",
+            "todo": [
+                "find a way not to do this!"
+            ],
+            "class": "nCell"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nRange.js",
+            "line": 18,
+            "description": "The row of the top left cell of the new nRange.",
+            "itemtype": "property",
+            "name": "row",
+            "class": "nRange"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nRange.js",
+            "line": 23,
+            "description": "The column of the top left cell of the new nRange.",
+            "itemtype": "property",
+            "name": "col",
+            "class": "nRange"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nRange.js",
+            "line": 28,
+            "description": "The height of the nRange in rows.",
+            "itemtype": "property",
+            "name": "rowsize",
+            "class": "nRange"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nRange.js",
+            "line": 33,
+            "description": "The width of the nRange in columns.",
+            "itemtype": "property",
+            "name": "colsize",
+            "class": "nRange"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nRange.js",
+            "line": 38,
+            "description": "The table attached to this nRange object",
+            "itemtype": "property",
+            "name": "table",
+            "class": "nRange"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nRange.js",
+            "line": 45,
+            "description": "This will set the value of all nCell instances within the nRange by calling the nCell.setValue() function",
+            "itemtype": "method",
+            "name": "setValue",
+            "params": [
+                {
+                    "name": "Value",
+                    "description": "This value should be relevant to the nCell mode",
+                    "type": "Any"
+                }
+            ],
+            "class": "nRange"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nRange.js",
+            "line": 54,
+            "description": "This can be used to change a specified property of all cells in the range to a specified value.",
+            "itemtype": "method",
+            "name": "setProperties",
+            "params": [
+                {
+                    "name": "PropertyAddress",
+                    "description": "The nCell property to set eg: [\"dom\",\"style\",\"color\"]",
+                    "type": "Array of Strings"
+                },
+                {
+                    "name": "Value",
+                    "description": "",
+                    "type": "Any"
+                }
+            ],
+            "example": [
+                "\n\trange.setProperties([\"dom\",\"style\",\"width\"],\"50px\");"
+            ],
+            "class": "nRange"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nRange.js",
+            "line": 72,
+            "description": "Attempt to merge the range.",
+            "itemtype": "method",
+            "name": "merge",
+            "class": "nRange"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nRange.js",
+            "line": 80,
+            "description": "Unmerge all cells within the range.",
+            "itemtype": "method",
+            "name": "merge",
+            "class": "nRange"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nRange.js",
+            "line": 87,
+            "description": "Execute a function on each cell in the nRange",
+            "itemtype": "method",
+            "name": "forEach",
+            "example": [
+                "\n\tvar tab = new nTable(5,5);\n\tvar range = new tab.getRange(1,1,2,2);\n\trange.forEach(function(c){\n\t\tconsole.log(c.getValue());\n\t});"
+            ],
+            "class": "nRange"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 21,
+            "itemtype": "method",
+            "name": "getCell",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "The row of the cell, zero based.",
+                    "type": "Int"
+                },
+                {
+                    "name": "c",
+                    "description": "The column of the cell, zero based.",
+                    "type": "Int"
+                }
+            ],
+            "return": {
+                "description": "The nCell object that is stored internally in the cells array",
+                "type": "NCell"
+            },
+            "class": "nTable",
+            "module": "tables"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 35,
+            "itemtype": "method",
+            "name": "getRange",
+            "params": [
+                {
+                    "name": "r",
+                    "description": "The row of the top left cell, zero based.",
+                    "type": "Int"
+                },
+                {
+                    "name": "c",
+                    "description": "The column of the top left cell, zero based.",
+                    "type": "Int"
+                },
+                {
+                    "name": "height",
+                    "description": "Height of the range (minimum of 1).",
+                    "type": "Int"
+                },
+                {
+                    "name": "width",
+                    "description": "Width of the range (minimum of 1).",
+                    "type": "Int"
+                }
+            ],
+            "return": {
+                "description": "A new nRange object.",
+                "type": "NRange"
+            },
+            "class": "nTable",
+            "module": "tables"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 46,
+            "description": "This method is called internally when the class is constructed. It can be called again at any time empty and resize the table.",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "row",
+                    "description": "The new number of rows.",
+                    "type": "Int"
+                },
+                {
+                    "name": "column",
+                    "description": "The new number of columns.",
+                    "type": "Int"
+                }
+            ],
+            "class": "nTable",
+            "module": "tables"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 67,
+            "description": "This method is called internally after the cells array is filled. This function generates the dom required to display the array and appends it to the dom property.\nAt present this function redraws the entire table from scratch which is expensive.",
+            "itemtype": "method",
+            "name": "renderTable",
+            "class": "nTable",
+            "module": "tables"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 91,
+            "itemtype": "method",
+            "name": "getWidth",
+            "return": {
+                "description": "The width of the table",
+                "type": "Int"
+            },
+            "class": "nTable",
+            "module": "tables"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 98,
+            "itemtype": "method",
+            "name": "getHeight",
+            "return": {
+                "description": "The height of the table",
+                "type": "Int"
+            },
+            "class": "nTable",
+            "module": "tables"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 106,
+            "description": "This is the internal storage of the nCells objects displayed by the nTable class.",
+            "itemtype": "property",
+            "name": "cells",
+            "type": "Array",
+            "class": "nTable",
+            "module": "tables"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 112,
+            "description": "This is the element that needs to be added to the DOM once the nTable class has been initialised.",
+            "example": [
+                "\n\tvar t = new nTable(5,5);\n\tdocument.body.appendChild(t.dom);"
+            ],
+            "itemtype": "property",
+            "name": "dom",
+            "type": "HTMLTableElement",
+            "class": "nTable",
+            "module": "tables"
+        },
+        {
+            "file": "..\\js\\lib\\nTable\\nTable.js",
+            "line": 121,
+            "description": "Note that by default, the className of the table .dom property is set to \"nTable\".",
+            "class": "nTable",
+            "module": "tables"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " ..\\js\\lib\\nTable\\nCell.js:229"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " ..\\js\\lib\\nTable\\nCell.js:234"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " ..\\js\\lib\\nTable\\nCell.js:239"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " ..\\js\\lib\\nTable\\nCell.js:244"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " ..\\js\\lib\\nTable\\nTable.js:21"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " ..\\js\\lib\\nTable\\nTable.js:35"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " ..\\js\\lib\\nTable\\nTable.js:91"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " ..\\js\\lib\\nTable\\nTable.js:98"
+        },
+        {
+            "message": "Missing item type\nMathJax/config/local/local.js\n  \n  Include changes and configuration local to your installation\n  in this file.  For example, common macros can be defined here\n  (see below).  To use this file, add \"local/local.js\" to the\n  config array in MathJax.js or your MathJax.Hub.Config() call.\n---------------------------------------------------------------------\n  \n  Copyright (c) 2009-2013 The MathJax Consortium\n \n  Licensed under the Apache License, Version 2.0 (the \"License\");\n  you may not use this file except in compliance with the License.\n  You may obtain a copy of the License at\n \n      http://www.apache.org/licenses/LICENSE-2.0\n \n  Unless required by applicable law or agreed to in writing, software\n  distributed under the License is distributed on an \"AS IS\" BASIS,\n  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n  See the License for the specific language governing permissions and\n  limitations under the License.",
+            "line": " ..\\js\\lib\\mathjax\\config\\local\\local.js:4"
+        },
+        {
+            "message": "Missing item type\nMathJax/config/default.js\nThis configuration file is loaded when you load MathJax\n  via <script src=\"MathJax.js?config=default\"></script>\nUse it to customize the MathJax settings.  See comments below.\n---------------------------------------------------------------------\n  \n  Copyright (c) 2009-2013 The MathJax Consortium\n \n  Licensed under the Apache License, Version 2.0 (the \"License\");\n  you may not use this file except in compliance with the License.\n  You may obtain a copy of the License at\n \n      http://www.apache.org/licenses/LICENSE-2.0\n \n  Unless required by applicable law or agreed to in writing, software\n  distributed under the License is distributed on an \"AS IS\" BASIS,\n  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n  See the License for the specific language governing permissions and\n  limitations under the License.",
+            "line": " ..\\js\\lib\\mathjax\\config\\default.js:4"
+        },
+        {
+            "message": "Missing item type\nMathJax.js\nThe main code for the MathJax math-typesetting library.  See\n  http://www.mathjax.org/ for details.\n---------------------------------------------------------------------\nCopyright (c) 2009-2013 The MathJax Consortium\nLicensed under the Apache License, Version 2.0 (the \"License\");\n  you may not use this file except in compliance with the License.\n  You may obtain a copy of the License at\n    http://www.apache.org/licenses/LICENSE-2.0\nUnless required by applicable law or agreed to in writing, software\n  distributed under the License is distributed on an \"AS IS\" BASIS,\n  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n  See the License for the specific language governing permissions and\n  limitations under the License.",
+            "line": " ..\\js\\lib\\mathjax\\MathJax.js:1"
+        },
+        {
+            "message": "Missing item type\nNote that by default, the className of the table .dom property is set to \"nTable\".",
+            "line": " ..\\js\\lib\\nTable\\nTable.js:121"
+        }
+    ]
+}
