@@ -1,1 +1,1 @@
-yuidoc ../js -T simple
+yuidoc ../js
