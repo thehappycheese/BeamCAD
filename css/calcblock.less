@@ -1,0 +1,38 @@
+@import "colors.less";
+.calcblock{
+	.mainBoxShadow;
+	max-width:790px;
+
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:20px;
+}
+.calcblocktopbar{
+	
+	height:20px;
+	.calcWidth(~"100% - 6px");
+
+	padding:3px;
+	
+	font-family: sans-serif;
+	font-size:14pt;
+	color: @text-unselected;
+	
+	background-color:@background-unselected;
+}
+.calcblocktopbar.selected{
+	background: @background-selected;
+	color: @text-selected;
+}
+.calcblock:hover .calcblocktopbar{
+	background-color: @background-unselected-highlight;
+}
+.calcblock:hover .calcblocktopbar.selected{
+	background-color: @background-selected-highlight;
+}
+.calcblockcontent{
+	padding:10px;
+}
+.calcblockbuttons{
+	
+}

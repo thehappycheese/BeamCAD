@@ -1,0 +1,32 @@
+@import "colors.less";
+.maintab {
+	font-family: sans-serif;
+	color: @text-unselected;
+	background: @background-unselected;
+	display:inline-block;
+	text-align:center;
+	padding:4px;
+	font-size:14pt;
+	border-radius:@border-radius @border-radius 0 0;
+	.calcHeight(~"100% - 8px");
+	cursor:pointer;
+	margin-left:10px;
+	margin-right:0;
+	.mainBoxShadow;
+}
+.maintab:hover {
+	background: @background-unselected-highlight;
+	color: @text-unselected-highlight;
+	box-shadow: 1px 1px 4px @body-shadow;
+}
+
+
+
+.maintab.selected{
+	background: @background-selected;
+	color: @text-selected;
+}
+.maintab.selected:hover{
+	background: @background-selected-highlight;
+	color: @text-selected-highlight;
+}

@@ -1,7 +1,8 @@
+@import "colors.less";
 
 .nTable{
-	border-right:1px solid #3F8184;
-	border-top:1px solid #3F8184;
+	border-right:1px solid @tableborder;
+	border-top:1px solid @tableborder;
 	width:100%;
 	max-width: 21cm;
 	margin-left:auto;
@@ -15,8 +16,8 @@
 
 .nTable td{
 	padding:3px 5px;
-	border-left:1px solid #3F8184;
-	border-bottom:1px solid #3F8184;
+	border-left:1px solid @tableborder;
+	border-bottom:1px solid @tableborder;
 	font-size:0.8em;
 	white-space:nowrap;
 	overflow:hidden;
@@ -34,7 +35,7 @@
 }
 
 .nTable .heading{
-	color: #6E0426;
+	color: @text-bright;
 	font-weight:bold;
 	font-family:sans-serif;
 	text-align:center;
@@ -45,29 +46,10 @@
 	padding:0;
 }
 
-
-.nTable thead{
-	font-family:sans-serif;
-	font-size: 1.3em;
-	background-color:#CCCCCC;
-}
-
-
 .nTable input{
 	width:100%;
 	min-width:1cm;
 	height:20px;
 	border:1px solid grey;
 	margin:0;
-}
-
-
-.nTable input:invalid{
-	color:darkorange;
-	border-color:orange;
-}
-.nTable input:focus{
-	background:#FEFEDD;
-	/*border:1px solid yellow;*/
-	outline:1px solid orange;
 }
