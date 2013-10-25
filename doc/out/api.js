@@ -1,6 +1,10 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
+        "Arimsys",
+        "CalcBlock",
+        "DOMTools",
+        "EventDispatcher",
         "nCell",
         "nRange",
         "nTable"

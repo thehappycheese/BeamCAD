@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>tables</title>
+    <title>..\js\lib\DOMTools\DOMTools.getUniqueId.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -96,85 +96,31 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>tables Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: ..\js\lib\DOMTools\DOMTools.getUniqueId.js</h1>
 
-    
+<div class="file">
+    <pre class="code prettyprint linenums">
 
-    
-        <div class="foundat">
-            Defined in: <a href="../files/.._js_main.js.html#l49"><code>..\js\main.js:49</code></a>
-        </div>
-    
-
-    
-</div>
+/**
+ * @class DOMTools
+ */
+var DOMTools = (function(exp){
+var exports = exp || {};
 
 
+var uniqueId = 0;
+/**
+ * Returns a unique ID to use for DOM elements. Uses the current time in base 34 with an optional prefix string.
+ * @method getUniqueId
+ * @param Prefix {String}
+ */
+exports.getUniqueId = function(prefix){
+	return (prefix || &quot;id&quot;)+((new Date()).getTime()+ (uniqueId++)).toString(34);
+}
 
-<div class="box intro">
-    
-</div>
-
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/Arimsys.html">
-                        Arimsys
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/CalcBlock.html">
-                        CalcBlock
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/DOMTools.html">
-                        DOMTools
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/EventDispatcher.html">
-                        EventDispatcher
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/nCell.html">
-                        nCell
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/nRange.html">
-                        nRange
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/nTable.html">
-                        nTable
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+return exports;
+})(DOMTools);
+    </pre>
 </div>
 
                     </div>

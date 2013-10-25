@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>tables</title>
+    <title>..\js\lib\nArimsys\nArimsys.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -96,85 +96,82 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>tables Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: ..\js\lib\nArimsys\nArimsys.js</h1>
 
-    
-
-    
-        <div class="foundat">
-            Defined in: <a href="../files/.._js_main.js.html#l49"><code>..\js\main.js:49</code></a>
-        </div>
-    
-
-    
-</div>
+<div class="file">
+    <pre class="code prettyprint linenums">
+///~ lib/nParser/nParser.js
+///~ lib/taffy-min.js
 
 
+/**
+@class Arimsys
+@param database {TaffyDB} This database should include the columns {id:&quot;string&quot;, prereqs:&quot;string&quot;}
+*/
+function nArimsys(database) {
 
-<div class="box intro">
-    
-</div>
+	/**
+	@property dat {TaffyDB}
+	*/
+	this.dat = database;
 
+	/**
+	Stores a series of calculations in the order that they are to be performed. Each calculation affects a series of entries in the &quot;dat&quot; database
+	@property calcs
+	*/
+	this.calcs = [];
+	
+	/**
+	Searches the calculation space for new symbols that can be found.
+	@method getAvaliable
+	*/
+	this.getAvaliable = function(){
+		var i;
+		var result = [];
+		this.dat().each(function(r){
+			if(r.prereq===&quot;&quot; || this.checkPrerequisite(r.prereq)){
+				result.push(r.id);
+			}
+		}.bind(this));
+		return result;
+	}.bind(this);
 
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/Arimsys.html">
-                        Arimsys
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/CalcBlock.html">
-                        CalcBlock
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/DOMTools.html">
-                        DOMTools
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/EventDispatcher.html">
-                        EventDispatcher
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/nCell.html">
-                        nCell
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/nRange.html">
-                        nRange
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/nTable.html">
-                        nTable
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+	
+	this.checkPrerequisite = function(str){
+		var prereq = nParser.parse(str);
+		return this.check(prereq);
+	}.bind(this);
+	
+	
+	
+	// ===== Recursive Prereuisite decomposition =====
+	this.check = function(exp){
+		var funcname = exp.shift()
+		return this[funcname].apply(this,exp)
+	}.bind(this);
+	
+	
+	// ===== PREREQUISITE OPPERATORS =====
+	this.has = function(varname){
+		var val = this.dat({&quot;id&quot;:varname}).first().value;
+		return (val!==null &amp;&amp; val!==undefined &amp;&amp; val!==&quot;&quot;)
+	}.bind(this);
+	this.and = function(left, right){
+		return this.check(left) &amp;&amp; this.check(right);
+	}
+	this.or = function(left, right){
+		return this.check(left) || this.check(right);
+	}
+	this.not = function(right){
+		return !this.check(right)
+	}.bind(this);
+	
+	this.eq = function(left, right){
+		var val = this.dat({&quot;id&quot;:left}).first().value
+		return val == right;
+	}
+}
+    </pre>
 </div>
 
                     </div>

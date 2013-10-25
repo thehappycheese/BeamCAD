@@ -1,5 +1,6 @@
 @import "colors.less";
 .calcblock{
+	background:@body-light-grey;
 	.mainBoxShadow;
 	max-width:790px;
 
@@ -7,12 +8,12 @@
 	margin-right:auto;
 	margin-bottom:20px;
 }
-.calcblocktopbar{
+.calcblock .titlebar{
 	
 	height:20px;
-	.calcWidth(~"100% - 6px");
+	.calcWidth(~"100% - 8px");
 
-	padding:3px;
+	padding:4px;
 	
 	font-family: sans-serif;
 	font-size:14pt;
@@ -20,19 +21,37 @@
 	
 	background-color:@background-unselected;
 }
-.calcblocktopbar.selected{
+.calcblock .titlebar.selected{
 	background: @background-selected;
 	color: @text-selected;
 }
-.calcblock:hover .calcblocktopbar{
+.calcblock:hover .titlebar{
 	background-color: @background-unselected-highlight;
 }
-.calcblock:hover .calcblocktopbar.selected{
+.calcblock:hover .titlebar.selected{
 	background-color: @background-selected-highlight;
 }
-.calcblockcontent{
+.calcblock .content{
 	padding:10px;
 }
-.calcblockbuttons{
-	
+.cbbutt {
+	width:20px;
+	height:100%;
+	border-radius:5px;
+	display:inline-block;
+	margin-right:10px;
+}
+.calcblock .titlebar .minbut{
+	.cbbutt;
+	background:#6ace40;
+}
+.calcblock .titlebar .closebut {
+	.cbbutt;
+	background:#fa6f6f;
+}
+.calcblock .titlebar .minbut:hover{
+	background:#7af28b;
+}
+.calcblock .titlebar .closebut:hover{
+	background:#fed0db;
 }

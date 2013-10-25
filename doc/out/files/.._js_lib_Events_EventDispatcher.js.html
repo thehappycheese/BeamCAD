@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>tables</title>
+    <title>..\js\lib\Events\EventDispatcher.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -96,85 +96,87 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>tables Module</h1>
-<div class="box clearfix meta">
-    
+                        <h1 class="file-heading">File: ..\js\lib\Events\EventDispatcher.js</h1>
 
-    
-
-    
-        <div class="foundat">
-            Defined in: <a href="../files/.._js_main.js.html#l49"><code>..\js\main.js:49</code></a>
-        </div>
-    
-
-    
-</div>
-
-
-
-<div class="box intro">
-    
-</div>
-
-
-
-<div class="yui3-g">
-    <div class="yui3-u-1-2">
-        
-            <p>This module provides the following classes:</p>
-
-            <ul class="module-classes">
-            
-                <li class="module-class">
-                    <a href="../classes/Arimsys.html">
-                        Arimsys
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/CalcBlock.html">
-                        CalcBlock
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/DOMTools.html">
-                        DOMTools
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/EventDispatcher.html">
-                        EventDispatcher
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/nCell.html">
-                        nCell
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/nRange.html">
-                        nRange
-                    </a>
-                </li>
-            
-                <li class="module-class">
-                    <a href="../classes/nTable.html">
-                        nTable
-                    </a>
-                </li>
-            
-            </ul>
-        
-    </div>
-
-    <div class="yui3-u-1-2">
-        
-    </div>
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * This mixin is used to lend primative event management to another class. The maintenance of this class is important!
+ * @class EventDispatcher
+ * @example
+ * 	var ev = new EventDispatcher();
+ * 	ev.on(&quot;run&quot;,function(e){
+ * 		console.log(e);
+ * 	});
+ */
+function EventDispatcher() {
+	&quot;use strict&quot;;
+	
+ 
+ /**
+	 * This is set automotically when the mixin is instantiated. It is used to prevent repeated instantiation.
+	 * @property isEventDispatcher
+	 * @private
+	 */
+	if(this.isEventDispatcher == true){
+		return;
+	}
+	this.isEventDispatcher = true;
+	
+	
+	/**
+	 * Used as an internal dictionary to relate event names to event functions.
+	 * @property events
+	 * @type {Object}
+	 */
+	this.events = {};
+	
+	
+	/**
+	 * @method on
+	 * @param EventName {String}
+	 * @param ListenerFunction {String}
+	 */
+	this.on = (function (eventName, eventFunction) {
+		if (typeof eventName !== &quot;string&quot; || typeof eventFunction !== &quot;function&quot;) {
+			console.log(&quot;Invalid event registration, &quot; + eventName);
+			return;
+		}
+		if (this.events[eventName] === undefined) {
+			this.events[eventName] = [];
+		}
+		this.events[eventName].push(eventFunction);
+	}).bind(this);
+	
+	
+	/**
+	 * @method clearListeners
+	 * @param EventName {String}
+	 */
+	this.clearListeners = (function (eventName) {
+		if (this.events[eventName] !== undefined) {
+			this.events[eventName] = [];
+		}
+	}).bind(this);
+	
+	
+	/**
+	 * If the event name is unknown, this method will fail quietly, like a fish.
+	 * @method dispatch
+	 * @param EventName {String}
+	 * @param EventData {Any}
+	 */
+	this.dispatch = (function (eventName, eventData) {
+		if (this.events[eventName] !== undefined) {
+			for (var i = 0; i &lt; this.events[eventName].length; i++) {
+				this.events[eventName][i](eventData);
+			}
+		} else {
+			//fail quietly, like a fish.
+		}
+	}).bind(this);
+}
+    </pre>
 </div>
 
                     </div>

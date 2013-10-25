@@ -36,7 +36,7 @@
 				xreq.onreadystatechange = textLoaded;
 				xreq.ontimeout = function () { alert("nickReqire.js --> Build timed out!"); };
 				xreq.timeout = 4000;
-				xreq.send();
+				xreq.send(null);
 		}else{
 			//console.log("nickReqire.js --> Inspection Complete!");
 			order(rules);
