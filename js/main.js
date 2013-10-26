@@ -63,19 +63,41 @@ function CalcBlock(Title) {
 
 
 	this.dom_titlebar = document.createElement("div");
-	this.dom_titlebar.className = "titlebar";
+	this.dom_titlebar.className = "titlebar selected";
 	this.dom_titlebar.appendChild(this.dom_closebutton);
 	this.dom_titlebar.appendChild(this.dom_minimizebutton);
 	this.dom_titlebar.appendChild(document.createTextNode(this.title));
 
 	this.dom_content = document.createElement("div");
 	this.dom_content.className = "content";
-
+	this.dom_content.style.display = "block";
 
 	this.dom = document.createElement("div");
 	this.dom.className = "calcblock";
 	this.dom.appendChild(this.dom_titlebar);
 	this.dom.appendChild(this.dom_content);
+
+
+
+
+
+	this.dom_minimizebutton.addEventListener("mousedown", function (e) {
+		if (this.dom_content.style.display === "block") {
+			this.dom_content.style.display = "none";
+			this.dom_titlebar.className = "titlebar";
+		} else {
+			this.dom_content.style.display = "block"
+			this.dom_titlebar.className = "titlebar selected";
+		}
+	}.bind(this));
+
+
+
+
+
+
+
+
 
 }
 
