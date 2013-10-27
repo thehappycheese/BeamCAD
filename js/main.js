@@ -1,4 +1,5 @@
 ///~ lib/DOMTools/DOMTools.scrobble.js
+///~ ui/CalcBlock.js
 "use strict";
 // Setup initial events:
 
@@ -38,68 +39,46 @@ function changeTab(e) {
 
 // Create instance of calcblock and add it to the 
 
-var cb = new CalcBlock("Exposure Classification");
-ui.tab0.appendChild(cb.dom);
-
-
-
-
-///~ lib/Events/EventDispatcher.js
+var cbDI = new cbDesignIntent();
+var cbBS = new cbBeamShape();
+var cbEC = new cbExposureClassifictaion();
+var cbCS = new cbConcreteStrength();
+//ui.tab0.appendChild(cbDI.dom);
+ui.tab0.appendChild(cbBS.dom);
+ui.tab0.appendChild(cbEC.dom);
+ui.tab0.appendChild(cbCS.dom);
 
 /**
-@class CalcBlock
-@param TitleText {String}
-@extends EventDispatcher.js
+@class cbDesignIntent
+@extends CalcBlock
+@constructor
 */
-function CalcBlock(Title) {
-	//Mixin EventDispatcher
-	EventDispatcher.call(this);
-	this.title = Title
-	
-	this.dom_minimizebutton = document.createElement("div");
-	this.dom_minimizebutton.className = "minbut";
-	this.dom_closebutton = document.createElement("div");
-	this.dom_closebutton.className = "closebut";
-
-
-	this.dom_titlebar = document.createElement("div");
-	this.dom_titlebar.className = "titlebar selected";
-	this.dom_titlebar.appendChild(this.dom_closebutton);
-	this.dom_titlebar.appendChild(this.dom_minimizebutton);
-	this.dom_titlebar.appendChild(document.createTextNode(this.title));
-
-	this.dom_content = document.createElement("div");
-	this.dom_content.className = "content";
-	this.dom_content.style.display = "block";
-
-	this.dom = document.createElement("div");
-	this.dom.className = "calcblock";
-	this.dom.appendChild(this.dom_titlebar);
-	this.dom.appendChild(this.dom_content);
-
-
-
-
-
-	this.dom_minimizebutton.addEventListener("mousedown", function (e) {
-		if (this.dom_content.style.display === "block") {
-			this.dom_content.style.display = "none";
-			this.dom_titlebar.className = "titlebar";
-		} else {
-			this.dom_content.style.display = "block"
-			this.dom_titlebar.className = "titlebar selected";
-		}
-	}.bind(this));
-
-
-
-
-
-
+function cbDesignIntent() {
+	CalcBlock.call(this);
+	this.setTitle("Design Intent");
+	this.loadContent("partials/cbDesignIntent.html");
+		
 
 
 
 }
+
+function cbExposureClassifictaion() {
+	CalcBlock.call(this);
+	this.setTitle("Exposure Classification");
+}
+function cbConcreteStrength() {
+	CalcBlock.call(this);
+	this.setTitle("Concrete Strength");
+}
+function cbBeamShape() {
+	CalcBlock.call(this);
+	this.setTitle("Beam Shape");
+	this.loadContent("partials/cbBeamShape.html");
+}
+
+
+
 
 
 
