@@ -10,7 +10,7 @@
 	border-spacing:0;
 	text-align:left;
 	font-family:sans-serif;
-	table-layout: fixed;
+	//table-layout: auto;
 	empty-cells:show;
 }
 
@@ -22,11 +22,11 @@
 	white-space:nowrap;
 	overflow:hidden;
 }
-.nTable button{
-	margin:0px;
+
+.nTable .icon {
+	margin: 0px 5px;
+	vertical-align:middle;
 }
-
-
 .nTable .title{
 	font-size:1.2em;
 	font-weight:bold;
@@ -46,10 +46,6 @@
 	padding:0;
 }
 
-.nTable input{
-	width:100%;
-	min-width:1cm;
-	height:20px;
-	border:1px solid grey;
-	margin:0;
+.nTable input[type=text] {
+	width:2cm;
 }

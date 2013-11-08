@@ -79,6 +79,7 @@ function CalcBlock() {
 				if (e.target.status === 200) {
 					this.dom_content.innerHTML = e.target.responseText;
 					this.dispatch("load");
+					MathJax.Hub.Queue(["Typeset",MathJax.Hub,this.dom_content]);
 				} else {
 					console.log("ContentBlock resource failed to load:  error");
 					console.log(e.target);

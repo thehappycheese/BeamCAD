@@ -57,7 +57,7 @@ function cbDesignIntent() {
 	CalcBlock.call(this);
 	this.setTitle("Design Intent");
 	this.loadContent("partials/cbDesignIntent.html");
-		
+	
 
 
 
@@ -75,6 +75,7 @@ function cbBeamShape() {
 	CalcBlock.call(this);
 	this.setTitle("Beam Shape");
 	this.loadContent("partials/cbBeamShape.html");
+	
 }
 
 

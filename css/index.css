@@ -11,7 +11,6 @@
   border-spacing: 0;
   text-align: left;
   font-family: sans-serif;
-  table-layout: fixed;
   empty-cells: show;
 }
 .nTable td {
@@ -22,8 +21,9 @@
   white-space: nowrap;
   overflow: hidden;
 }
-.nTable button {
-  margin: 0px;
+.nTable .icon {
+  margin: 0px 5px;
+  vertical-align: middle;
 }
 .nTable .title {
   font-size: 1.2em;
@@ -41,12 +41,8 @@
   margin: 0;
   padding: 0;
 }
-.nTable input {
-  width: 100%;
-  min-width: 1cm;
-  height: 20px;
-  border: 1px solid grey;
-  margin: 0;
+.nTable input[type=text] {
+  width: 2cm;
 }
 .calcblock {
   background: #e8e7dd;
@@ -74,12 +70,6 @@
 .calcblock .titlebar.selected {
   background: #f7e48b;
   color: #185c94;
-}
-.calcblock:hover .titlebar {
-  background-color: #ffecff;
-}
-.calcblock:hover .titlebar.selected {
-  background-color: #fffbd8;
 }
 .calcblock .content {
   padding: 10px;
