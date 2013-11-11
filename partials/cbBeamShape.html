@@ -6,11 +6,11 @@
 
 <h3>Preliminary Information</h3>
 
-<table class="nTable"><tr ><td style="width:200px;text-align:right; padding-right:10px;">Design title</td><td style="width:50px;text-align:center;"></td><td ><input type="text" value="Untitled"/></td><td width="100px"></td></tr><tr ><td style="width:200px;text-align:right; padding-right:10px;">Location</td><td style="width:50px;text-align:center;"></td><td ><input type="text" value="Untitled"/></td><td width="100px"></td></tr><tr ><td style="width:200px;text-align:right; padding-right:10px;">Exposure classification</td><td style="width:50px;text-align:center;"></td><td ><select id="eclass"><option value="A1" selected>A1</option><option value="A2">A2</option><option value="B1">B1</option><option value="B2">B2</option><option value="C1">C1</option><option value="C2">C2</option></select></td><td width="100px">[Describe the <br>selected option]</td></tr><tr ><td style="width:200px;text-align:right; padding-right:10px;">Other notes about this design</td><td style="width:50px;text-align:center;"></td><td ><textarea></textarea></td><td width="100px"></td></tr></table>
+<table class="nTable"><tr ><td style="width:200px;text-align:right; padding-right:10px;">Design title</td><td ><input type="text" value="Untitled"/></td></tr><tr ><td style="width:200px;text-align:right; padding-right:10px;">Location</td><td ><input type="text" value="Untitled"/></td></tr><tr ><td style="width:200px;text-align:right; padding-right:10px;">Exposure classification</td><td ><select id="eclass"><option value="A1" selected>A1</option><option value="A2">A2</option><option value="B1">B1</option><option value="B2">B2</option><option value="C1">C1</option><option value="C2">C2</option></select></td></tr><tr ><td style="width:200px;text-align:right; padding-right:10px;">Other notes about this design</td><td ><textarea style="width:100%;margin:0;padding:0;border:0;"></textarea></td></tr></table>
 
 
 
-<h3>Material Properties</h3>
+<h3>Materials</h3>
 
 <table class="nTable"><tr ><td style="width:200px;text-align:right; padding-right:10px;">Reinforcement bar class</td><td style="width:50px;text-align:center;"></td><td ><select id="reoclass"><option value="L">L Class</option>          <option  value="N" selected>N Class</option></select></td><td width="100px">[Describe the <br>selected option]</td></tr><tr ><td style="width:200px;text-align:right; padding-right:10px;">Concrete strength</td><td style="width:50px;text-align:center;">$${f'_{c}}$$</td><td ><input type="text" id="b" value="32 MPa"/></td><td width="100px"><select><option>Unknown</option>          <option selected>Known</option><option>Estimate</option></select></td></tr></table>
 
@@ -22,12 +22,12 @@
 
 
 
-<h3>Geometric Constraints</h3>
+<h3>Shape</h3>
 
 <!-- Beam shape radio buttons-->
 <table class="nTable"><tr ><td ><label><input type="radio" name="beamshape" id="bsrect" value="rect" checked><img src="img/icons/bs-rect.png" class="icon">Rectangular</label></td><td ><label><input type="radio" name="beamshape" value="t"><img src="img/icons/bs-t.png" class="icon">T-beam</label></td><td ><label><input type="radio" name="beamshape" value="tslab"><img src="img/icons/bs-tslab.png" class="icon">In slab</lable></td></tr></table>
 <br />
-<div style="text-align:center">[Image of Beam]</div>
+<img src="img/BeamShapeMockup.png" style="margin-left:auto;margin-right:auto;display:block;"/>
 <br />
 <table class="nTable"><tr ><td style="width:200px;text-align:right; padding-right:10px;">Depth</td><td style="width:50px;text-align:center;">$${D}$$</td><td ><input type="text" id="D" value="D" disabled /></td><td width="100px"><select><option selected>Unknown</option>          <option>Known</option><option>Estimate</option><option>Previous Value</option></select></td></tr>
 <tr ><td style="width:200px;text-align:right; padding-right:10px;">Web-breadth</td><td style="width:50px;text-align:center;">$${b_w}$$</td><td ><input type="text" id="b" value="500 mm"/></td><td width="100px"><select><option>Unknown</option>          <option selected>Known</option><option>Estimate</option><option>Previous Value</option></select></td></tr>
