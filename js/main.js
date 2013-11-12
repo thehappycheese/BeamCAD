@@ -1,5 +1,6 @@
 ///~ lib/DOMTools/DOMTools.scrobble.js
 ///~ ui/CalcBlock.js
+///* bcad.js
 "use strict";
 // Setup initial events:
 
