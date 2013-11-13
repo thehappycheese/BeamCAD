@@ -58,8 +58,8 @@ exports.Beam = function (){
 	this.momentReo = [
 		// Depth is from inner surface of shear reo
 		// A negative depth indicates that it goes from the bottom of the beam
-		{number:2, diameter:32, depth:-32/2		, area:16*16*Math.PI},
-		{number:4, diameter:32, depth:-32/2-60	, area:16*16*Math.PI}
+		{number:2, diameter:32, depth:-32/2		, As:16*16*Math.PI*2},
+		{number:4, diameter:32, depth:-32/2-60	, As:16*16*Math.PI*4}
 	];
 	
 	// Reo explicitly not included in moment reo calcs for the purpose of crack control
@@ -74,7 +74,6 @@ exports.Beam = function (){
 	this.Z = function(){
 		return this.I()/(this.D/2);// rect, sag or hog;
 	}
-	
 	this.Ag = function(){
 		return this.D*this.b; // rect
 	}
@@ -97,6 +96,8 @@ exports.Beam = function (){
 		var topd = this.cover + this.dfitments;				// Depth to upper inner shearbar surf
 		var botd = this.D - (this.cover + this.dfitments);	// Depth to lower inner shearbar surf
 		
+		//var logtable = [];
+
 		for(i=0;i<this.momentReo.length;i++){
 			if(this.momentReo[i].depth<0){
 				di = botd + this.momentReo[i].depth;
@@ -104,14 +105,14 @@ exports.Beam = function (){
 				di = topd + this.momentReo[i].depth;
 			}
 			
-			console.log(di)
+			
 			
 			// ratio
 			epsilonsi = epsiloncmax / dn * (di-dn);
 			
 			// kN
 			Fsi = Math.min(epsilonsi,epsilonsmax) *	// Ratio *
-						   this.momentReo[i].area *	// mm^2	 *
+						   this.momentReo[i].As  *	// mm^2	 *
 						   this.Es;					// GPa	 = kN
 			//console.log("di: ",di,"  epsilonsi:",epsilonsi, "  Fsi: ",Fsi);
 			// TODO: Ensure ordering of reobars so that the console doesnt spit out random crap?
@@ -120,12 +121,15 @@ exports.Beam = function (){
 			//			Make sure this limitation is obvious to the user in the picture of the beam.
 			if(Fsi>0){
 				Ts	+= Fsi;
-				Ast	+= this.momentReo[i].area;
+				Ast += this.momentReo[i].As;
 			}else{
 				Cs -= Fsi;
-				Asc	+= this.momentReo[i].area;
+				Asc += this.momentReo[i].As;
 			}
+			//logtable.push({ di: di, epsilonsi: epsilonsi, Ts: Ts, Cs: Cs, Ast: Ast, Asc: Asc });
+
 		}
+		//console.table(logtable);
 		return {Ts:Ts, Cs:Cs, Ast:Ast, Asc:Asc};
 	}
 	
@@ -166,17 +170,19 @@ exports.Beam = function (){
 		var lastdist = Infinity;
 		var t
 		var c
-		for(dn=0.01;dn<this.D;dn+=20){
+		var logtable = [];
+		for(dn=1;dn<this.D;dn+=1){
 			t = this.processDn(dn).Ts;
 			c = this.Cc(dn);
-			// LEFTOFF: 2013 11 13
-			console.log(dn,t,c)
+			
+			logtable.push({"Depth to neutral axis":dn,Tenstion:Math.round(t),Compression:Math.round(c)});
 			if(Math.abs(t-c)>lastdist){
 				dn-=1;
 				break
 			}
 			lastdist = Math.abs(t-c);
 		}
+		console.table(logtable)
 		return dn;
 	}
 	
