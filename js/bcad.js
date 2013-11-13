@@ -5,6 +5,7 @@
 */
 
 var bc = (function(){
+"use strict";
 
 var exports = {};
 
@@ -15,49 +16,56 @@ var exports = {};
 */
 exports.Beam = function (){
 	
-	this.phi = 0.8;
-	this.Mstar = 500; //kNm
-	this.Mou = undefined;
+	this.phi	= 0.8;
+	this.Mstar	= 500; //kNm
+	this.Mou	= undefined;
 	
 	
-	this.t = "rect"; // t i tslab
+	this.beamtype = "rect"; // t i tslab
 	
 	this.reoclass = "N";
-	this.fc = 32; //MPa
-	this.fsy = 500; //MPa
-	this.Ec = undefined;
+	this.fsy	= 0.500;		//GPa
+	this.Es		= 200;			//GPa
+	
+	this.fc		= 0.032;		//GPa
+	this.alpha2	= 0.85;
+	this.gamma	= 0.85;
+	this.Ec		= undefined;	
+		
+		
+	this.L		= 10000;		// mm
+	this.a		= undefined;	// For beff?
+		
+		
+	this.Dtf	= undefined;	// mm
+	this.Dbf	= undefined;	// mm
+	this.D		= 500;			// mm
+	this.dn		= undefined;
+		
+		
+	this.btf	= undefined;	// mm
+	this.bbf	= undefined;	// mm
+	this.beff	= undefined;	// mm
+	this.bw		= 300;			// mm
 	
 	
-	this.L = 10000;
-	this.a = undefined; // For beff?
+	this.cover				= 25;	// mm (Outer surface to shear reo surface)
+	this.dfitments			= 12;	// mm (Nominal diameter)
+	this.shearReoPitch		= 300;	// mm (Center to center)
 	
 	
-	this.Dtf = undefined;
-	this.Dbf = undefined;
-	this.D = 500;
 	
-	
-	this.btf = undefined;
-	this.bbf = undefined;
-	this.beff = undefined;
-	this.bw = 300;
-	
-	
-	this.cover = 25;
-	this.shearReoDiameter	= 12;
-	this.shearReoPitch		= 300;
-	
-	
-	// A negative depth indicates that it goes from the bottom of the beam
 	this.momentReo = [
-		[2, 32, -32/2], // # Diam depth-from-shear-reo-surface
-		[2, 32, -32/2-60]
+		// Depth is from inner surface of shear reo
+		// A negative depth indicates that it goes from the bottom of the beam
+		{number:2, diameter:32, depth:-32/2		, area:16*16*Math.PI},
+		{number:4, diameter:32, depth:-32/2-60	, area:16*16*Math.PI}
 	];
 	
+	// Reo explicitly not included in moment reo calcs for the purpose of crack control
+	this.crackReo = [];
 	
-	this.dn = 100; // TODO: Assumed value :S paramaterize the functions that use it instead?
-	this.alpha2 = undefined;
-	this.gamma = undefined;
+	
 	
 	
 	this.I = function(){
@@ -71,99 +79,110 @@ exports.Beam = function (){
 		return this.D*this.b; // rect
 	}
 	
-	this.Acc = function(){
-		return this.gamma*this.dn*this.bw; //rect
-	}
 	
-	this.Cc = function(){
-		return this.alpha2*this.fc*this.Acc(); // all types
-	}
 	
-	this.Ast = function(){
-		// only the reo with di>dn is tensile
-		
-		// TODO: Prevent the selection of all layers, particularly bars of <1/2 dima of largest bar. Make sure this limitation is obvious to the user in the picture of the beam.
-		
-		var result = 0;
-		
-		var topd = this.cover + this.shearReoDiameter;
-		var botd = this.D - (this.cover + this.shearReoDiameter);
+	this.processDn = function(dn){
+		var Ast		= 0;	// mm^2
+		var Asc		= 0;	// mm^2
+		var Ts		= 0;	// kN
+		var Cs		= 0;	// kN
 		
 		var i,
-			di,
-			m = this.momentReo;
-			
-		for(i=0;i<m.length;i++){
-			if(m[i][2]<0){
-				di = botd + m[i][2];
+			di,						// Depth from the top of the i'th layer of steel
+			Fsi,					//  Force in the i'th layer ot steel
+			epsilonsi,				// Strain in the i'th layer of steel
+			epsiloncmax = 0.003,	// Maximum allowable strain in concrete according to < TODO: code ref >
+			epsilonsmax = 0.0025;	// Assume steel strain limit is 0.0025 when calculating the force
+		
+		var topd = this.cover + this.dfitments;				// Depth to upper inner shearbar surf
+		var botd = this.D - (this.cover + this.dfitments);	// Depth to lower inner shearbar surf
+		
+		for(i=0;i<this.momentReo.length;i++){
+			if(this.momentReo[i].depth<0){
+				di = botd + this.momentReo[i].depth;
 			}else{
-				di = topd + m[i][2];
+				di = topd + this.momentReo[i].depth;
 			}
-			console.log(m);
-			if(di>this.dn){
-				result += m[i][0]*getReoArea(m[i][1])
+			
+			console.log(di)
+			
+			// ratio
+			epsilonsi = epsiloncmax / dn * (di-dn);
+			
+			// kN
+			Fsi = Math.min(epsilonsi,epsilonsmax) *	// Ratio *
+						   this.momentReo[i].area *	// mm^2	 *
+						   this.Es;					// GPa	 = kN
+			//console.log("di: ",di,"  epsilonsi:",epsilonsi, "  Fsi: ",Fsi);
+			// TODO: Ensure ordering of reobars so that the console doesnt spit out random crap?
+			// TODO: Prevent the selection of all layers,
+			//			particularly bars of <1/2 dima of largest bar.
+			//			Make sure this limitation is obvious to the user in the picture of the beam.
+			if(Fsi>0){
+				Ts	+= Fsi;
+				Ast	+= this.momentReo[i].area;
+			}else{
+				Cs -= Fsi;
+				Asc	+= this.momentReo[i].area;
 			}
 		}
-		return result;
+		return {Ts:Ts, Cs:Cs, Ast:Ast, Asc:Asc};
 	}
 	
-	this.Ts = function(){
+	
+	this.Acc = function(dn){
+		return (this.gamma*dn)*this.bw; //rect
+	}
+	
+	this.Asc = function(dn){
+		return this.processDn(dn).Asc;
+	}
+	
+	this.Ast = function(dn){
+		return this.processDn(dn).Ast;
+	}
+	
+	this.Ts = function(dn){
 		//----------------------- OPTION 1 ---------------------------
 		// can assume that all Ast is yielded... (then check later that it was right!)
-		return this.Ast()*this.fsy;
-		
-		
-		//----------------------- OPTION 2 ---------------------------
-		// or can calculate force of each layer based on strain
-		var result = undefined;
-		
-		// TODO: Prevent the selection of all layers, particularly bars of <1/2 dima of largest bar. Make sure this limitation is obvious to the user in the picture of the beam.
-		var topd = this.cover + this.shearReoDiameter;
-		var botd = this.D - (this.cover + this.shearReoDiameter);
-		
-		var i,
-			di,
-			m = this.momentReo;
-			
-		for(i=0;i<m.length;i++){
-			if(m[i][2]<0){
-				di = this.botd + m[i][2];
-			}else{
-				di = this.topd + m[i][2];
-			}
-			
-			// LEFTOFF: 2013 11 13
-			// TODO: get steel strain based on depth, then calculate force based on strain and report. This same chunk can be used to calculate Cs but for a single if statement which checks if the force is positive or negative.
-		}
-		
-		
-		
-		
-		
-		return result;
-		
+		//return this.Ast(dn)*this.fsy;
+		return this.processDn(dn).Ts;
+	}
+	
+	this.Cs = function(dn){
+		return this.processDn(dn).Cs;
 	}
 	
 	
+	this.Cc = function(dn){
+		return this.alpha2*this.fc*this.Acc(dn); // all types
+	}
 	
 	
 	
 	
 	this.checkCapacity = function(){
-		
+		var dn =0.01;
+		var lastdist = Infinity;
+		var t
+		var c
+		for(dn=0.01;dn<this.D;dn+=20){
+			t = this.processDn(dn).Ts;
+			c = this.Cc(dn);
+			// LEFTOFF: 2013 11 13
+			console.log(dn,t,c)
+			if(Math.abs(t-c)>lastdist){
+				dn-=1;
+				break
+			}
+			lastdist = Math.abs(t-c);
+		}
+		return dn;
 	}
 	
 	
 	
 }
-
-
-// TODO: update this function to reflect the rebar standard
-function getReoArea(d){
-	return (d/2)*(d/2)*Math.PI;
-}
-
-
 
 
 
