@@ -1,4 +1,4 @@
-
+///~ lib/DOMTools/DOMTools.getUniqueId.js
 ///~ lib/Events/EventDispatcher.js
 
 /**
@@ -6,10 +6,15 @@
 @param TitleText {String}
 @extends EventDispatcher.js
 */
-function CalcBlock() {
+function EditorDiv(manager) {
+	this.id = DOMTools.getUniqueId();
+	this.manager = manager;
+	
+	
 	// ==== Mixin EventDispatcher ====
 	EventDispatcher.call(this);
-
+	
+	
 
 	// ==== Build UI ====
 	this._title = "untitled";
@@ -54,6 +59,7 @@ function CalcBlock() {
 
 	this.dom_closebutton.addEventListener("mousedown", function (e) {
 		this.dispatch("close", e);
+		this.manager.closeEditorDiv(this);
 	}.bind(this));
 
 
@@ -68,53 +74,6 @@ function CalcBlock() {
 		this.dom_titletext.innerHTML = newval;
 	}.bind(this);
 
-	/**
-	@method loadContent
-	@param URL {string}
-	*/
-	this.loadContent = function (url) {
-		var xr = new XMLHttpRequest();
-		xr.addEventListener("readystatechange", function (e) {
-			if (e.target.readyState === e.target.DONE) {
-				if (e.target.status === 200) {
-					this.dom_content.innerHTML = e.target.responseText;
-					this.dispatch("load");
-					MathJax.Hub.Queue(["Typeset",MathJax.Hub,this.dom_content]);
-				} else {
-					console.log("ContentBlock resource failed to load:  error");
-					console.log(e.target);
-					this.dispatch("error",e.targt.statusText);
-				}
-			}
-		}.bind(this));
-		xr.addEventListener("error", function () {
-			console.log("ContentBlock resource failed to load:  error");
-			console.log(e.target);
-			this.dispatch("error", e.targt.statusText);
-		}.bind(this));
-		xr.addEventListener("timeout", function (e) {
-			console.log("ContentBlock resource failed to load:  timed-out");
-			console.log(e.target);
-			this.dispatch("error", e.targt.statusText);
-		}.bind(this));
-
-		xr.timeout = 4000;
-		xr.open("GET", url, true);
-		xr.send();
-	}.bind(this);
-
-	/**
-	@method setInputs
-	*/
-	this.setInputs = function (e) {
-
-	}.bind(this);
-	/**
-	@method getOutput
-	*/
-	this.getOutput = function () {
-
-	}.bind(this);
-
+	
 
 }

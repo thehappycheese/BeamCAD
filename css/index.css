@@ -247,14 +247,14 @@ h3 {
   width: -webkit-calc(100% - 280px - 50px);
   width: -moz-calc(100% - 280px - 50px);
   width: calc(100% - 280px - 50px);
-  height: -webkit-calc(100% - 50px - 50px - 1px);
-  height: -moz-calc(100% - 50px - 50px - 1px);
-  height: calc(100% - 50px - 50px - 1px);
+  height: -webkit-calc(100% - 50px - 20px - 1px);
+  height: -moz-calc(100% - 50px - 20px - 1px);
+  height: calc(100% - 50px - 20px - 1px);
   right: 0;
-  bottom: 30px;
+  bottom: 0;
   padding: 10px;
   border-top: 1px solid #c4c3bb;
-  border-radius: 0;
+  border-radius: 0 5px 5px 5px;
 }
 #bottombar {
   width: -webkit-calc(100% - 280px - 50px);

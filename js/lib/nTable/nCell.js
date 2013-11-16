@@ -1,4 +1,4 @@
-///~ lib/nDOMTools/DOMTools.getUniqueId.js
+///~ lib/DOMTools/DOMTools.getUniqueId.js
 
 
 /**

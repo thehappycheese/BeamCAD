@@ -1,10 +1,19 @@
 ///~ lib/DOMTools/DOMTools.scrobble.js
-///~ ui/CalcBlock.js
+///~ lib/nTable/nTable.js
+///~ ui/EditorDiv.js
 ///* bcad.js
+///* LoadContent.js
 "use strict";
-// Setup initial events:
+
+
+
 
 var ui = DOMTools.scrobble(document.body);
+
+
+
+// ==== Setup TABS ==============================================
+
 ui.tabbut0.onmousedown = this.changeTab;
 ui.tabbut1.onmousedown = this.changeTab;
 ui.tabbut2.onmousedown = this.changeTab;
@@ -38,45 +47,66 @@ function changeTab(e) {
 }
 
 
-// Create instance of calcblock and add it to the 
 
-var cbDI = new cbDesignIntent();
-var cbBS = new cbBeamShape();
-var cbEC = new cbExposureClassifictaion();
-var cbCS = new cbConcreteStrength();
-//ui.tab0.appendChild(cbDI.dom);
-ui.tab0.appendChild(cbBS.dom);
-ui.tab0.appendChild(cbEC.dom);
-ui.tab0.appendChild(cbCS.dom);
 
-/**
-@class cbDesignIntent
-@extends CalcBlock
-@constructor
-*/
-function cbDesignIntent() {
-	CalcBlock.call(this);
-	this.setTitle("Design Intent");
-	this.loadContent("partials/cbDesignIntent.html");
+// ==== Create a collapsable calcblock and set up a manager for it =========
+
+var calcManager = new (function(){
+	this.dom = ui.tab0;
+	this.editordivs = [];
 	
-
-
-
-}
-
-function cbExposureClassifictaion() {
-	CalcBlock.call(this);
-	this.setTitle("Exposure Classification");
-}
-function cbConcreteStrength() {
-	CalcBlock.call(this);
-	this.setTitle("Concrete Strength");
-}
-function cbBeamShape() {
-	CalcBlock.call(this);
-	this.setTitle("Beam Shape");
-	this.loadContent("partials/cbBeamShape.html");
+	this.closeEditorDiv = function(ed){
+		for(var i=0;i<this.editordivs.length;i++){
+			if(this.editordivs[i] === ed){
+				this.editordivs.splice(i,1);
+				console.log("closeed EditorDiv" +i);
+				break;
+			}
+		}
+		this.render();
+	}.bind(this);
 	
+	this.render = function(){
+		this.dom.innerHTML = "";
+		for(var i=0;i<this.editordivs.length;i++){
+			this.dom.appendChild(this.editordivs[i].dom);
+		}
+	}.bind(this);
+	
+})();
+
+
+
+
+
+
+
+
+
+var ediv = new EditorDiv(calcManager);
+calcManager.editordivs.push(ediv);
+calcManager.render();
+
+
+
+
+
+
+function Calc(t) {
+	this.title = 
+	this.target = t;
+	this.lines = [];
+	
+	
+	this.render = function(){
+		this.target.innerHTML = "";
+		this.lines.forEach(function(l){
+			this.target.appendChild(this.target);
+		});
+	}
+}
+function CalcLine(){
+	this.dom = document.createElement("div");
 }
 
 
