@@ -1,4 +1,17 @@
+///~ lib/taffy-min.js
 
+// CONCRETE PROPERTIES AT 28 DAYS
+// <AS3600.A2 T3.1.2>
+var AS3600T312 = TAFFY(
+	{fc:0.020	,fcmi:0.022,	Ec:24.0},
+	{fc:0.025	,fcmi:0.028,	Ec:26.7},
+	{fc:0.032	,fcmi:0.035,	Ec:30.1},
+	{fc:0.040	,fcmi:0.043,	Ec:32.8},
+	{fc:0.050	,fcmi:0.053,	Ec:34.8},
+	{fc:0.065	,fcmi:0.068,	Ec:37.4},
+	{fc:0.080	,fcmi:0.082,	Ec:39.6},
+	{fc:0.100	,fcmi:0.099,	Ec:42.2}
+);
 
 /**
 * @module bc
@@ -10,6 +23,18 @@ var bc = (function(){
 var exports = {};
 
 
+
+function VarGroup(){
+	this.__vars = {};
+	this.addVar = function(name, value){
+		this.__vars[name] = value;
+		this.__defineGetter__
+	}.bind(this);
+	
+	this.removeVar = function(){
+		
+	}.bind(this);
+}
 
 /**
 * @class Beam
@@ -23,18 +48,79 @@ exports.Beam = function (){
 	
 	this.beamtype = "rect"; // t i tslab
 	
-	this.reoclass = "N";
-	this.fsy	= 0.500;		//GPa
-	this.Es		= 200;			//GPa
 	
-	this.fc		= 0.032;		//GPa
-	this.alpha2	= 0.85;
-	this.gamma	= 0.85;
-	this.Ec		= undefined;	
-		
-		
-	this.L		= 10000;		// mm
-	this.a		= undefined;	// For beff?
+	// ================= STEEL PROPERTIES ================
+	this.reoclass = "N";
+	
+	
+	
+	this._fsy = 0.500;	// GPa
+	 this.fsy = function(newval){
+		 //Validation
+		if(newval)	this._fsy = newval;
+		return		this._fsy;
+	}.bind(this);		//GPa
+	
+	
+	
+	this._Es = 200;	// GPa
+	 this.Es = function(newval){
+		// Validation
+		if(newval)	this._Es = newval;
+		return		this._Es;
+	}.bind(this);
+	
+	
+	
+	this._fc = 0.032;	// GPa
+	this.fc = function(newval){
+		// Validation
+		if(newval)	this._fc = newval;
+		return		this._fc;
+	}.bind(this);
+
+
+
+	this.alpha2 = function(){
+		// Validation
+		var result = 1 - 0.003*this.fc();		// <AS3600.A2 8.1.3 page 101> 
+		// Validaton
+		return result;
+	}.bind(this);
+	
+	
+
+	this.gamma = function(){
+		// Validation
+		var result = 1.05 - 0.007*this.fc();	// <AS3600.A2 8.1.3 page 101>
+		// Validation
+		return result;
+	}.bind(this);
+	
+	
+	
+	
+	
+	// ============ CONCRETE PROPERTIES ==============
+	
+	// This is assumed. The limits are 1800-2800  <AS3600.A2 1.1.2 page 8>
+	this.rohc = function(){return 2500;}; //kg/m^3
+	this.fcmi = function(){return 10;};
+	
+	this.Ec	= function(){
+		// <AS3600.A2 3.1.2 page 37>
+		// Validation (Standard values only)
+		result = AS3600T312({fc:this.fc()});
+		// Validation
+		return result;
+	}
+
+	
+	this._L		= 10000 // mm
+	this.L		= function(newval){
+		if(newval) this._L = newval;
+		return this.L;
+	};
 		
 		
 	this.Dtf	= undefined;	// mm
@@ -72,19 +158,19 @@ exports.Beam = function (){
 		return this.bw*Math.pow(this.D,3)/12;// rect
 	}
 	this.Z = function(){
-		return this.I()/(this.D/2);// rect, sag or hog;
+		return this.I()/(this.D/2);	// rect, sag or hog;
 	}
 	this.Ag = function(){
-		return this.D*this.b; // rect
+		return this.D*this.b;		// rect
 	}
 	
 	
 	
 	this.processDn = function(dn){
-		var Ast		= 0;	// mm^2
-		var Asc		= 0;	// mm^2
-		var Ts		= 0;	// kN
-		var Cs		= 0;	// kN
+		var Ast		= 0;			// mm^2
+		var Asc		= 0;			// mm^2
+		var Ts		= 0;			// kN
+		var Cs		= 0;			// kN
 		
 		var i,
 			di,						// Depth from the top of the i'th layer of steel
