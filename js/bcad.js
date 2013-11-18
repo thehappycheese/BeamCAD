@@ -114,6 +114,12 @@ exports.Beam = function (){
 		// Validation
 		return result;
 	}
+	
+	// LEFTOFF: 2013 09 11
+	// TODO: Finish converting these to getter setter functions, or better yet, come up with a new way to do this. Its kinda bs and unintuitive.
+	//		 getter setters would be ideal but then again they dont work in internet explorer. Or do they?
+	//		 in any case... make a helper function that greates a getter setter function for your own sake.
+	//		 This calculator has felt increasingly redundant, but it has helped so much in formulating a structure for this program. Keep going! :D
 
 	
 	this._L		= 10000 // mm
