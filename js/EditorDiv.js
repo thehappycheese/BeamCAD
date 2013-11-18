@@ -1,5 +1,5 @@
-///~ lib/DOMTools/DOMTools.getUniqueId.js
-///~ lib/Events/EventDispatcher.js
+///~ nick/DOMTools.js
+///~ nick/events/EventDispatcher.js
 
 /**
 @class CalcBlock

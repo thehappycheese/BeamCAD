@@ -1,6 +1,6 @@
 ///~ lib/taffy-min.js
 
-// CONCRETE PROPERTIES AT 28 DAYS
+// CONCRETE PROPERTIES AT 28 DAYS (For standard concrete strengths with standard mixes and curing procedures only)
 // <AS3600.A2 T3.1.2>
 var AS3600T312 = TAFFY(
 	{fc:0.020	,fcmi:0.022,	Ec:24.0},

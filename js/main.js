@@ -1,8 +1,7 @@
-///~ lib/DOMTools/DOMTools.scrobble.js
-///~ lib/nTable/nTable.js
-///~ ui/EditorDiv.js
+///~ nick/DOMTools.js
+///~ nick/nTable/nTable.js
+///~ EditorDiv.js
 ///* bcad.js
-///* LoadContent.js
 
 "use strict";
 

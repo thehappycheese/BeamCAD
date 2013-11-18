@@ -87,7 +87,7 @@
 		for(i=0;i<rule.length;i++){
 			for(j=i+1;j<rule.length;j++){
 				if(rule[i].url === rule[j].url){
-					console.log("removed duplicate import: " + rule[j].url);
+					//console.log("removed duplicate import: " + rule[j].url);
 					rule.splice(j,1);
 					i--;
 					break;

@@ -1,4 +1,4 @@
-///~ lib/DOMTools/DOMTools.getUniqueId.js
+///~ nick/DOMTools.js
 
 
 /**
