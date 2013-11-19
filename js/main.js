@@ -3,6 +3,8 @@
 ///~ EditorDiv.js
 ///* bcad.js
 
+///* math.js
+
 "use strict";
 
 
@@ -111,7 +113,7 @@ function CalcLine(){
 
 
 
-
+runmathjs();
 
 
 
