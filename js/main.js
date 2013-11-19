@@ -3,7 +3,7 @@
 ///~ EditorDiv.js
 ///* bcad.js
 
-///* math.js
+
 
 "use strict";
 
@@ -110,10 +110,6 @@ function Calc(t) {
 function CalcLine(){
 	this.dom = document.createElement("div");
 }
-
-
-
-runmathjs();
 
 
 

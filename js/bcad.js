@@ -2,7 +2,7 @@
 
 // CONCRETE PROPERTIES AT 28 DAYS (For standard concrete strengths with standard mixes and curing procedures only)
 // <AS3600.A2 T3.1.2>
-var AS3600T312 = TAFFY(
+var AS3600T312 = TAFFY([
 	{fc:0.020	,fcmi:0.022,	Ec:24.0},
 	{fc:0.025	,fcmi:0.028,	Ec:26.7},
 	{fc:0.032	,fcmi:0.035,	Ec:30.1},
@@ -11,7 +11,7 @@ var AS3600T312 = TAFFY(
 	{fc:0.065	,fcmi:0.068,	Ec:37.4},
 	{fc:0.080	,fcmi:0.082,	Ec:39.6},
 	{fc:0.100	,fcmi:0.099,	Ec:42.2}
-);
+]);
 
 /**
 * @module bc
@@ -23,19 +23,6 @@ var bc = (function(){
 var exports = {};
 
 
-
-function VarGroup(){
-	this.__vars = {};
-	this.addVar = function(name, value){
-		this.__vars[name] = value;
-		this.__defineGetter__
-	}.bind(this);
-	
-	this.removeVar = function(){
-		
-	}.bind(this);
-}
-
 /**
 * @class Beam
 */
@@ -44,58 +31,122 @@ exports.Beam = function (){
 	this.phi	= 0.8;
 	this.Mstar	= 500; //kNm
 	this.Mou	= undefined;
+	this.Moumin = undefined;
 	
 	
 	this.beamtype = "rect"; // t i tslab
 	
 	
 	// ================= STEEL PROPERTIES ================
-	this.reoclass = "N";
+	this._reoclass = "N";
+	Object.defineProperty(this,"reoclass",{
+		get:function(){
+			return this._reoclass;
+		}.bind(this)
+		,set:function(newval){
+			if(newval==="N" || newval==="L"){
+				this._reoclass = newval;
+			}else{
+				throw new Error("The reoClass must be either\"N\" or \"L\"");
+			}
+		}.bind(this)
+	});
 	
 	
 	
 	this._fsy = 0.500;	// GPa
-	 this.fsy = function(newval){
-		 //Validation
-		if(newval)	this._fsy = newval;
-		return		this._fsy;
-	}.bind(this);		//GPa
+	Object.defineProperty(this,"fsy",{
+		get:function(){
+			return this._fsy;
+		}.bind(this)
+		,set:function(newval){
+			// TODO: confirm this error message?
+			throw new Error("The steel yeild strength must be 500 MPa in this software.");
+		}.bind(this)
+	});
 	
 	
 	
 	this._Es = 200;	// GPa
-	 this.Es = function(newval){
-		// Validation
-		if(newval)	this._Es = newval;
-		return		this._Es;
-	}.bind(this);
+	Object.defineProperty(this,"Es",{
+		get:function(){
+			return this._Es;
+		}.bind(this)
+		,set:function(newval){
+			// TODO: confirm this error message?
+			throw new Error("The steel youngs modulus must be 200 GPa in this software.");
+		}.bind(this)
+	});
 	
 	
 	
 	this._fc = 0.032;	// GPa
-	this.fc = function(newval){
-		// Validation
-		if(newval)	this._fc = newval;
-		return		this._fc;
-	}.bind(this);
-
-
-
-	this.alpha2 = function(){
-		// Validation
-		var result = 1 - 0.003*this.fc();		// <AS3600.A2 8.1.3 page 101> 
-		// Validaton
-		return result;
-	}.bind(this);
+	Object.defineProperty(this,"fc",{
+		get:function(){
+			return this._fc;
+		}.bind(this)
+		,set:function(newval){
+			// TODO: Validate
+			if(AS3600T312({fc:newval}).first()){
+				this._fc = newval;
+			}else{
+				throw new Error("<AS3600.A2 Table 3.1.2> Does not contain this concrete strength: "+newval+" GPa.");
+			}
+			return this._fc;
+		}.bind(this)
+	});
 	
 	
-
-	this.gamma = function(){
-		// Validation
-		var result = 1.05 - 0.007*this.fc();	// <AS3600.A2 8.1.3 page 101>
-		// Validation
-		return result;
-	}.bind(this);
+	
+	this._alpha2 = undefined;
+	Object.defineProperty(this,"alpha2",{
+		get:function(){
+			if(this._alpha2 !== undefined){
+				return this._alpha2;
+			}else{
+				return 1 - 0.003*this.fc;	// <AS3600.A2 8.1.3 page 101>
+			}
+		}.bind(this)
+		,set:function(newval){
+			// TODO: Confirm this assumption
+			if(newval === undefined){
+				this._alpha2 = undefined;
+				console.warn("alpha2 is now automatically calculated");
+			}if(newval<0.85 && newval>0.67){
+				this._alpha2 = newval;
+				console.warm("alpha2 has been manually set to "+newval);
+			}else{
+				throw new Error("<AS3600.A2 8.1.3> alpha2 must be within the range of 0.67 to 0.85");
+			}
+			return this._alpha2;
+		}.bind(this)
+	});
+	
+	
+	
+	this._gamma = undefined;
+	Object.defineProperty(this,"gamma",{
+		get:function(){
+			if(this._gamma !== undefined){
+				return this._gamma;
+			}else{
+				return 1.05 - 0.007*this.fc;	// <AS3600.A2 8.1.3 page 101>
+			}
+		}.bind(this)
+		,set:function(newval){
+			// TODO: Confirm this assumption
+			if(newval === undefined){
+				this._gamma = undefined;
+				console.warn("gamma is now automatically calculated");
+			}if(newval<0.85 && newval>0.67){
+				this._gamma = newval;
+				console.warm("gamma has been manually set to "+newval);
+			}else{
+				throw new Error("<AS3600.A2 8.1.3> gamma must be within the range of 0.67 to 0.85");
+			}
+			return this._gamma;
+		}.bind(this)
+	});
 	
 	
 	
@@ -103,42 +154,67 @@ exports.Beam = function (){
 	
 	// ============ CONCRETE PROPERTIES ==============
 	
-	// This is assumed. The limits are 1800-2800  <AS3600.A2 1.1.2 page 8>
-	this.rohc = function(){return 2500;}; //kg/m^3
-	this.fcmi = function(){return 10;};
 	
-	this.Ec	= function(){
-		// <AS3600.A2 3.1.2 page 37>
-		// Validation (Standard values only)
-		result = AS3600T312({fc:this.fc()});
-		// Validation
-		return result;
-	}
+	this._rohc = 2500; // This is assumed.
+	Object.defineProperty(this,"rohc",{
+		get:function(){
+			return this._rohc; //kg/m^3
+		}.bind(this),
+		set:function(newval){
+			if(newval>2800 || newval<1800){
+				// The limits are 1800-2800  <AS3600.A2 1.1.2 page 8>
+				throw new Error("<AS3600.A2 1.1.2> limits the density of concrete from 1800 to 2800 kg/m^3");
+			}else{
+				this._rohc = newval;
+			}
+		}.bind(this)
+	});
 	
-	// LEFTOFF: 2013 09 11
-	// TODO: Finish converting these to getter setter functions, or better yet, come up with a new way to do this. Its kinda bs and unintuitive.
-	//		 getter setters would be ideal but then again they dont work in internet explorer. Or do they?
-	//		 in any case... make a helper function that greates a getter setter function for your own sake.
-	//		 This calculator has felt increasingly redundant, but it has helped so much in formulating a structure for this program. Keep going! :D
-
+	
+	
+	Object.defineProperty(this,"fcmi",{
+		get:function(){
+			return AS3600T312({fc:this.fc}).first().fcmi; //kg/m^3
+		}.bind(this)
+	});
+	
+	
+	
+	Object.defineProperty(this,"Ec",{
+		get:function(){
+			// <AS3600.A2 3.1.2 page 37>
+			return AS3600T312({fc:this.fc}).first().Ec; //kg/m^3
+		}.bind(this)
+	});
+	
+	
 	
 	this._L		= 10000 // mm
-	this.L		= function(newval){
-		if(newval) this._L = newval;
-		return this.L;
-	};
+	Object.defineProperty(this,"L",{
+		get:function(){
+			// <AS3600.A2 3.1.2 page 37>
+			return this._L;
+		}.bind(this),
+		set:function(newval){
+			if(newval>0 && newval<100000){
+				this._L
+			}else{
+				throw new Error("Length should be between 0 mm and 100000 mm");
+			}
+		}
+	});
 		
 		
-	this.Dtf	= undefined;	// mm
-	this.Dbf	= undefined;	// mm
-	this.D		= 500;			// mm
+	this.Dtf	= undefined;		// mm
+	this.Dbf	= undefined;		// mm
+	this.D		= 500;				// mm
 	this.dn		= undefined;
-		
-		
-	this.btf	= undefined;	// mm
-	this.bbf	= undefined;	// mm
-	this.beff	= undefined;	// mm
-	this.bw		= 300;			// mm
+	
+	
+	this.btf	= undefined;		// mm
+	this.bbf	= undefined;		// mm
+	this.beff	= undefined;		// mm
+	this.bw		= 300;				// mm
 	
 	
 	this.cover				= 25;	// mm (Outer surface to shear reo surface)
@@ -154,24 +230,33 @@ exports.Beam = function (){
 		{number:4, diameter:32, depth:-32/2-60	, As:16*16*Math.PI*4}
 	];
 	
-	// Reo explicitly not included in moment reo calcs for the purpose of crack control
-	this.crackReo = [];
-	
-	
 	
 	
 	this.I = function(){
 		return this.bw*Math.pow(this.D,3)/12;// rect
 	}
+	
+	
+	
 	this.Z = function(){
 		return this.I()/(this.D/2);	// rect, sag or hog;
 	}
+	
+	
+	
 	this.Ag = function(){
 		return this.D*this.b;		// rect
 	}
 	
 	
-	
+	Object.defineProperty(this,"dn",{
+		get:function(){
+			
+			
+			
+			
+		}.bind(this)
+	});
 	this.processDn = function(dn){
 		var Ast		= 0;			// mm^2
 		var Asc		= 0;			// mm^2
@@ -258,7 +343,7 @@ exports.Beam = function (){
 	
 	
 	this.checkCapacity = function(){
-		var dn =0.01;
+		var dn = 0.01;
 		var lastdist = Infinity;
 		var t
 		var c
@@ -286,11 +371,5 @@ exports.Beam = function (){
 
 
 return exports;
-
-
-
-
-
-
-
 })();
+b = new bc.Beam();
