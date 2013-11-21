@@ -23,6 +23,47 @@ var bc = (function(){
 var exports = {};
 
 
+window.mo ={};
+
+// TODO: not working
+function Var(parent,name,state,value,get,set){
+	this.parent = parent;
+	this.name	= name;
+	this.state	= state;
+	this.value	= value;
+	if(this.get){
+		this.get = get.bind(this);
+	}else{
+		this.get = function(){return value}.bind(this);
+	}
+	// TODO: do the same for set as above
+	this.set = set.bind(this) || function(newval){this.value = newval; return this.value;}.bind(this);
+	Object.defineProperty(this.parent, this.name,{get:this.get,set:this.set});
+}
+
+var vars = [
+	new Var(mo,"fc","numeric",0.032,null,
+		function(newval){
+			// validate
+			this.value = newval;
+			return this.value;
+		}
+	),
+	new Var(mo,"alpha2","numeric",0.032,function(){
+	// Correct this formula
+			return 1 - 0.003*this.parent.fc*1000;
+		},
+		function(newval){
+			throw new Error();
+			return this.value;
+		}
+	)
+];
+
+
+
+
+
 /**
 * @class Beam
 */
@@ -104,6 +145,7 @@ exports.Beam = function (){
 			if(this._alpha2 !== undefined){
 				return this._alpha2;
 			}else{
+				// TODO clamp and validate!
 				return 1 - 0.003*this.fc;	// <AS3600.A2 8.1.3 page 101>
 			}
 		}.bind(this)
