@@ -23,42 +23,45 @@ var bc = (function(){
 var exports = {};
 
 
-window.mo ={};
 
-// TODO: not working
-function Var(parent,name,state,value,get,set){
-	this.parent = parent;
-	this.name	= name;
-	this.state	= state;
-	this.value	= value;
-	if(this.get){
-		this.get = get.bind(this);
-	}else{
-		this.get = function(){return value}.bind(this);
+
+
+function BeamVar = function(parent,value,data){
+	this.parent		= parent;
+	
+	
+	this.value		= value;
+	
+	
+	this.get 		= function(){
+		return this.value;
+	}.bind(this);
+	
+	
+	this.set		= function(newval){
+		this.value = newval;
+	}.bind(this);
+	
+	
+	if(data){
+		for(var item in data){
+			
+			if(typeof data[item] === "function"){
+				this[item] = data[item].bind(this);
+			}else{
+				this[item] = data[item];
+			}
+			
+		}
 	}
-	// TODO: do the same for set as above
-	this.set = set.bind(this) || function(newval){this.value = newval; return this.value;}.bind(this);
-	Object.defineProperty(this.parent, this.name,{get:this.get,set:this.set});
+
 }
 
-var vars = [
-	new Var(mo,"fc","numeric",0.032,null,
-		function(newval){
-			// validate
-			this.value = newval;
-			return this.value;
-		}
-	),
-	new Var(mo,"alpha2","numeric",0.032,function(){
-	// Correct this formula
-			return 1 - 0.003*this.parent.fc*1000;
-		},
-		function(newval){
-			throw new Error();
-			return this.value;
-		}
-	)
-];
+
+
+
+
+
 
 
 
@@ -69,133 +72,145 @@ var vars = [
 */
 exports.Beam = function (){
 	
-	this.phi	= 0.8;
-	this.Mstar	= 500; //kNm
-	this.Mou	= undefined;
-	this.Moumin = undefined;
+	this.phi = new BeamVar(this,0.8,{set:undefined});
+	
+	this.Mstar = new BeamVar(this,500,{
+		unit:"kNm",
+		set:function(newval){
+			if(newval === parseFloat(newval)){
+				this.value = newval;
+			}
+		}
+	});
 	
 	
-	this.beamtype = "rect"; // t i tslab
+	this.Mou	= new BeamVar(this,undefined);
+	this.Moumin = new BeamVar(this,undefined);
+	
+	
+	this.beamtype = new BeamVar(this,"rect",{
+		set:function(newval){
+			// TODO: Establish weather other values of beam type are required
+			if(newval==="rect" || newval === "t"){
+				this.value = newval;
+			}else{
+				throw new Error("BeamCAD::Beam: beamtype may only be 't' or 'rect'");
+			}
+		}
+	});
 	
 	
 	// ================= STEEL PROPERTIES ================
-	this._reoclass = "N";
-	Object.defineProperty(this,"reoclass",{
-		get:function(){
-			return this._reoclass;
-		}.bind(this)
-		,set:function(newval){
+
+	this.reoclass = new BeamVar(this,"N",{
+		set:function(newval){
 			if(newval==="N" || newval==="L"){
-				this._reoclass = newval;
+				this.value = newval;
 			}else{
-				throw new Error("The reoClass must be either\"N\" or \"L\"");
+				throw new Error("BeamCAD::Beam: The reoClass must be either\"N\" or \"L\"");
 			}
-		}.bind(this)
-	});
+		}
+	})
 	
 	
 	
-	this._fsy = 0.500;	// GPa
-	Object.defineProperty(this,"fsy",{
-		get:function(){
-			return this._fsy;
-		}.bind(this)
-		,set:function(newval){
+	this.fsy = new BeamVar(this,0.500,{
+		set:function(newval){
 			// TODO: confirm this error message?
-			throw new Error("The steel yeild strength must be 500 MPa in this software.");
-		}.bind(this)
+			throw new Error("BeamCAD::Beam: The steel yeild strength cannot be changed from 500 MPa in this software.");
+		}
 	});
 	
 	
 	
-	this._Es = 200;	// GPa
-	Object.defineProperty(this,"Es",{
-		get:function(){
-			return this._Es;
-		}.bind(this)
-		,set:function(newval){
+	this.Es = new BeamVar(this,200,{
+		set:function(newval){
 			// TODO: confirm this error message?
-			throw new Error("The steel youngs modulus must be 200 GPa in this software.");
+			throw new Error("BeamCAD::Beam: The steel youngs modulus cannot be changed from 200 GPa in this software.");
 		}.bind(this)
 	});
 	
 	
-	
-	this._fc = 0.032;	// GPa
-	Object.defineProperty(this,"fc",{
-		get:function(){
-			return this._fc;
-		}.bind(this)
-		,set:function(newval){
+	this.fc = new BeamVar(this,0.032,{
+		set:function(newval){
 			// TODO: Validate
 			if(AS3600T312({fc:newval}).first()){
-				this._fc = newval;
+				this.value = newval;
 			}else{
-				throw new Error("<AS3600.A2 Table 3.1.2> Does not contain this concrete strength: "+newval+" GPa.");
+				throw new Error("BeamCAD::Beam: <AS3600.A2 Table 3.1.2> Does not contain this concrete strength: "+newval+" GPa.");
 			}
-			return this._fc;
-		}.bind(this)
+		}
 	});
 	
 	
-	
-	this._alpha2 = undefined;
-	Object.defineProperty(this,"alpha2",{
+	this.alpha2 = new BeamVar(this,undefined,{
+		
+		
 		get:function(){
-			if(this._alpha2 !== undefined){
-				return this._alpha2;
-			}else{
-				// TODO clamp and validate!
-				return 1 - 0.003*this.fc;	// <AS3600.A2 8.1.3 page 101>
+			if(this.mode === "user"){
+				return this.value;
+			}else if(mode === "auto"){
+				// TODO: Confirm code correctness and test
+				return Math.min(0.85,Math.max(0.67,1 - 0.003*this.parent.fc));	// <AS3600.A2 8.1.3 page 101>
 			}
-		}.bind(this)
-		,set:function(newval){
-			// TODO: Confirm this assumption
-			if(newval === undefined){
-				this._alpha2 = undefined;
-				console.warn("alpha2 is now automatically calculated");
-			}if(newval<0.85 && newval>0.67){
-				this._alpha2 = newval;
-				console.warm("alpha2 has been manually set to "+newval);
+		},
+		set:function(newval){
+			// TODO: Confirm code correctness and test
+			//		 greq ?
+			if(newval <= 0.85 && newval >= 0.67){
+				this.value = newval;
 			}else{
-				throw new Error("<AS3600.A2 8.1.3> alpha2 must be within the range of 0.67 to 0.85");
+				throw new Error("BeamCAD::Beam: <AS3600.A2 8.1.3> alpha2 must be within the range of 0.67 to 0.85");
 			}
-			return this._alpha2;
-		}.bind(this)
+		},
+		mode:"auto",
+		setMode:function(newval){
+			if(newval === "user" || newval === "auto"){
+				this.mode = newval;
+			}else{
+				throw new Error("BeamCAD::Beam: The mode for alpha2 should be either 'user' or 'auto'");
+			}
+		}
 	});
 	
 	
 	
-	this._gamma = undefined;
-	Object.defineProperty(this,"gamma",{
+	this.gamma = new BeamVar(this,undefined,{
+		
+		
 		get:function(){
-			if(this._gamma !== undefined){
-				return this._gamma;
-			}else{
-				return 1.05 - 0.007*this.fc;	// <AS3600.A2 8.1.3 page 101>
+			if(this.mode === "user"){
+				return this.value;
+			}else if(mode === "auto"){
+				// TODO: Confirm code correctness and test
+				return Math.min(0.85,Math.max(0.67,1.05 - 0.007*this.parent.fc));	// <AS3600.A2 8.1.3 page 101>
 			}
-		}.bind(this)
-		,set:function(newval){
-			// TODO: Confirm this assumption
-			if(newval === undefined){
-				this._gamma = undefined;
-				console.warn("gamma is now automatically calculated");
-			}if(newval<0.85 && newval>0.67){
-				this._gamma = newval;
-				console.warm("gamma has been manually set to "+newval);
+		},
+		set:function(newval){
+			// TODO: Confirm code correctness and test
+			//		 greq ?
+			if(newval <= 0.85 && newval >= 0.67){
+				this.value = newval;
 			}else{
-				throw new Error("<AS3600.A2 8.1.3> gamma must be within the range of 0.67 to 0.85");
+				throw new Error("BeamCAD::Beam: <AS3600.A2 8.1.3> gamma must be within the range of 0.67 to 0.85");
 			}
-			return this._gamma;
-		}.bind(this)
+		},
+		mode:"auto",
+		setMode:function(newval){
+			if(newval === "user" || newval === "auto"){
+				this.mode = newval;
+			}else{
+				throw new Error("BeamCAD::Beam: The mode for gamma should be either 'user' or 'auto'");
+			}
+		}
 	});
-	
-	
-	
 	
 	
 	// ============ CONCRETE PROPERTIES ==============
 	
+	// LEFTOFF: 2013 11 23
+	// TODO:	Continue to convert this class to BeamVar
+	//			Leave this solution alone. This calculator solves a limited purpose atm.
 	
 	this._rohc = 2500; // This is assumed.
 	Object.defineProperty(this,"rohc",{
