@@ -151,7 +151,7 @@ exports.Beam = function (){
 				return this.value;
 			}else if(mode === "auto"){
 				// TODO: Confirm code correctness and test
-				return Math.min(0.85,Math.max(0.67,1 - 0.003*this.parent.fc));	// <AS3600.A2 8.1.3 page 101>
+				return Math.min(0.85,Math.max(0.67,1 - 0.003*this.parent.fc.get()));	// <AS3600.A2 8.1.3 page 101>
 			}
 		},
 		set:function(newval){
@@ -183,7 +183,7 @@ exports.Beam = function (){
 				return this.value;
 			}else if(mode === "auto"){
 				// TODO: Confirm code correctness and test
-				return Math.min(0.85,Math.max(0.67,1.05 - 0.007*this.parent.fc));	// <AS3600.A2 8.1.3 page 101>
+				return Math.min(0.85,Math.max(0.67,1.05 - 0.007*this.parent.fc.get()));	// <AS3600.A2 8.1.3 page 101>
 			}
 		},
 		set:function(newval){
@@ -212,71 +212,77 @@ exports.Beam = function (){
 	// TODO:	Continue to convert this class to BeamVar
 	//			Leave this solution alone. This calculator solves a limited purpose atm.
 	
-	this._rohc = 2500; // This is assumed.
-	Object.defineProperty(this,"rohc",{
-		get:function(){
-			return this._rohc; //kg/m^3
-		}.bind(this),
+	this.rohc = new BeamVar(this,2500,{//kg/m^3 assumed
 		set:function(newval){
-			if(newval>2800 || newval<1800){
+			if(newval<=2800 && newval>=1800){
+				this.value = newval;
+			}else{
 				// The limits are 1800-2800  <AS3600.A2 1.1.2 page 8>
-				throw new Error("<AS3600.A2 1.1.2> limits the density of concrete from 1800 to 2800 kg/m^3");
-			}else{
-				this._rohc = newval;
-			}
-		}.bind(this)
-	});
-	
-	
-	
-	Object.defineProperty(this,"fcmi",{
-		get:function(){
-			return AS3600T312({fc:this.fc}).first().fcmi; //kg/m^3
-		}.bind(this)
-	});
-	
-	
-	
-	Object.defineProperty(this,"Ec",{
-		get:function(){
-			// <AS3600.A2 3.1.2 page 37>
-			return AS3600T312({fc:this.fc}).first().Ec; //kg/m^3
-		}.bind(this)
-	});
-	
-	
-	
-	this._L		= 10000 // mm
-	Object.defineProperty(this,"L",{
-		get:function(){
-			// <AS3600.A2 3.1.2 page 37>
-			return this._L;
-		}.bind(this),
-		set:function(newval){
-			if(newval>0 && newval<100000){
-				this._L
-			}else{
-				throw new Error("Length should be between 0 mm and 100000 mm");
+				throw new Error("BeamCAD::Beam: <AS3600.A2 1.1.2> limits the density of concrete from 1800 to 2800 kg/m^3");
 			}
 		}
 	});
+	
+	
+	
+	this.fcmi = new BeamVar(this,undefined,{
+		get:function(){
+
+			var result = AS3600T312({fc:this.parent.fc.get()}).first().fcmi;
+			if(result === false){
+				throw new Error("BeamCAD::Beam: fcmi could not be automatically calculated: f'c not found in <AS3600.A2 T3.1.2>");
+			}
+			return result;
+
+		},
+		set:undefined
+	});
+	
+	
+
+	
+	this.Ec = new BeamVar(this,undefined,{
+		get:function(){
+			// <AS3600.A2 3.1.2 page 37>
+			return AS3600T312({fc:this.parent.fc.get()}).first().Ec; //kg/m^3
+		}
+		set:undefined
+	});
+	
+	
+	
+	this.L = new BeamVar(this, 10000, {
+		set:function(newval){
+			if(typeof newval == "number" && newval === Math.abs(newval)){
+				this.value = newval;
+			}else{
+				throw new Error("BeamCAD::Beam: L should be a positive number");
+			}
+		}
+	})
+	
+	
+	// TODO: validate the getters AND setters for these?
+	this.Dtf		= new BeamVar(this,undefined);
+	this.Dbf		= new BeamVar(this,undefined);
+	this.D			= new BeamVar(this,undefined);
+	
+	//////////////////////////////////////////// WHAT TO DO HERE :I ???
+	this.dn			= undefined;
 		
 		
-	this.Dtf	= undefined;		// mm
-	this.Dbf	= undefined;		// mm
-	this.D		= 500;				// mm
-	this.dn		= undefined;
+	this.btf		= new BeamVar(this,undefined);
+	this.bbf		= new BeamVar(this,undefined);
+	this.beff		= new BeamVar(this,undefined);
+	this.bw			= new BeamVar(this,300);
 	
 	
-	this.btf	= undefined;		// mm
-	this.bbf	= undefined;		// mm
-	this.beff	= undefined;		// mm
-	this.bw		= 300;				// mm
+	this.cover		= new BeamVar(this,25);	// (Outer surface to shear reo surface)
+	this.dfitments	= new BeamVar(this,12);	// (Nominal diameter)
 	
-	
-	this.cover				= 25;	// mm (Outer surface to shear reo surface)
-	this.dfitments			= 12;	// mm (Nominal diameter)
-	this.shearReoPitch		= 300;	// mm (Center to center)
+	// TODO: what are the practical limits for shear reo spacing?
+	//		 Also, is it important in this beam object at all?
+	this.shearReoPitch	= new BeamVar(this,300);	// (Center to center)
 	
 	
 	
