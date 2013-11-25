@@ -26,7 +26,7 @@ var exports = {};
 
 
 
-function BeamVar = function(parent,value,data){
+function BeamVar (parent,value,data){
 	this.parent		= parent;
 	
 	
@@ -72,10 +72,12 @@ function BeamVar = function(parent,value,data){
 */
 exports.Beam = function (){
 	
+	
+	
 	this.phi = new BeamVar(this,0.8,{set:undefined});
 	
+	
 	this.Mstar = new BeamVar(this,500,{
-		unit:"kNm",
 		set:function(newval){
 			if(newval === parseFloat(newval)){
 				this.value = newval;
@@ -83,21 +85,12 @@ exports.Beam = function (){
 		}
 	});
 	
-	
 	this.Mou	= new BeamVar(this,undefined);
+	
 	this.Moumin = new BeamVar(this,undefined);
 	
 	
-	this.beamtype = new BeamVar(this,"rect",{
-		set:function(newval){
-			// TODO: Establish weather other values of beam type are required
-			if(newval==="rect" || newval === "t"){
-				this.value = newval;
-			}else{
-				throw new Error("BeamCAD::Beam: beamtype may only be 't' or 'rect'");
-			}
-		}
-	});
+	
 	
 	
 	// ================= STEEL PROPERTIES ================
@@ -113,14 +106,12 @@ exports.Beam = function (){
 	})
 	
 	
-	
 	this.fsy = new BeamVar(this,0.500,{
 		set:function(newval){
 			// TODO: confirm this error message?
 			throw new Error("BeamCAD::Beam: The steel yeild strength cannot be changed from 500 MPa in this software.");
 		}
 	});
-	
 	
 	
 	this.Es = new BeamVar(this,200,{
@@ -131,6 +122,7 @@ exports.Beam = function (){
 	});
 	
 	
+	// ================ CONCRETE PROPERTIES ==============
 	this.fc = new BeamVar(this,0.032,{
 		set:function(newval){
 			// TODO: Validate
@@ -174,7 +166,6 @@ exports.Beam = function (){
 	});
 	
 	
-	
 	this.gamma = new BeamVar(this,undefined,{
 		
 		
@@ -206,12 +197,6 @@ exports.Beam = function (){
 	});
 	
 	
-	// ============ CONCRETE PROPERTIES ==============
-	
-	// LEFTOFF: 2013 11 23
-	// TODO:	Continue to convert this class to BeamVar
-	//			Leave this solution alone. This calculator solves a limited purpose atm.
-	
 	this.rohc = new BeamVar(this,2500,{//kg/m^3 assumed
 		set:function(newval){
 			if(newval<=2800 && newval>=1800){
@@ -222,7 +207,6 @@ exports.Beam = function (){
 			}
 		}
 	});
-	
 	
 	
 	this.fcmi = new BeamVar(this,undefined,{
@@ -239,17 +223,27 @@ exports.Beam = function (){
 	});
 	
 	
-
-	
 	this.Ec = new BeamVar(this,undefined,{
 		get:function(){
 			// <AS3600.A2 3.1.2 page 37>
 			return AS3600T312({fc:this.parent.fc.get()}).first().Ec; //kg/m^3
-		}
+		},
 		set:undefined
 	});
 	
 	
+	//================== GEOMETRICAL PROPERTIES =========
+	
+	this.beamtype = new BeamVar(this,"t",{
+		set:function(newval){
+			// TODO: Establish weather other values of beam type are required
+			if(newval==="rect" || newval === "t"){
+				this.value = newval;
+			}else{
+				throw new Error("BeamCAD::Beam: beamtype may only be 't' or 'rect'");
+			}
+		}
+	});
 	
 	this.L = new BeamVar(this, 10000, {
 		set:function(newval){
@@ -261,28 +255,26 @@ exports.Beam = function (){
 		}
 	})
 	
-	
 	// TODO: validate the getters AND setters for these?
-	this.Dtf		= new BeamVar(this,undefined);
-	this.Dbf		= new BeamVar(this,undefined);
-	this.D			= new BeamVar(this,undefined);
-	
-	//////////////////////////////////////////// WHAT TO DO HERE :I ???
-	this.dn			= undefined;
+	this.Dtf		= new BeamVar(this,100);
+	this.D			= new BeamVar(this,500);
+	this.dn			= undefined;//////////////////////////////////////////// WHAT TO DO HERE :I ???
 		
 		
-	this.btf		= new BeamVar(this,undefined);
-	this.bbf		= new BeamVar(this,undefined);
+	this.btf		= new BeamVar(this,400);
 	this.beff		= new BeamVar(this,undefined);
 	this.bw			= new BeamVar(this,300);
 	
 	
-	this.cover		= new BeamVar(this,25);	// (Outer surface to shear reo surface)
-	this.dfitments	= new BeamVar(this,12);	// (Nominal diameter)
+	// 
+	this.eclass		= // TODO: Eclass
 	
-	// TODO: what are the practical limits for shear reo spacing?
-	//		 Also, is it important in this beam object at all?
-	this.shearReoPitch	= new BeamVar(this,300);	// (Center to center)
+	// TODO: cover validation
+	this.cover		= new BeamVar(this,25);
+	// (Outer surface to shear reo surface)
+	
+	
+	this.dfitments	= new BeamVar(this,12);	// (Nominal diameter)
 	
 	
 	
@@ -294,32 +286,112 @@ exports.Beam = function (){
 	];
 	
 	
-	
-	this.I = function(){
-		return this.bw*Math.pow(this.D,3)/12;// rect
-	}
-	
-	
-	
-	this.Z = function(){
-		return this.I()/(this.D/2);	// rect, sag or hog;
-	}
-	
-	
-	
-	this.Ag = function(){
-		return this.D*this.b;		// rect
-	}
-	
-	
-	Object.defineProperty(this,"dn",{
+	this.dbar = new BeamVar(this,undefined,{
 		get:function(){
-			
-			
-			
-			
-		}.bind(this)
+			if(this.parent.beamtype.get() == "rect"){
+				return this.parent.D.get()/2;
+			}else if(this.parent.beamtype.get() == "t"){
+				var flangeArea		= this.parent.Dtf.get()*this.parent.btf.get();
+				var flangeCentroid	= this.parent.Dtf.get()/2;
+				
+				
+				var webArea			= (this.parent.D.get() - this.parent.Dtf.get())*this.parent.bw.get();
+				var webCentroid		= this.parent.Dtf.get() + (this.parent.D.get() - this.parent.Dtf.get())/2;
+				
+				return (flangeArea*flangeCentroid + webArea*webCentroid)/(webArea + flangeArea);
+			}else{
+				throw new Error("BeamCAD::Beam: dbar could not be calculated because beamtype was unrecognised")
+			}
+		},
+		set:undefined
 	});
+	
+	
+	this.I = new BeamVar(this,25,{
+		get:function(){
+			if(this.parent.beamtype.get() == "rect"){
+				return this.parent.bw.get()*Math.pow(this.parent.D.get(),3)/12;
+			}else if(this.parent.beamtype.get() == "t"){
+				var dbar = this.parent.dbar.get();
+				var flangeArea			= this.parent.Dtf.get()*this.parent.btf.get();
+				var flangeCentroidDist	= this.parent.Dtf.get()/2-dbar;
+				var flangeI				= this.parent.btf.get()*Math.pow(this.parent.Dtf.get(),3)/12;
+				//console.log(flangeArea,flangeCentroidDist,flangeI)
+				
+				var webArea				= (this.parent.D.get() - this.parent.Dtf.get())*this.parent.bw.get();
+				var webCentriodDist		= (this.parent.Dtf.get() + (this.parent.D.get() - this.parent.Dtf.get())/2)-dbar;
+				var webI				= this.parent.bw.get()*Math.pow(this.parent.D.get()-this.parent.Dtf.get(),3)/12;
+				//console.log(webArea,webCentriodDist,webI)
+				return flangeI +flangeArea*Math.pow(flangeCentroidDist,2) + webI + webArea*Math.pow(webCentriodDist,2);
+			}else{
+				throw new Error("BeamCAD::Beam: I could not be calculated because beamtype was unrecognised")
+			}			
+		},
+		set:undefined
+	});
+	
+	
+	
+	this.Ztop = new BeamVar(this,undefined,{
+		get:function(){
+			return this.parent.I.get()/this.parent.dbar.get()
+		},
+		set:undefined
+	});
+	this.Zbot = new BeamVar(this,undefined,{
+		get:function(){
+			return this.parent.I.get()/(this.parent.D.get()-this.parent.dbar.get())
+		},
+		set:undefined
+	});
+	this.Zmax = new BeamVar(this,undefined,{
+		get:function(){
+			return Math.max(this.parent.Ztop.get(),this.parent.Zbot.get());
+		},
+		set:undefined
+	});
+	this.Zmin = new BeamVar(this,undefined,{
+		get:function(){
+			return Math.min(this.parent.Ztop.get(),this.parent.Zbot.get());
+		},
+		set:undefined
+	});
+
+	
+	
+	this.Ag = new BeamVar(this,undefined,{
+		get:function(){
+			if(this.parent.beamtype.get()==="rect"){
+				return this.parent.D.get()*this.parent.bw.get();
+			}else if(this.parent.beamtype.get()==="t"){
+				return (this.parent.D.get()-this.parent.Dtf.get())*this.parent.bw.get()+
+						this.parent.Dtf.get()*this.parent.btf.get();
+			}else{
+				throw new Error("BeamCAD::Beam: Ag could not be calculated because beamtype was unrecognised");
+			}
+		},
+		set:undefined
+	});
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// ================ HERE BE FUNCTIONS! ===================
+	
+	// LEFTOFF: 2013 11 26 had just finsihed converting to beamVar. There are a few things still to go up there ^^
+	//					mainly validation but there are a few more variables to be abstracted fo the calculation of I
+	
+	
+	
 	this.processDn = function(dn){
 		var Ast		= 0;			// mm^2
 		var Asc		= 0;			// mm^2
