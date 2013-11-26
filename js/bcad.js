@@ -262,12 +262,12 @@ exports.Beam = function (){
 		
 		
 	this.btf		= new BeamVar(this,400);
-	this.beff		= new BeamVar(this,undefined);
+	this.beff		= new BeamVar(this,undefined); //// this depends on hogging/sagging capcaity calc, remove?
 	this.bw			= new BeamVar(this,300);
 	
 	
 	// 
-	this.eclass		= // TODO: Eclass
+	this.eclass		=  new BeamVar(this,)// TODO: Eclass
 	
 	// TODO: cover validation
 	this.cover		= new BeamVar(this,25);
