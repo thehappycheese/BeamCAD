@@ -1,7 +1,7 @@
 ///~ nick/DOMTools.js
 ///~ nick/nTable/nTable.js
 ///~ EditorDiv.js
-///* bcad.js
+///* bcad2.js
 
 
 

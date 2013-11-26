@@ -74,7 +74,22 @@ exports.Beam = function (){
 	
 	
 	
-	this.phi = new BeamVar(this,0.8,{set:undefined});
+	this.phi = new BeamVar(this,0.8,{
+		get:function(){
+			// ASSUME: That the beam is pure bending only. This means that the only thing detyermining phi is the reoclass
+			// From <AS3600.A2 T2.2.2(b) page 30>
+			
+			if(this.parent.reoclass.get() === "N"){
+				// LEFTOFF: 2013 11 27
+				// TODO:	figure out this nonsence :( We are mixing state with calculation. This cant be determined at any time unless this is a storage for a value.
+			}else if(this.parent.reoclass.get() === "L"){
+				
+			}
+			
+			
+		},
+		set:undefined
+	});
 	
 	
 	this.Mstar = new BeamVar(this,500,{
@@ -100,7 +115,8 @@ exports.Beam = function (){
 			if(newval==="N" || newval==="L"){
 				this.value = newval;
 			}else{
-				throw new Error("BeamCAD::Beam: The reoClass must be either\"N\" or \"L\"");
+				// TODO: NATALIE: Is the design procedure different except for determining phi?
+				throw new Error("BeamCAD::Beam: The reoClass must be either 'N' or 'L'");
 			}
 		}
 	})
@@ -278,7 +294,14 @@ exports.Beam = function (){
 	
 	
 	
-	this.momentReo = [
+	this.bottomReo = [
+		// Depth is from inner surface of shear reo
+		// A negative depth indicates that it goes from the bottom of the beam
+		{number:2, diameter:32, depth:-32/2		, As:16*16*Math.PI*2},
+		{number:4, diameter:32, depth:-32/2-60	, As:16*16*Math.PI*4}
+	];
+	
+	this.topReo = [
 		// Depth is from inner surface of shear reo
 		// A negative depth indicates that it goes from the bottom of the beam
 		{number:2, diameter:32, depth:-32/2		, As:16*16*Math.PI*2},
