@@ -125,16 +125,19 @@ f_sy{
 
 
 f'c {
-	Characteristic compressive strength
-	At 28 days of
-	Concrete
+	Characteristic compressive strength at 28 days after concrete pour.
 	
-	20MPa to 100MPa 1.1.2
+	Determined in accordance with specification (AS1379)
+	or
+	Determined in statistically from tests (AS1012.9)
+	
+	AS3600 1.1.2	limits f'c to  between 20MPa and 100MPa.
+	AS3600 3.1.1.1	lists standard grades: [20,25,32,40,50,65,80,100]MPa
 	
 	Affects
 		E_c
 		alpha_2
-		gamma	
+		gamma
 	
 	
 	
